@@ -42,9 +42,9 @@ end
 
 def conditions_for_collection
  #   if current_user.can_manage_users? 
-	 return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
+	 return ['users.organization_id in (1)']##, current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
 	#else 
-	 return ['users.id in (?)', current_user.id]
+	## return ['users.id in (?)', current_user.id]
     #end
 end
 
