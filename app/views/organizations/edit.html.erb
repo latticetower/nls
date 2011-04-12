@@ -1,0 +1,6 @@
+﻿<h1>Редактирование организации</h1>
+
+<% form_for(@organization) do |f| %>
+  <%= f.error_messages %>
+ <%= render :partial => "form", :locals => { :f => f, :button => "Обновить"  }  %>
+<% end %>

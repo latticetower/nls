@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test
+END
+processor_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/processor_test.rb
+END
+paperclip_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/paperclip_test.rb
+END
+helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/helper.rb
+END
+thumbnail_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/thumbnail_test.rb
+END
+iostream_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/iostream_test.rb
+END
+integration_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/integration_test.rb
+END
+upfile_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/upfile_test.rb
+END
+command_line_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/command_line_test.rb
+END
+attachment_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/attachment_test.rb
+END
+geometry_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/geometry_test.rb
+END
+style_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/style_test.rb
+END
+database.yml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/database.yml
+END
+storage_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/storage_test.rb
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/.gitignore
+END
+interpolations_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/main/!svn/ver/334/shiny_journal/trunk/vendor/plugins/paperclip/test/interpolations_test.rb
+END

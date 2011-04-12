@@ -1,0 +1,18 @@
+﻿<tr class="bordered">
+<td> <%= @user.role.name  %></td>
+<td> <%= @user.organization.name %>
+<td> <%= @user.fio %></td>
+<td> <%= @user.job %></td>
+<td> <%= @user.room %></td>
+<td> <%= @user.login %></td>
+<td><% if @current_user.can_manage_users? %><% link_to(edit_user_path(@user)) do %>
+	<%= image_tag("wrench.png", :alt => "Редактировать") %>
+        <% end %>
+		<% end %>
+		</td>
+    <td>
+    	<%= link_to_remote(image_tag("cross.png"), 
+	:url => { :controller => "users", :action => "destroy_ajax",  :id => @user.id}, :update => "user_list")  %>
+	</td>
+
+  </tr>

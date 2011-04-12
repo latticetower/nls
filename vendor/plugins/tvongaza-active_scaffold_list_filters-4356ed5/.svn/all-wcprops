@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5/Rakefile
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5/init.rb
+END
+environment.rb
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5/environment.rb
+END
+install.rb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5/install.rb
+END
+README.textile
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5/README.textile
+END
+install_assets.rb
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5/install_assets.rb
+END
+uninstall.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/main/!svn/ver/451/shiny_journal/trunk/vendor/plugins/tvongaza-active_scaffold_list_filters-4356ed5/uninstall.rb
+END

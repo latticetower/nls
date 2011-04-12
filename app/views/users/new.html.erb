@@ -1,0 +1,6 @@
+﻿<h1>Новый пользователь</h1>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial => "form_add", :locals => { :f => f, :button => "Создать"  }  %>
+<% end %>

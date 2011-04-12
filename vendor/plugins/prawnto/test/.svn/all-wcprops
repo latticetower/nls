@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/test
+END
+action_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/test/action_controller_test.rb
+END
+raw_template_handler_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/test/raw_template_handler_test.rb
+END
+base_template_handler_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/test/base_template_handler_test.rb
+END
+template_handler_test_mocks.rb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/test/template_handler_test_mocks.rb
+END
+dsl_template_handler_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/test/dsl_template_handler_test.rb
+END

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests
+END
+ObjectComparator.as
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/ObjectComparator.as
+END
+ArrayOfPrimitivesTest.as
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/ArrayOfPrimitivesTest.as
+END
+Cache.as
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/Cache.as
+END
+StringTest.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/StringTest.as
+END
+MultipleArgsTest.as
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/MultipleArgsTest.as
+END
+PrimitiveTest.as
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/PrimitiveTest.as
+END
+ComplexType.as
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/ComplexType.as
+END
+ComplexTypeTest.as
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/testsuite/tests/ComplexTypeTest.as
+END

@@ -1,0 +1,56 @@
+﻿<h1>Организации</h1>
+
+<table >
+  <tr>
+  <th class="first">ID</th>
+  <th>Название</th>
+    <th>Название (полное)</th>
+  <th>Всего пользователей</th>
+ <th>Часы</th>
+   <th></th>
+    <th></th>
+  </tr>
+<tbody id="organization_list">
+<% @organizations.each do |organization| %>
+  <tr class="bordered">
+     <td><%= organization.id %></td>
+     <td><%= organization.name %></td>
+	 <td><%= organization.name_long %></td>
+	 <td><%= organization.users.count %></td>
+	 <td><%= organization.hours %></td>
+		
+    <td><% link_to(edit_organization_path(organization)) do %>
+	<%= image_tag("wrench.png", :alt => "Редактировать") %>
+        <% end %>
+		</td>
+    <td>
+    	<% link_to(organization, :confirm => 'Уверены?', :method => :delete) do %>
+	     <%= image_tag("cross.png", :alt => "Удалить") %>
+        <% end %>
+	</td>
+    
+  </tr>
+<% end %>
+</tbody>
+</table>
+<% render :partial => "index_top", :locals => {:current_user => current_user} %>
+
+<% if current_user.can_view_firms? %>
+
+<p id="add_link"><%= link_to_function("Новая организация", "$('#add_link').remove(); $('#add_organization').show()") %></p>
+<div id="add_organization" style="display:none;">
+<% form_remote_tag(:url => url_for(:action => "create_ajax"),
+:html => {:action =>  url_for(:action => 'create_ajax')},
+    :update => "organization_list", :position => :bottom) do %>
+Краткое название: <%= text_field "organization", "name", :size => 15 %>
+<br>Длинное название: <%= text_area "organization", "name_long", :cols => 15, :rows => 3 %>
+<br>
+Телефоны: <%= text_field "organization", "phone", :size => 15 %>
+<br>Общее количество часов: <%= text_field "organization", "hours", :size => 15 %>
+<%= submit_tag 'Добавить' %>
+<% end %>
+</div>
+<% end %>
+
+
+

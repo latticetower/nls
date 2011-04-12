@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/lib/prawnto/template_handlers
+END
+dsl.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/lib/prawnto/template_handlers/dsl.rb
+END
+raw.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/lib/prawnto/template_handlers/raw.rb
+END
+base.rb
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/main/!svn/ver/343/shiny_journal/trunk/vendor/plugins/prawnto/lib/prawnto/template_handlers/base.rb
+END

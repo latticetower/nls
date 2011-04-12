@@ -1,0 +1,7 @@
+﻿<h1>Редактирование роли</h1>
+
+<% form_for(@role) do |f| %>
+    <%= f.error_messages %>
+ <%= render :partial => "form", :locals => { :f => f, :button => "Обновить"  }  %>
+ 
+<% end %>

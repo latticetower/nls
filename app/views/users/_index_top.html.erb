@@ -1,0 +1,9 @@
+﻿<% if current_user.can_manage_users? %>
+ <% link_to 'Новый пользователь', new_user_path %>
+ <p id="add_link"><%= link_to_function("Новый пользователь", "$('#add_link').remove(); $('#add_user').show()") %></p>
+ <div id="add_user" style="display:none;">
+  <% form_remote_tag(:url => url_for(:action => "create_ajax"), :html => {:action =>  url_for(:action => 'create_ajax')}, :update => "user_list", :position => :top) do %>
+<%= render :partial => "form_ajax", :locals => { :button => "Создать" }  %>
+	<% end %>
+</div>
+<% end %>

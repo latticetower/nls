@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service id="remoting-service"
+    class="flex.messaging.services.RemotingService"
+    messageTypes="flex.messaging.messages.RemotingMessage">
+
+    <default-channels>
+        <channel ref="my-amf"/>
+    </default-channels>
+    
+    <destination id="DataService">
+        <properties>
+            <source>weborb/LoginService</source>
+        </properties>
+    </destination>
+    
+    <destination id="LoginService">
+        <properties>
+            <source>LoginService</source>
+        </properties>
+    </destination>
+	
+	<destination id="TicketsService">
+        <properties>
+            <source>TicketsService</source>
+        </properties>
+    </destination>
+	
+	<destination id="UsersService">
+        <properties>
+            <source>UsersService</source>
+        </properties>
+    </destination>
+	
+	<destination id="RolesService">
+        <properties>
+            <source>RolesService</source>
+        </properties>
+    </destination>
+	
+	<destination id="CommentsService">
+        <properties>
+            <source>CommentsService</source>
+        </properties>
+    </destination>
+	
+	<destination id="OrganizationsService">
+        <properties>
+             <source>OrganizationsService</source>
+        </properties>
+    </destination>
+    
+    <destination id="FlexRemotingTest">
+        <properties>
+            <source>weborb/tests/FlexRemotingTest</source>
+        </properties>
+    </destination>
+    
+    <destination id="PrimitiveTest">
+        <properties>
+            <source>weborb/tests/PrimitiveTest</source>
+        </properties>
+    </destination>
+    
+    <destination id="StringsTest">
+        <properties>
+            <source>weborb/tests/StringsTest</source>
+        </properties>
+    </destination>    
+    
+    <destination id="PrimitiveArrayTest">
+        <properties>
+            <source>weborb/tests/PrimitiveArrayTest</source>
+        </properties>
+    </destination>
+    
+    <destination id="ComplexTypesTest">
+        <properties>
+            <source>weborb/tests/ComplexTypesTest</source>
+        </properties>
+    </destination>
+    
+    <destination id="MultipleArgsTest">
+        <properties>
+            <source>weborb/tests/MultipleArgsTest</source>
+        </properties>
+    </destination>    
+</service>

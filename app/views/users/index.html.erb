@@ -1,0 +1,38 @@
+﻿<h1>Список пользователей</h1>
+<%= render :partial => "index_top", :locals => {:current_user => current_user} %>
+<table >
+<tr>
+<th  class="first">Роль</th>
+<th>Организация</th>
+<th>ФИО
+<th>Должность</th>
+<th>Кабинет</th>
+<th>Логин</th>
+ <th></th>
+  <th></th>
+
+</tr>
+<tbody id="user_list">
+<% @users.each do |u| %>
+  <tr class="bordered">
+  <td> <%= u.role.name  %></td>
+<td> <%= u.organization.name %>
+<td> <%= u.fio %></td>
+<td> <%= u.job %></td>
+<td> <%= u.room %></td>
+<td> <%= u.login %></td>
+    <td><% if current_user.can_manage_users? %><% link_to(edit_user_path(u)) do %>
+	<%= image_tag("wrench.png", :alt => "Редактировать") %>
+        <% end %>
+		<% end %>
+		</td>
+    <td>
+    	<%= link_to_remote(image_tag("cross.png"), 
+	:url => { :controller => "users", :action => "destroy_ajax",  :id => u.id}, :update => "user_list")  %>
+	</td>
+
+  </tr>
+<% end %>
+</tbody>
+</table>
+

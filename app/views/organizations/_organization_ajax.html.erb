@@ -1,0 +1,19 @@
+﻿  <tr class="bordered">
+    <td><%= @organization.id %></td>
+    <td><%= @organization.name %></td>
+	 <td><%= @organization.name_long %></td>
+	<td><%= @organization.users.count %></td>
+		<td><%= @organization.hours %></td>
+		
+    <td><% link_to(edit_organization_path(@organization)) do %>
+	<%= image_tag("wrench.png", :alt => "Редактировать") %>
+        <% end %>
+		</td>
+    <td>
+    	<% link_to(@organization, :confirm => 'Уверены?', :method => :delete) do %>
+	     <%= image_tag("cross.png", :alt => "Удалить") %>
+        <% end %>
+	</td>
+   
+  </tr>
+

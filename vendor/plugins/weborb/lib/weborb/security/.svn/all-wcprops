@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/main/!svn/ver/82/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/security
+END
+WebORBAuthenticationHandler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/security/WebORBAuthenticationHandler.rb
+END
+weborb_security.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/security/weborb_security.rb
+END
+CustomAuthenticationHandler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/main/!svn/ver/82/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/security/CustomAuthenticationHandler.rb
+END

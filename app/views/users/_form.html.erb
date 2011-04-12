@@ -1,0 +1,38 @@
+﻿<% if @user %>
+<table>
+<% if not @user.nil? and @user.can_manage_roles? %>
+<tr class="bordered"><td> Роль:</td><td> <%= select("user", "role_id", Role.all.collect{|c|[c.name, c.id]} )  %></td>
+<% end %>
+<% if not @user.nil? and @user.can_view_firms? %>
+     <tr class="bordered"><td> Организация:</td><td> <%= select("user", "organization_id", Organization.all.collect{|c|[c.name, c.id]} )  %></td>
+<% end %>
+<% if not @user.nil? %>
+<tr class="bordered"><td> ФИО:</td><td> <%= f.text_field :fio %></td>
+<tr class="bordered"><td> Должность:</td><td> <%= f.text_field :job %></td>
+<tr class="bordered"><td> Кабинет:</td><td> <%= f.text_field :room %></td>
+<tr class="bordered"><td> Логин:</td><td> <%= f.text_field :login %></td>
+<tr class="bordered"><td> Пароль:</td><td> <%= f.password_field :password %></td>
+<tr class="bordered"><td> email:</td><td> <%= f.text_field :email %></td>
+<% end %>
+</table>  
+<p>
+    <%= submit_tag button %>
+</p>
+<div>
+
+В фильтре показывать заявки, которые относятся к следующим категориям: 
+   <% for  p in Category.find(:all) -%>
+         <% checked = @user.categories.include?(p) %>
+         <br><%= check_box_tag "user[category_ids][]", "#{p.id}", checked -%> 
+         <%= "#{p.name}" -%>
+      <% end -%>
+</div>
+<% if not @user.nil? and @user.is_an_admin_or_tehnik? %>
+В фильтре показывать заявки, которые относятся к следующим организациям: 
+   <% for  p in Organization.find(:all) -%>
+         <% checked = @user.showed_organizations.include?(p) %>
+         <br><%= check_box_tag "user[showed_organization_ids][]", "#{p.id}", checked -%> 
+         <%= "#{p.name}" -%>
+      <% end -%>
+<% end %>
+<% end %>

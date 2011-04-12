@@ -1,0 +1,8 @@
+﻿<h1>Роль: <%= @role.name %></h1>
+<p>
+<div>Разрешения:
+   <% for  p in @role.permissions -%>
+         <br>&raquo;
+         <%= "#{p.description} - #{p.name}" -%>
+      <% end -%>
+</div>

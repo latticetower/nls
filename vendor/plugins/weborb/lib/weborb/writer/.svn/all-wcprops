@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer
+END
+amfv3_formatter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/amfv3_formatter.rb
+END
+object_serializer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/object_serializer.rb
+END
+message_writer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/message_writer.rb
+END
+object_writer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/object_writer.rb
+END
+amf_formatter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/amf_formatter.rb
+END
+v3_object_serializer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/v3_object_serializer.rb
+END
+response_writer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/response_writer.rb
+END
+amfv0_formatter.rb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/main/!svn/ver/74/shiny_journal/trunk/vendor/plugins/weborb/lib/weborb/writer/amfv0_formatter.rb
+END
