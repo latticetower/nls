@@ -10,10 +10,15 @@ Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
-config.gem 'russian', :source => 'http://gemcutter.org'
+ 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
+ config.gem 'russian', :source => 'http://gemcutter.org'
+ config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
+ config.gem 'inherited_resources', :version => '1.0.6'  ##, :source => 'http://gems.github.com'
+ config.gem 'formtastic', :version => '1.2.3'
+ config.gem 'clearance', :version => '0.8.8' 
+ #config.gem 'cucumber', :lib =>'cucumber', :source => 'git://github.com/aslakhellesoy/cucumber.git'
   # Specify gems that this application depends on and have them installed with rake gems:install
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"

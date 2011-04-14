@@ -9,7 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20110412112347) do
+
+  create_table "action_lists", :id => false, :force => true do |t|
+    t.integer   "action_id",  :null => false
+    t.integer   "answer_id",  :null => false
+    t.timestamp "created_at", :null => false
+  end
 
   create_table "actions", :force => true do |t|
     t.string "name", :default => "", :null => false
@@ -22,7 +28,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer "received_drugs",                    :null => false
     t.integer "identified_drugs",                  :null => false
     t.string  "details",           :default => "", :null => false
-    t.integer "action_id",                         :null => false
   end
 
   create_table "boxing_types", :force => true do |t|
@@ -34,12 +39,13 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   create_table "letter_details", :force => true do |t|
-    t.integer "letter_id",       :null => false
-    t.integer "medicine_id",     :null => false
-    t.integer "boxing_type_id",  :null => false
-    t.integer "measure_id",      :null => false
-    t.integer "manufacturer_id", :null => false
-    t.integer "country_id",      :null => false
+    t.integer "letter_id",                       :null => false
+    t.integer "medicine_id",                     :null => false
+    t.integer "boxing_type_id",                  :null => false
+    t.integer "measure_id",                      :null => false
+    t.integer "manufacturer_id",                 :null => false
+    t.integer "country_id",                      :null => false
+    t.string  "serial",          :default => "", :null => false
   end
 
   create_table "letters", :force => true do |t|
@@ -74,14 +80,14 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string  "name",      :default => "", :null => false
   end
 
-  create_table "permission_roles", :id => false, :force => true do |t|
-    t.integer "role_id",       :null => false
-    t.integer "permission_id", :null => false
-  end
-
   create_table "permissions", :force => true do |t|
     t.string "name",        :limit => 100, :default => "", :null => false
     t.string "description",                :default => "", :null => false
+  end
+
+  create_table "permissions_roles", :id => false, :force => true do |t|
+    t.integer "role_id",       :null => false
+    t.integer "permission_id", :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -94,8 +100,20 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   create_table "users", :force => true do |t|
-    t.integer "role_id",         :null => false
-    t.integer "organization_id", :null => false
+    t.integer "role_id",                                              :null => false
+    t.integer "organization_id",                                      :null => false
+    t.string  "email"
+    t.string  "encrypted_password", :limit => 128
+    t.string  "salt",               :limit => 128
+    t.string  "confirmation_token", :limit => 128
+    t.string  "remember_token",     :limit => 128
+    t.boolean "email_confirmed",                   :default => false, :null => false
+    t.boolean "admin",                             :default => false
   end
+
+  add_index "users", ["admin"], :name => "index_users_on_admin"
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["id", "confirmation_token"], :name => "index_users_on_id_and_confirmation_token"
+  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end

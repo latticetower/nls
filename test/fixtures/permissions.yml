@@ -3,7 +3,7 @@
  one:
    id: 1
    name: 'fff'
-   description: ''
+   description: 'New Item'
    #
 # two:
 #   column: value
