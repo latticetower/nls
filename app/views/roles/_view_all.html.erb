@@ -1,9 +1,0 @@
-﻿<% for role in Role.find(:all) %>
-<h4>Роль: <%= role.name %></h4>
-<div><p>
-   <% for  p in role.permissions -%>
-         <br><red>&raquo;</red>
-         <%= "#{p.description} - <red>#{p.name}</red>" -%>
-      <% end -%>
-</div>
-<% end %>

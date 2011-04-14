@@ -1,13 +1,11 @@
 class RolesController < ApplicationController
-
- # before_filter :authorize  before_filter :authorize
   # GET /roles
   # GET /roles.xml
   def index
     @roles = Role.all
 
     respond_to do |format|
-      format.html { render :template => "roles/index", :locals => {:current_user => current_user}}
+      format.html # index.html.erb
       format.xml  { render :xml => @roles }
     end
   end
@@ -15,19 +13,17 @@ class RolesController < ApplicationController
   # GET /roles/1
   # GET /roles/1.xml
   def show
-  @role = Role.find(params[:id])
-  
-  respond_to do |format|
-      format.html { render :template => "roles/show", :locals => {:current_user => current_user}}
-      format.xml  { render :xml => @roles }
+    @role = Role.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @role }
     end
-   # redirect_to :action => :index
   end
 
   # GET /roles/new
   # GET /roles/new.xml
   def new
-  
     @role = Role.new
 
     respond_to do |format|
@@ -38,7 +34,6 @@ class RolesController < ApplicationController
 
   # GET /roles/1/edit
   def edit
-
     @role = Role.find(params[:id])
   end
 
@@ -49,8 +44,7 @@ class RolesController < ApplicationController
 
     respond_to do |format|
       if @role.save
-        flash[:notice] = 'Role was successfully created.'
-        format.html { redirect_to(@role) }
+        format.html { redirect_to(@role, :notice => 'Role was successfully created.') }
         format.xml  { render :xml => @role, :status => :created, :location => @role }
       else
         format.html { render :action => "new" }
@@ -63,11 +57,10 @@ class RolesController < ApplicationController
   # PUT /roles/1.xml
   def update
     @role = Role.find(params[:id])
-   
+
     respond_to do |format|
       if @role.update_attributes(params[:role])
-        flash[:notice] = 'Role was successfully updated.'
-        format.html { redirect_to(@role) }
+        format.html { redirect_to(@role, :notice => 'Role was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

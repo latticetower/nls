@@ -1,28 +1,17 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Организации</title>
-
-<![if !(IE)]>
+  <title>Organizations: <%= controller.action_name %></title>
   <%= stylesheet_link_tag 'scaffold' %>
-<![endif]>
-
-<!--[if IE]>
-  <%= stylesheet_link_tag 'ie_scaffold' %>
-<![endif]-->
-    <%= javascript_include_tag :defaults %>
 </head>
 <body>
 
-<div class="wrapper">
-<div class="sidebar"><%= render :partial => "sidebar/form", :locals => {:view => "organizations", :user => User.find(session[:user_id])}  %></div>
-<div class="main"><%= yield %></div>
-</div>
-<div class="header"><%= render :partial => "sidebar/user_panel", :locals => {:view => "tickets", :user => User.find(session[:user_id])}  %></div>
+<p style="color: green"><%= notice %></p>
 
-<div class="footer"><a href = "http://***REMOVED***"><div class="foot_text">ООО Центр Инноваций, 2010</div></a></div>
+<%= yield %>
+
 </body>
 </html>

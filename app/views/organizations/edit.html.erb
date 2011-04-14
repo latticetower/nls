@@ -1,6 +1,10 @@
-﻿<h1>Редактирование организации</h1>
+﻿<h1>Editing organization</h1>
 
-<% form_for(@organization) do |f| %>
+<% semantic_form_for(@organization) do |f| %>
   <%= f.error_messages %>
- <%= render :partial => "form", :locals => { :f => f, :button => "Обновить"  }  %>
+<%= render :partial => "form", :locals => { :f => f, :button => "Обновить"  }  %>
+ 
 <% end %>
+
+<%= link_to 'Show', @organization %> |
+<%= link_to 'Back', organizations_path %>
