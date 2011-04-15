@@ -1,0 +1,2 @@
+module LetterDetailsHelper
+end
