@@ -1,14 +1,32 @@
 class OrganizationsController < ApplicationController
+
+
+active_scaffold :organization do |config|
+    config.label = Russian.t(:organizations)
+    config.columns = [:name]
+    config.list.columns = [:name]
+	
+	##todo: use this 
+	#config.columns.each do |column|
+	#   column.label = Russian.t(column.name)
+	#end
+	
+	config.list.sorting = {:name => 'ASC'}
+	
+	config.search.columns = [:name]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:name].sort = true
+	config.columns[:name].sort_by :sql => 'organizations.name'
+	
+	config.list.always_show_search = true
+
+end 
+
   # GET /organizations
   # GET /organizations.xml
-  def index
-    @organizations = Organization.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @organizations }
-    end
-  end
 
   # GET /organizations/1
   # GET /organizations/1.xml

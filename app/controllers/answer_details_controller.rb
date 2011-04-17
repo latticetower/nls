@@ -1,4 +1,6 @@
 class AnswerDetailsController < ApplicationController
+ layout 'streamlined'
+    acts_as_streamlined
   # GET /answer_details
   # GET /answer_details.xml
   def index

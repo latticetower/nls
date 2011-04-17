@@ -1,14 +1,27 @@
 class BoxingTypesController < ApplicationController
-  # GET /boxing_types
-  # GET /boxing_types.xml
-  def index
-    @boxing_types = BoxingType.all
+active_scaffold :boxing_type do |config|
+    config.label = Russian.t(:boxing_type)
+    config.columns = [:name]
+    config.list.columns = [:name]
+	
+	##todo: use this 
+	#config.columns.each do |column|
+	#   column.label = Russian.t(column.name)
+	#end
+	
+	config.list.sorting = {:name => 'ASC'}
+	
+	config.search.columns = [:name]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:name].sort = true
+	config.columns[:name].sort_by :sql => 'boxing_types.name'
+	
+	config.list.always_show_search = true
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @boxing_types }
-    end
-  end
+end 
+
 
   # GET /boxing_types/1
   # GET /boxing_types/1.xml

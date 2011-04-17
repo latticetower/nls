@@ -1,14 +1,28 @@
 class LetterStatesController < ApplicationController
-  # GET /letter_states
-  # GET /letter_states.xml
-  def index
-    @letter_states = LetterState.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @letter_states }
-    end
-  end
+
+active_scaffold :letter_states do |config|
+    config.label = Russian.t(:letter_state)
+    config.columns = [:name]
+    config.list.columns = [:name]
+	
+	##todo: use this 
+	#config.columns.each do |column|
+	#   column.label = Russian.t(column.name)
+	#end
+	
+	config.list.sorting = {:name => 'ASC'}
+	
+	config.search.columns = [:name]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:name].sort = true
+	config.columns[:name].sort_by :sql => 'letter_states.name'
+	
+	config.list.always_show_search = true
+
+end 
 
   # GET /letter_states/1
   # GET /letter_states/1.xml

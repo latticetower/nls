@@ -1,14 +1,27 @@
 class MedicinesController < ApplicationController
-  # GET /medicines
-  # GET /medicines.xml
-  def index
-    @medicines = Medicine.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @medicines }
-    end
-  end
+active_scaffold :medicine do |config|
+    config.label = Russian.t(:medicines)
+    config.columns = [:name]
+    config.list.columns = [:name]
+	
+	##todo: use this 
+	#config.columns.each do |column|
+	#   column.label = Russian.t(column.name)
+	#end
+	
+	config.list.sorting = {:name => 'ASC'}
+	
+	config.search.columns = [:name]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:name].sort = true
+	config.columns[:name].sort_by :sql => 'medicines.name'
+	
+	config.list.always_show_search = true
+end 
+
 
   # GET /medicines/1
   # GET /medicines/1.xml

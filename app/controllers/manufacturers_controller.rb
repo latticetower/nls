@@ -1,14 +1,22 @@
 class ManufacturersController < ApplicationController
-  # GET /manufacturers
-  # GET /manufacturers.xml
-  def index
-    @manufacturers = Manufacturer.all
+active_scaffold :manufacturer do |config|
+    config.label = Russian.t(:manufacturer)
+    config.columns = [:name]
+    config.list.columns = [:name]
+	
+	config.list.sorting = {:name => 'ASC'}
+	
+	config.search.columns = [:name]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:name].sort = true
+	config.columns[:name].sort_by :sql => 'manufacturers.name'
+	
+	config.list.always_show_search = true
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @manufacturers }
-    end
-  end
+end 
+
 
   # GET /manufacturers/1
   # GET /manufacturers/1.xml

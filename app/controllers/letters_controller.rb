@@ -1,14 +1,27 @@
 class LettersController < ApplicationController
-  # GET /letters
-  # GET /letters.xml
-  def index
-    @letters = Letter.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @letters }
-    end
-  end
+active_scaffold :letters do |config|
+    config.label = Russian.t(:letter)
+    config.columns = [:item, :created_on]
+    config.list.columns = [:item, :created_on]
+	
+	##todo: use this 
+	#config.columns.each do |column|
+	#   column.label = Russian.t(column.name)
+	#end
+	
+	config.list.sorting = {:item => 'ASC'}
+	
+	config.search.columns = [:item]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:item].sort = true
+	config.columns[:item].sort_by :sql => 'letters.item'
+	
+	config.list.always_show_search = true
+
+end 
 
   # GET /letters/1
   # GET /letters/1.xml

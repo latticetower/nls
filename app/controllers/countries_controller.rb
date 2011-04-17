@@ -1,15 +1,24 @@
 class CountriesController < ApplicationController
-  # GET /countries
-  # GET /countries.xml
-  def index
-    @countries = Country.all
+ 
+ active_scaffold :country do |config|
+    config.label = Russian.t(:countries)
+    config.columns = [:name]
+    config.list.columns = [:name]
+	
+	config.list.sorting = {:name => 'ASC'}
+	
+	config.search.columns = [:name]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:name].sort = true
+	config.columns[:name].sort_by :sql => 'countries.name'
+	
+	config.list.always_show_search = true
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @countries }
-    end
-  end
-
+end 
+ 
+ 
   # GET /countries/1
   # GET /countries/1.xml
   def show
