@@ -1,19 +1,43 @@
 class LetterDetailsController < ApplicationController
+in_place_edit_for :letter_detail, :serial
 active_scaffold :letter_detail do |config|
     config.label = Russian.t(:letter_details)
-    config.columns = [:letter, :medicine]
-    config.list.columns = [:letter, :medicine]
+    config.columns = [ :medicine, :boxing_type, :measure,  :manufacturer,  :country, :serial]
+  	##todo: use this 
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
 	
-	##todo: use this 
-	#config.columns.each do |column|
-	#   column.label = Russian.t(column.name)
-	#end
 	
+	config.columns[:boxing_type].includes = [:boxing_type, :measure]
+	config.columns[:manufacturer].includes = [:manufacturer, :country]
+	
+#	config.columns[:boxing_type].sort_by :sql => "boxing_type.name"
+#	config.columns[:manufacturer].sort_by :sql => "manufacturer.name"
+#	config.columns[:boxing_type].search_sql = "boxing_type.name"
+#	config.columns[:manufacturer].search_sql = "manufacturer.name"
 	config.list.sorting = {:letter => 'ASC'}
+	
+	config.columns[:medicine].inplace_edit = :ajax
+	config.columns[:medicine].form_ui = :select
+		
+	config.columns[:boxing_type].inplace_edit = :ajax
+	config.columns[:boxing_type].form_ui = :select
+	
+	config.columns[:measure].inplace_edit = true
+	config.columns[:measure].form_ui = :select
+	
+	config.columns[:manufacturer].inplace_edit = true
+	config.columns[:manufacturer].form_ui = :select
+	
+	config.columns[:country].inplace_edit = :ajax
+		config.columns[:country].form_ui = :select
+	config.columns[:country].options = {:include_blank => Russian.t('empty')}
+	config.columns[:serial].inplace_edit = true
 	
 	config.search.columns = [:letter]
 	config.search.live = true
-	
+
 	config.list.per_page = 15
 	config.columns[:letter].sort = true
 	config.columns[:letter].sort_by :sql => 'letter_details.letter_id'
@@ -22,6 +46,15 @@ active_scaffold :letter_detail do |config|
 
 end 
 
+def authorized_for_read?
+  return true
+ #return current_user.is_a_tehnik?
+end
+
+def authorized_for_delete?
+  return true
+ #current_user.is_a_tehnik?
+end
   # GET /letter_details/1
   # GET /letter_details/1.xml
   def show
@@ -43,12 +76,12 @@ end
       format.xml  { render :xml => @letter_detail }
     end
   end
-
+=begin
   # GET /letter_details/1/edit
   def edit
     @letter_detail = LetterDetail.find(params[:id])
   end
-
+=end
   # POST /letter_details
   # POST /letter_details.xml
   def create
@@ -64,7 +97,7 @@ end
       end
     end
   end
-
+=begin
   # PUT /letter_details/1
   # PUT /letter_details/1.xml
   def update
@@ -80,7 +113,7 @@ end
       end
     end
   end
-
+=end
   # DELETE /letter_details/1
   # DELETE /letter_details/1.xml
   def destroy

@@ -1,14 +1,5 @@
 class OrganizationDetailsController < ApplicationController
-  # GET /organization_details
-  # GET /organization_details.xml
-  def index
-    @organization_details = OrganizationDetail.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @organization_details }
-    end
-  end
+ active_scaffold
 
   # GET /organization_details/1
   # GET /organization_details/1.xml

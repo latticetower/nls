@@ -1,16 +1,31 @@
 class AnswerDetailsController < ApplicationController
- layout 'streamlined'
-    acts_as_streamlined
-  # GET /answer_details
-  # GET /answer_details.xml
-  def index
-    @answer_details = AnswerDetail.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @answer_details }
-    end
-  end
+ active_scaffold :answer_details do |config|
+    config.label = Russian.t(:answer_details)
+    config.columns = [:letter, :letter_detail, :supplier, :received_drugs, 
+	:identified_drugs, :details]
+    config.list.columns =  [:letter, :letter_detail, :supplier, :received_drugs, 
+	:identified_drugs, :details]
+	
+	config.columns[:supplier].inplace_edit = :ajax
+	config.columns[:identified_drugs].inplace_edit = true
+	config.columns[:received_drugs].inplace_edit = true
+	config.columns[:details].inplace_edit = true
+	##todo: use this 
+	#config.columns.each do |column|
+	#   column.label = Russian.t(column.name)
+	#end	
+	config.list.sorting = {:letter => 'ASC'}
+	
+	config.search.columns = [:letter]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:letter].sort = true
+	config.columns[:letter].sort_by :sql => 'answer_details.letter_id'
+	
+	config.list.always_show_search = true
+end 
 
   # GET /answer_details/1
   # GET /answer_details/1.xml
@@ -23,16 +38,7 @@ class AnswerDetailsController < ApplicationController
     end
   end
 
-  # GET /answer_details/new
-  # GET /answer_details/new.xml
-  def new
-    @answer_detail = AnswerDetail.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @answer_detail }
-    end
-  end
 
   # GET /answer_details/1/edit
   def edit
@@ -55,6 +61,7 @@ class AnswerDetailsController < ApplicationController
     end
   end
 
+
   # PUT /answer_details/1
   # PUT /answer_details/1.xml
   def update
@@ -68,6 +75,17 @@ class AnswerDetailsController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @answer_detail.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  # GET /letter_details/new
+  # GET /letter_details/new.xml
+  def new
+    @answer_detail = AnswerDetail.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @answer_detail }
     end
   end
 

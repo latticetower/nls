@@ -3,5 +3,9 @@
 <div style="background-color:lime;">
 <%= render  :active_scaffold => "letter_details", :constraints => { :letter_id => @letter.id } %>
 </div>			  
+<% @letter.letter_details.each do |detail| %>
+<%= @letter_detail = detail; in_place_editor_field :letter_detail, :serial, {}, :url => { :controller => 'letter_detail', :action => 'set_letter_detail_serial', :id => detail.id } %>
+<tr>
+<% end %>
 <%= link_to 'Edit', edit_letter_path(@letter) %> |
 <%= link_to 'Back', letters_path %>

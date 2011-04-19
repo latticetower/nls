@@ -1,11 +1,39 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :medicines, :active_scaffold => :medicines
+
+  map.resources :answer_details, :active_scaffold => :answer_details ##
+
+  map.resources :letter_details, :active_scaffold => :letter_details ###
+
+  map.resources :action_lists
+
+  map.resources :letter_states
+
+  map.resources :letters, :active_scaffold => :letters
+
+  map.resources :organization_details
+
+  map.resources :permissions
+
+  map.resources :tactics
+
+  map.resources :manufacturers
+
+  map.resources :measures
+
+  map.resources :boxing_types
+
+  map.resources :medicines
+
+  map.resources :countries
+
   map.resources :roles
 
   map.resources :organizations
 
   Clearance::Routes.draw(map)
   map.resources :permissions
-
+map.resources :organizations, :active_scaffold => :organizations
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

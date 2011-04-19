@@ -1,14 +1,5 @@
 class PermissionsController < ApplicationController
-  # GET /permissions
-  # GET /permissions.xml
-  def index
-    @permissions = Permission.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @permissions }
-    end
-  end
+active_scaffold
 
   # GET /permissions/1
   # GET /permissions/1.xml

@@ -52,10 +52,6 @@ padding: 5px 20px 5px 5px;
 color: #333;
 }
 
-.active-scaffold .mark_record_column {
-  width: 1px;
-}
-
 /* Header
    ======================== */
 
@@ -295,7 +291,7 @@ background: transparent;
 }
 
 .active-scaffold .active-scaffold .active-scaffold-header {
-margin-right: 25px;
+margin-right: 15px;
 }
 
 .active-scaffold .active-scaffold .active-scaffold-header h2 {
@@ -315,6 +311,7 @@ right: 0px;
 
 .active-scaffold .active-scaffold .active-scaffold-header div.actions a {
 font: bold 11px verdana, sans-serif;
+padding: 0 2px 1px 17px;
 }
 
 .blue-theme .active-scaffold .active-scaffold-header div.actions a,
@@ -324,12 +321,6 @@ color: #06c;
 
 .blue-theme .active-scaffold .active-scaffold-header div.actions a:hover {
 background-color: #ff8;
-}
-
-.active-scaffold .active-scaffold .view {
-background-color: transparent;
-padding: 0px;
-border: none;
 }
 
 .active-scaffold .active-scaffold  td {
@@ -342,13 +333,6 @@ border-left: solid 1px #CDF7C5;
 background-color: #FFFFBB;
 padding: 4px;
 border: solid 1px #DDDF37;
-border-top: none;
-}
-
-.active-scaffold .active-scaffold .active-scaffold td.inline-adapter-cell {
-background-color: #DAFFCD;
-padding: 4px;
-border: solid 1px #7FcF00;
 border-top: none;
 }
 
@@ -524,7 +508,7 @@ margin: 0;
 }
 
 .active-scaffold .active-scaffold-header .loading-indicator {
-margin-top: 3px;
+margin-bottom: 3px;
 }
 
 /* Show

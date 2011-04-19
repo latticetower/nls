@@ -1,14 +1,5 @@
 class ActionListsController < ApplicationController
-  # GET /action_lists
-  # GET /action_lists.xml
-  def index
-    @action_lists = ActionList.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @action_lists }
-    end
-  end
+ active_scaffold
 
   # GET /action_lists/1
   # GET /action_lists/1.xml

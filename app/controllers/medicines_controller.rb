@@ -1,5 +1,4 @@
 class MedicinesController < ApplicationController
-
 active_scaffold :medicine do |config|
     config.label = Russian.t(:medicines)
     config.columns = [:name]

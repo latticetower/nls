@@ -6,19 +6,19 @@ active_scaffold :letters do |config|
     config.list.columns = [:item, :created_on]
 	
 	##todo: use this 
-	#config.columns.each do |column|
-	#   column.label = Russian.t(column.name)
-	#end
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
 	
 	config.list.sorting = {:item => 'ASC'}
 	
-	config.search.columns = [:item]
+	config.search.columns = [:item, :created_on]
 	config.search.live = true
 	
 	config.list.per_page = 15
 	config.columns[:item].sort = true
-	config.columns[:item].sort_by :sql => 'letters.item'
-	
+	config.columns[:item].sort_by :sql => 'item'
+	config.columns[:created_on].search_ui = :date
 	config.list.always_show_search = true
 
 end 

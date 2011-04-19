@@ -3,8 +3,8 @@ class OrganizationsController < ApplicationController
 
 active_scaffold :organization do |config|
     config.label = Russian.t(:organizations)
-    config.columns = [:name]
-    config.list.columns = [:name]
+    config.columns = [:name, :name_long]
+    config.list.columns = [:name, :name_long]
 	
 	##todo: use this 
 	#config.columns.each do |column|

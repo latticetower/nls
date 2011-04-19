@@ -1,11 +1,9 @@
-<h1>Editing action_list</h1>
+﻿<h1>Editing action_list</h1>
 
-<% form_for(@action_list) do |f| %>
+<% semantic_form_for(@action_list) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
 <% end %>
 
 <%= link_to 'Show', @action_list %> |
