@@ -1,8 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :answers
+
   map.resources :medicines, :active_scaffold => :medicines
 
   map.resources :answer_details, :active_scaffold => :answer_details ##
-
+  
+  map.resources :answers, :active_scaffold => :answers ###
   map.resources :letter_details, :active_scaffold => :letter_details ###
 
   map.resources :action_lists

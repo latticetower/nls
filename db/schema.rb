@@ -12,22 +12,18 @@
 ActiveRecord::Schema.define(:version => 20110412112347) do
 
   create_table "action_lists", :id => false, :force => true do |t|
-    t.integer   "action_id",  :null => false
-    t.integer   "answer_id",  :null => false
-    t.timestamp "created_at", :null => false
+    t.integer   "tactic_id",        :null => false
+    t.integer   "answer_detail_id", :null => false
+    t.timestamp "created_at",       :null => false
   end
 
-  create_table "actions", :force => true do |t|
-    t.string "name", :default => "", :null => false
-  end
-
-  create_table "answer_details", :id => false, :force => true do |t|
-    t.integer "letter_id",                         :null => false
-    t.integer "letter_details_id",                 :null => false
-    t.string  "supplier",          :default => "", :null => false
-    t.integer "received_drugs",                    :null => false
-    t.integer "identified_drugs",                  :null => false
-    t.string  "details",           :default => "", :null => false
+  create_table "answer_details", :force => true do |t|
+    t.integer "letter_id",                        :null => false
+    t.integer "letter_detail_id",                 :null => false
+    t.string  "supplier",         :default => "", :null => false
+    t.integer "received_drugs",                   :null => false
+    t.integer "identified_drugs",                 :null => false
+    t.string  "details",          :default => "", :null => false
   end
 
   create_table "boxing_types", :force => true do |t|
@@ -46,6 +42,10 @@ ActiveRecord::Schema.define(:version => 20110412112347) do
     t.integer "manufacturer_id",                 :null => false
     t.integer "country_id",                      :null => false
     t.string  "serial",          :default => "", :null => false
+  end
+
+  create_table "letter_states", :force => true do |t|
+    t.string "name", :default => "", :null => false
   end
 
   create_table "letters", :force => true do |t|
@@ -67,17 +67,16 @@ ActiveRecord::Schema.define(:version => 20110412112347) do
     t.string "name_short", :limit => 100, :default => "", :null => false
   end
 
-  create_table "organization_details", :id => false, :force => true do |t|
-    t.integer "organization_id",                                :null => false
-    t.string  "quality_contol",                 :default => "", :null => false
-    t.string  "phone",           :limit => 100, :default => "", :null => false
+  create_table "organization_details", :force => true do |t|
+    t.string "quality_contol",                :default => "", :null => false
+    t.string "phone",          :limit => 100, :default => "", :null => false
   end
 
-  add_index "organization_details", ["organization_id"], :name => "organization_id"
-
   create_table "organizations", :force => true do |t|
-    t.integer "parent_id",                 :null => false
-    t.string  "name",      :default => "", :null => false
+    t.integer "parent_id"
+    t.string  "name",                    :default => "", :null => false
+    t.string  "name_long",               :default => "", :null => false
+    t.integer "organization_details_id",                 :null => false
   end
 
   create_table "permissions", :force => true do |t|
@@ -95,13 +94,13 @@ ActiveRecord::Schema.define(:version => 20110412112347) do
     t.string "typename", :default => "", :null => false
   end
 
-  create_table "states", :force => true do |t|
+  create_table "tactics", :force => true do |t|
     t.string "name", :default => "", :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.integer "role_id",                                              :null => false
-    t.integer "organization_id",                                      :null => false
+    t.integer "role_id",                           :default => 5,     :null => false
+    t.integer "organization_id",                   :default => 1,     :null => false
     t.string  "email"
     t.string  "encrypted_password", :limit => 128
     t.string  "salt",               :limit => 128

@@ -1,17 +1,13 @@
 class LetterDetailsController < ApplicationController
-in_place_edit_for :letter_detail, :serial
-active_scaffold :letter_detail do |config|
+
+active_scaffold :letter_details do |config|
     config.label = Russian.t(:letter_details)
     config.columns = [ :medicine, :boxing_type, :measure,  :manufacturer,  :country, :serial]
   	##todo: use this 
 	config.columns.each do |column|
 	   column.label = Russian.t(column.name)
 	end
-	
-	
-	config.columns[:boxing_type].includes = [:boxing_type, :measure]
-	config.columns[:manufacturer].includes = [:manufacturer, :country]
-	
+		
 #	config.columns[:boxing_type].sort_by :sql => "boxing_type.name"
 #	config.columns[:manufacturer].sort_by :sql => "manufacturer.name"
 #	config.columns[:boxing_type].search_sql = "boxing_type.name"
@@ -43,8 +39,8 @@ active_scaffold :letter_detail do |config|
 	config.columns[:letter].sort_by :sql => 'letter_details.letter_id'
 	
 	config.list.always_show_search = true
-
 end 
+
 
 def authorized_for_read?
   return true

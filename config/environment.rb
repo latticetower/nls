@@ -18,6 +18,9 @@ Rails::Initializer.run do |config|
  config.gem 'inherited_resources', :version => '1.0.6'  ##, :source => 'http://gems.github.com'
  config.gem 'formtastic', :version => '1.2.3'
  config.gem 'clearance', :version => '0.8.8' 
+ 
+ config.gem 'splattael-activerecord_base_without_table', :lib    => 'activerecord_base_without_table',
+                                                            :source => 'http://gems.github.com'
  #config.gem 'cucumber', :lib =>'cucumber', :source => 'git://github.com/aslakhellesoy/cucumber.git'
   # Specify gems that this application depends on and have them installed with rake gems:install
   # config.gem "bj"

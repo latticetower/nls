@@ -34,6 +34,16 @@ end
     end
   end
 
+    # GET /letters/1
+  # GET /letters/1.xml
+  def show_answer
+    @letter = Letter.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @letter }
+    end
+  end
   # GET /letters/new
   # GET /letters/new.xml
   def new

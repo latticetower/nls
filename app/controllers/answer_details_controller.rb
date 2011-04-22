@@ -2,9 +2,9 @@ class AnswerDetailsController < ApplicationController
 
  active_scaffold :answer_details do |config|
     config.label = Russian.t(:answer_details)
-    config.columns = [:letter, :letter_detail, :supplier, :received_drugs, 
+    config.columns = [ :letter_detail, :supplier, :received_drugs, 
 	:identified_drugs, :details]
-    config.list.columns =  [:letter, :letter_detail, :supplier, :received_drugs, 
+    config.list.columns =  [ :letter_detail, :supplier, :received_drugs, 
 	:identified_drugs, :details]
 	
 	config.columns[:supplier].inplace_edit = :ajax
