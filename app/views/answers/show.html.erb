@@ -1,3 +1,5 @@
+﻿N <%= @answer.item %> <%= @answer.created_on %>
 
-<%= link_to 'Edit', edit_answer_path(@answer) %> |
-<%= link_to 'Back', answers_path %>
+<div style="background-color:oldlace;">
+<%= render  :active_scaffold => "answer_details", :constraints => { :letter_id => @answer.id } %>
+</div>	

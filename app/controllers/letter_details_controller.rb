@@ -33,6 +33,8 @@ active_scaffold :letter_details do |config|
 	
 	config.search.columns = [:letter]
 	config.search.live = true
+config.show.link=false
+config.update.link=false
 
 	config.list.per_page = 15
 	config.columns[:letter].sort = true
@@ -66,6 +68,10 @@ end
   # GET /letter_details/new.xml
   def new
     @letter_detail = LetterDetail.new
+if params[:id]
+@letter = Letter.find(params[:id])
+@letter_detail.letter=@letter
+end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -112,7 +118,8 @@ end
 =end
   # DELETE /letter_details/1
   # DELETE /letter_details/1.xml
-  def destroy
+=begin
+ def destroy
     @letter_detail = LetterDetail.find(params[:id])
     @letter_detail.destroy
 
@@ -121,4 +128,5 @@ end
       format.xml  { head :ok }
     end
   end
+=end
 end

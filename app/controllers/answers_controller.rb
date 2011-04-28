@@ -1,13 +1,11 @@
 class AnswersController < ApplicationController
-active_scaffold :answers do |config|
-    config.label = Russian.t(:answer)
-    config.columns = [:letter]
-end 
+
+active_scaffold :answers
 
   # GET /answers/1
   # GET /answers/1.xml
   def show
-    @answer = Answer.find(params[:id])
+    @answer = Letter.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -18,7 +16,7 @@ end
   # GET /answers/new
   # GET /answers/new.xml
   def new
-    @answer = Answer.new
+    @answer = Letter.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -27,14 +25,14 @@ end
   end
 
   # GET /answers/1/edit
-  def edit
-    @answer = Answer.find(params[:id])
-  end
+ # def edit
+ #   @answer = Letter.find(params[:id])
+ # end
 
   # POST /answers
   # POST /answers.xml
   def create
-    @answer = Answer.new(params[:answer])
+    @answer = Letter.new(params[:answer])
 
     respond_to do |format|
       if @answer.save
@@ -50,7 +48,7 @@ end
   # PUT /answers/1
   # PUT /answers/1.xml
   def update
-    @answer = Answer.find(params[:id])
+    @answer = Letter.find(params[:id])
 
     respond_to do |format|
       if @answer.update_attributes(params[:answer])
@@ -66,7 +64,7 @@ end
   # DELETE /answers/1
   # DELETE /answers/1.xml
   def destroy
-    @answer = Answer.find(params[:id])
+    @answer = Letter.find(params[:id])
     @answer.destroy
 
     respond_to do |format|

@@ -2,24 +2,26 @@ class AnswerDetailsController < ApplicationController
 
  active_scaffold :answer_details do |config|
     config.label = Russian.t(:answer_details)
-    config.columns = [ :letter_detail, :supplier, :received_drugs, 
-	:identified_drugs, :details]
-    config.list.columns =  [ :letter_detail, :supplier, :received_drugs, 
-	:identified_drugs, :details]
-	
-	config.columns[:supplier].inplace_edit = :ajax
+    config.columns = [ :item, :letter_detail, :serial, :producer, :supplier, :received_drugs, 	:identified_drugs, :details]
+    config.list.columns =  [ :item, :letter_detail, :serial, :producer, :supplier, :received_drugs, :identified_drugs, :details]
+
+	config.columns[:letter_detail].clear_link
+	config.columns[:supplier].inplace_edit = true
 	config.columns[:identified_drugs].inplace_edit = true
 	config.columns[:received_drugs].inplace_edit = true
 	config.columns[:details].inplace_edit = true
 	##todo: use this 
-	#config.columns.each do |column|
-	#   column.label = Russian.t(column.name)
-	#end	
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end	
 	config.list.sorting = {:letter => 'ASC'}
 	
 	config.search.columns = [:letter]
 	config.search.live = true
-	
+	config.show.link=false
+config.update.link=false
+config.delete.link=false
+
 	config.list.per_page = 15
 	config.columns[:letter].sort = true
 	config.columns[:letter].sort_by :sql => 'answer_details.letter_id'
@@ -91,6 +93,7 @@ end
 
   # DELETE /answer_details/1
   # DELETE /answer_details/1.xml
+=begin
   def destroy
     @answer_detail = AnswerDetail.find(params[:id])
     @answer_detail.destroy
@@ -100,4 +103,5 @@ end
       format.xml  { head :ok }
     end
   end
-end
+=end
+  end

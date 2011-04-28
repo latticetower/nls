@@ -2,18 +2,27 @@ class LettersController < ApplicationController
 
 active_scaffold :letters do |config|
     config.label = Russian.t(:letter)
-    config.columns = [:item, :created_on]
-    config.list.columns = [:item, :created_on]
-	
+    config.columns = [:item, :created_on, :organization]
+    config.list.columns = [:item, :created_on, :organization]
+	config.actions = [:create, :list, :search, :show, :update, :delete, :nested, :subform] 
 	##todo: use this 
 	config.columns.each do |column|
 	   column.label = Russian.t(column.name)
 	end
+
+	config.action_links.add 'reply', :label => 'Reply', :type => :record, :page => true
+	config.action_links.add 'edit_letter', :label => 'edit', :type => :record, :page => true
+	config.action_links[:reply].label = Russian.t('reply')
+	config.action_links[:edit_letter].label = Russian.t('edit_letter')
+	
+	config.columns[:item].inplace_edit = true
+	config.columns[:created_on].inplace_edit = true
+	config.columns[:organization].inplace_edit = true
 	
 	config.list.sorting = {:item => 'ASC'}
-	
-	config.search.columns = [:item, :created_on]
+	config.search.columns = [:item, :created_on, :organization]
 	config.search.live = true
+	config.show.link = false
 	
 	config.list.per_page = 15
 	config.columns[:item].sort = true
@@ -28,6 +37,25 @@ end
   def show
     @letter = Letter.find(params[:id])
 
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @letter }
+    end
+  end
+  def edit_letter
+    @letter = Letter.find(params[:id])
+
+	redirect_to :controller => :letters, :action => 'show', :id => @letter.id and return
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @letter }
+    end
+  end
+  
+   def reply
+    @letter = Letter.find(params[:id])
+
+	redirect_to :controller => :answers, :action => 'show', :id => @letter.id and return
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @letter }

@@ -1,8 +1,8 @@
-<h1>Editing answer</h1>
+﻿<h1>Editing answer</h1>
 
-<% form_for(@answer) do |f| %>
+<% semantic_form_for(@answer) do |f| %>
   <%= f.error_messages %>
-
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
   <p>
     <%= f.submit 'Update' %>
   </p>
