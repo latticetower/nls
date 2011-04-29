@@ -12,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :letter_states
 
-  map.resources :letters, :active_scaffold => :letters
+
 
   map.resources :organization_details
 
@@ -33,10 +33,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :roles
 
   map.resources :organizations
-
+map.resource :session, :controller => 'sessions'
   Clearance::Routes.draw(map)
   map.resources :permissions
 map.resources :organizations, :active_scaffold => :organizations
+  map.resources :letters, :active_scaffold => :letters
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

@@ -1,4 +1,7 @@
 class MeasuresController < ApplicationController
+include Clearance::Authentication
+before_filter :authenticate
+
 active_scaffold :measure do |config|
     config.label = Russian.t(:measure)
     config.columns = [:name]

@@ -14,9 +14,12 @@ class ApplicationController < ActionController::Base
 
   end
 
+
+=begin
   def current_user
     User.find(session[:user_id])
   end 
+=end
 =begin
  private 
   def authorize

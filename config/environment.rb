@@ -17,7 +17,7 @@ Rails::Initializer.run do |config|
  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
  config.gem 'inherited_resources', :version => '1.0.6'  ##, :source => 'http://gems.github.com'
  config.gem 'formtastic', :version => '1.2.3'
- config.gem 'clearance', :version => '0.8.8' 
+ config.gem 'cancan'
  
  config.gem 'splattael-activerecord_base_without_table', :lib    => 'activerecord_base_without_table',
                                                             :source => 'http://gems.github.com'
