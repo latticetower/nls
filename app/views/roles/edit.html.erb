@@ -1,10 +1,6 @@
-<h1>Editing role</h1>
+﻿<h1>Редактирование роли</h1>
 
 <% semantic_form_for(@role) do |f| %>
   <%= f.error_messages %>
-
-<%= render :partial => "form", :locals => { :f => f, :button => "�������"  }  %>
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
 <% end %>
-
-<%= link_to 'Show', @role %> |
-<%= link_to 'Back', roles_path %>

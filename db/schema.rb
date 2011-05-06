@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(:version => 20110412112347) do
   end
 
   create_table "organizations", :force => true do |t|
-    t.integer "parent_id"
+    t.integer "parent_id",               :default => "0", :null => false
     t.string  "name",                    :default => "", :null => false
     t.string  "name_long",               :default => "", :null => false
-    t.integer "organization_details_id",                 :null => false
+    t.integer "organization_details_id", :default => "0", :null => false
   end
 
   create_table "permissions", :force => true do |t|

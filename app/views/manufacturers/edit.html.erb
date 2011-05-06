@@ -1,10 +1,7 @@
-<h1>Editing manufacturer</h1>
+﻿<h1>Редактирование изготовителя</h1>
 
 <% semantic_form_for(@manufacturer) do |f| %>
   <%= f.error_messages %>
 
-<%= render :partial => "form", :locals => { :f => f, :button => "???????"  }  %>
+<%= render :partial => "form", :locals => { :f => f, :button => "Обновить"  }  %>
 <% end %>
-
-<%= link_to 'Show', @manufacturer %> |
-<%= link_to 'Back', manufacturers_path %>

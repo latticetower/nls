@@ -7,9 +7,9 @@ active_scaffold :letter_states do |config|
     config.list.columns = [:name]
 	
 	##todo: use this 
-	#config.columns.each do |column|
-	#   column.label = Russian.t(column.name)
-	#end
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
 	
 	config.list.sorting = {:name => 'ASC'}
 	

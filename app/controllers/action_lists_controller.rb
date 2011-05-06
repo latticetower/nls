@@ -1,5 +1,12 @@
 class ActionListsController < ApplicationController
- active_scaffold
+ active_scaffold  do |config|
+    config.label = Russian.t(:action_lists)
+    config.columns = [:answer_detail, :created_at, :tactic]
+    config.list.columns = [:answer_detail, :created_at, :tactic]
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
+  end
 
   # GET /action_lists/1
   # GET /action_lists/1.xml

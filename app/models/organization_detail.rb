@@ -1,3 +1,3 @@
 class OrganizationDetail < ActiveRecord::Base
-has_one :organization
+belongs_to :organization
 end

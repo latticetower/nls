@@ -1,9 +1,10 @@
-<% f.inputs do %>
-  <%= f.input :letter %>
-  <%= f.input :medicine %>
-   <%= f.input :boxing_type %>
-   <%= f.input :measure %>
-   <%= f.input :manufacturer %>
-   <%= f.input :country %>
-   <%= f.input :serial %>
+﻿<% f.inputs do %>
+  <%= f.input :letter, :label => "Письмо" %>
+  <%= f.input :medicine , :label => "Лекарственное средство" %>
+   <%= f.input :boxing_type, :label => "Упаковка" %>
+   <%= f.input :measure, :label => "Дозировка" %>
+   <%= f.input :manufacturer, :label => "Производитель" %>
+   <%= f.input :country, :label => "Страна изготовления" %>
+   <%= f.input :serial, :label => "Серия" %>
+   <%= f.submit :button %>
 <% end %>

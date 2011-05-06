@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :permissions
 
   map.resources :tactics
-
+  map.resources :users
   map.resources :manufacturers
 
   map.resources :measures
@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :organizations
 map.resource :session, :controller => 'sessions'
-  Clearance::Routes.draw(map)
+
   map.resources :permissions
 map.resources :organizations, :active_scaffold => :organizations
   map.resources :letters, :active_scaffold => :letters

@@ -23,10 +23,27 @@
 </script>
 </head>
 <body>
-
+<div>
+<%= link_to "Users", users_path %><br>
+<%= link_to "roles", roles_path %><br>
+<%= link_to "letters", letters_path %><br>
+<%= link_to "action_lists", action_lists_path %><br>
+<%= link_to "answer_details", answer_details_path %><br>
+<%= link_to "letter_details", letter_details_path %><br>
+<%= link_to "boxing_types", boxing_types_path %><br>
+<%= link_to "countries", countries_path %><br>
+<%= link_to "letter_states", letter_states_path %><br>
+<%= link_to "manufacturers", manufacturers_path %><br>
+<%= link_to "measures", measures_path %><br>
+<%= link_to "medicines", medicines_path %><br>
+<%= link_to "organization_details", organization_details_path %><br>
+<%= link_to "organizations", organizations_path %><br>
+<%= link_to "permissions", permissions_path %><br>
+<%= link_to "tactics", tactics_path %><br>
+</div>
 <p style="color: green"><%= notice %></p>
-
-<%= yield %>
-
+<div>
+    <%= yield %>
+</div>
 </body>
 </html>

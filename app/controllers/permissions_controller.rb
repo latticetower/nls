@@ -1,15 +1,30 @@
 class PermissionsController < ApplicationController
-active_scaffold
+active_scaffold :permissions do |config|
+ config.label = Russian.t(:permissions)
+    config.columns = [:name, :description]
+    config.list.columns = [:name, :description]
+	
+	##todo: use this 
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
+	
+	config.list.sorting = {:name => 'ASC'}
+	
+	config.search.columns = [:name]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:name].sort = true
+	config.columns[:name].sort_by :sql => 'permissions.name'
+	
+	config.list.always_show_search = true
+end
 
   # GET /permissions/1
   # GET /permissions/1.xml
   def show
-    @permission = Permission.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @permission }
-    end
+    redirect_to :action => :index
   end
 
   # GET /permissions/new

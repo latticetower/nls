@@ -1,5 +1,6 @@
-<% f.inputs do %>
-  <%= f.input :organization %>
+﻿<% f.inputs do %>
+  <%= f.input :organization, :as => :select, :collection => Organization.find(:all) %>
   <%= f.input :phone %>
-
+  <%= f.input :quality_control %>
+  <%= f.submit button %>
 <% end %>

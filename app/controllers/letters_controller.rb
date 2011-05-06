@@ -1,5 +1,4 @@
 class LettersController < ApplicationController
-before_filter :authenticate
 
 active_scaffold :letters do |config|
     config.label = Russian.t(:letter)

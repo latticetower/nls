@@ -4,7 +4,9 @@ class CountriesController < ApplicationController
     config.label = Russian.t(:countries)
     config.columns = [:name]
     config.list.columns = [:name]
-	
+	config.columns.each do |column|
+	  column.label = Russian.t(column.name)
+	end
 	config.list.sorting = {:name => 'ASC'}
 	
 	config.search.columns = [:name]

@@ -1,5 +1,26 @@
 class OrganizationDetailsController < ApplicationController
- active_scaffold
+ active_scaffold :organization_details do |config|
+    config.label = Russian.t(:organization_details)
+    config.columns = [:organization, :phone, :quality_control]
+    config.list.columns = [:organization, :phone, :quality_control]
+	
+	##todo: use this 
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
+	
+	config.list.sorting = {:phone => 'ASC'}
+	
+	config.search.columns = [:phone]
+	config.search.live = true
+	
+	config.list.per_page = 15
+	config.columns[:phone].sort = true
+	
+	
+	config.list.always_show_search = true
+end 
+
 
   # GET /organization_details/1
   # GET /organization_details/1.xml

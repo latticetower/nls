@@ -1,10 +1,7 @@
-﻿<h1>Editing permission</h1>
+﻿<h1>Редактирование разрешений</h1>
 
 <% semantic_form_for(@permission) do |f| %>
   <%= f.error_messages %>
 
 <%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
 <% end %>
-
-<%= link_to 'Show', @permission %> |
-<%= link_to 'Back', permissions_path %>

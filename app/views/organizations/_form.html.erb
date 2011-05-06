@@ -1,5 +1,5 @@
 <% f.inputs do %>
-  <%= f.input :name %>
-    <%= f.input :name_long %>
-		<%= f.submit 'send'%>
+  <%= f.input :name, :label => Russian.t(:name) %>
+    <%= f.input :name_long, :label => Russian.t(:name_long) %>
+		<%= f.submit button %>
 <% end %>

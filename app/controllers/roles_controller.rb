@@ -1,5 +1,12 @@
 class RolesController < ApplicationController
-active_scaffold
+active_scaffold :roles do |config|
+  config.label = Russian.t(:roles)
+    config.columns = [ :name]
+    config.list.columns = [:name]
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
+end
 
   # GET /roles/1
   # GET /roles/1.xml

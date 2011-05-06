@@ -1,12 +1,6 @@
-﻿<h1>Editing organization_detail</h1>
+﻿<h1>Редактирование деталей организации</h1>
 
 <% semantic_form_for(@organization_detail) do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+<%= render :partial => "form", :locals => { :f => f, :button => "Обновить"  }  %>
 <% end %>
-
-<%= link_to 'Show', @organization_detail %> |
-<%= link_to 'Back', organization_details_path %>

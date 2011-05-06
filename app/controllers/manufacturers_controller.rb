@@ -3,7 +3,9 @@ active_scaffold :manufacturer do |config|
     config.label = Russian.t(:manufacturer)
     config.columns = [:name]
     config.list.columns = [:name]
-	
+		config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
 	config.list.sorting = {:name => 'ASC'}
 	
 	config.search.columns = [:name]
