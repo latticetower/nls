@@ -1,5 +1,6 @@
-﻿N <%= @answer.item %> <%= @answer.created_on %>
-
+﻿Письмо N <%= @answer.item %> <%= @answer.created_on %><br>
+Отправитель: <%= @answer.organization.name %>
 <div style="background-color:oldlace;">
 <%= render  :active_scaffold => "answer_details", :constraints => { :letter_id => @answer.id } %>
 </div>	
+<a href = "/upload/uploadfile/">Образец формируемой печ.формы (в формате Word 2007)</a>

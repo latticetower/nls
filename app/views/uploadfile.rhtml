@@ -1,0 +1,87 @@
+﻿!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Using Ruby on Rails and XSLT to Create a Word 2007
+      Document</title>
+    <style type="text/css">
+
+    body {
+      background-color:gray;
+      font-family: tahoma, verdana, sans-serif;
+      font-size:11px;
+      margin-top:100px;
+    }
+
+    h1 {
+      font-size:1.3em;
+    }
+   
+    .upload {
+      margin:0px auto;
+      padding-top:15px;
+      width:600px;
+      height:160px;
+      border:4px solid silver;
+      background-color: #CCC;
+      text-align: center;
+    }
+
+    input {
+      font-size:11px;
+      font-family: tahoma, verdana, sans-serif;
+    }
+
+    .submit {
+      margin-top:10px;
+    }
+
+    </style>
+  </head>
+
+  <body>  
+    <div class="upload">
+      <h1>Using Ruby on Rails and XSLT to Create a Word 2007
+        Document</h1>
+         
+      <%= form_tag({:action => "uploadfile"},
+       {:id=>"upload_form",:name=>"upload_form",
+       :multipart=> true}) %>
+    
+      <table width="90%">
+        <tr>
+          <td align="left">
+            XSL Transform File (.xslt):   
+          </td>
+          <td align="right">
+            <%= file_field 'upload', 'file', "size" => 60%>   
+          </td>
+        </tr>
+        <tr>
+          <td align="left">
+            Template Document (.docx):   
+          </td>
+          <td align="right">
+            <%= file_field 'upload1', 'file1', "size" => 60%>   
+          </td>
+        </tr>
+        <tr>
+          <td align="left">
+            XML Data File (.xml):   
+          </td>
+          <td align="right">
+            <%= file_field 'upload2', 'file2', "size" => 60%>   
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <%= submit_tag "Create Document", :class => "submit" %>   
+          </td>
+        </tr>
+      </table>
+
+      <%= form_tag %>
+
+    </div>
+  </body>
+</html>
