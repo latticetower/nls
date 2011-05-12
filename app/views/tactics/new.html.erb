@@ -1,9 +1,7 @@
-﻿<h1>New tactic</h1>
+﻿<h1>Новое действие</h1>
 
 <% semantic_form_for(@tactic) do |f| %>
   <%= f.error_messages %>
 
 <%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
 <% end %>
-
-<%= link_to 'Back', tactics_path %>

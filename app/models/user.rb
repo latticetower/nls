@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
     if (self.salt == nil)
       self.salt = random_numbers(5)
       self.encrypted_password = Digest::MD5.hexdigest(self.salt + self.encrypted_password)
+      self.confirmation_token = Digest::MD5.hexdigest(self.salt + self.email)
     end
   end
  

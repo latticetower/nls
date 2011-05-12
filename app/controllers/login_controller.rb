@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
   before_filter :authorize, :only => :logout
-  
+  layout nil
   def index
     redirect_to :action => :login
   end
@@ -28,7 +28,10 @@ class LoginController < ApplicationController
     end
   end 
   
- 
+ def confirm
+ end
+ def inactive_account
+ end
   def register
     if request.post? and params[:user] #TODO: Переделать регистрацию
       session[:user_id] = nil 
@@ -44,9 +47,9 @@ class LoginController < ApplicationController
       
      if @user.save
         flash[:notice] = "User created."
-        session[:user_id] = @user.id
-        puts "set id=" + session[:user_id].to_s()
-        redirect_to :controller => 'letters'
+       #session[:user_id] = @user.id
+       # puts "set id=" + session[:user_id].to_s()
+        redirect_to :action => 'login'
       else
         flash[:notice] = "Not added"
       end
@@ -55,7 +58,8 @@ class LoginController < ApplicationController
    
   def logout
     session[:user_id] = nil
-    redirect_to :action => :login
+    @user=nil
+    redirect_to :controller => 'login', :action => :login 
   end
    
 

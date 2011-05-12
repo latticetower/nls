@@ -13,7 +13,7 @@ class UploadController < ApplicationController
       "application/vnd.openxmlformats-
       officedocument.wordprocessingml.document"
     
-    DataFile.save('public\\data\\roszdrav.xslt','public\\data\\roszdrav.docx','public\\data\\roszdrav.xml')
+    DataFile.save('#{RAILS_ROOT}/public/data/roszdrav.xslt','#{RAILS_ROOT}/public/data/roszdrav.docx','#{RAILS_ROOT}/public/data/roszdrav.xml')
     
     # Send the new file with the wordprocessingml document
     # content type.

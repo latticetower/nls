@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-layout 'letters'
+layout 'letters', :only => 'index'
 
   before_filter :authorize
   before_filter :jquery_noconflict
@@ -10,7 +10,7 @@ layout 'letters'
   
   ActiveScaffold.set_defaults do |config|
 	 # config.dhtml_history = false
-	# config.security.default_permission = false
+	# config.security.default_permission = falseconfig.security.default_permission = false
   end
 
     def current_user
@@ -20,13 +20,22 @@ layout 'letters'
 
  private 
   def authorize
-     unless (User.find_by_id(session[:user_id])) then
-      flash[:notice] = "Please log in" #TODO: mb some Russian?
-	   respond_to do |format|
-       format.html {redirect_to :controller => "login", :action => "login"}
-      end
+     @user = User.find_by_id(session[:user_id])
+      unless (@user) then
+        flash[:notice] = "Please log in" #TODO: mb some Russian?
+        respond_to do |format|
+          format.html {redirect_to :controller => "login", :action => "login"}
+        end 
+       end 
+      if @user 
+      if @user.active == false 
+         flash[:notice] = "Inactive account" 
+	      respond_to do |format|
+            format.html {redirect_to :controller => "login", :action => "inactive_account"}
+          end
+      end 
    end
- end
+  end
  
   
  # helper :all # include all helpers, all the time

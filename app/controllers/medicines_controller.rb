@@ -56,7 +56,10 @@ end
 
     respond_to do |format|
       if @medicine.save
-        format.html { redirect_to(@medicine, :notice => 'Medicine was successfully created.') }
+        format.html { 
+        redirect_to(medicines_url)
+        #redirect_to(@medicine, :notice => 'Medicine was successfully created.')
+        }
         format.xml  { render :xml => @medicine, :status => :created, :location => @medicine }
       else
         format.html { render :action => "new" }
@@ -72,7 +75,9 @@ end
 
     respond_to do |format|
       if @medicine.update_attributes(params[:medicine])
-        format.html { redirect_to(@medicine, :notice => 'Medicine was successfully updated.') }
+        format.html {redirect_to(medicines_url)
+        #redirect_to(@medicine, :notice => 'Medicine was successfully updated.')
+        }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

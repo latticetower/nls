@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Вход в систему учета </title>
+  <title>Вход в систему учета</title>
 
 <![if !(IE)]>
   <%= stylesheet_link_tag 'scaffold' %>
@@ -20,16 +20,10 @@
 
 	<!-- осн форма -->
 	<div class="login">
-		<p>Здравствуйте!  <p>Введите свои учетные данные*:
-		<% form_for :user, :url => { :action => "login" } do |f| %>
-			<table>
-				<tr  class="bordered"><td>Логин: </td><td><%= f.text_field :email, :size => 20 %></td></tr>
-				<tr  class="bordered"><td>Пароль: </td><td><%= f.password_field :password, :size => 20 %></td></tr>
-			</table>
-			<%= f.submit 'Войти' %>
-		<% end %>
-    <p><a href="register">Зарегистрироваться</a>
-				<p>*если у вас возникли проблемы при регистрации, <a href="mailto:***REMOVED***" title="обратный адрес">напишите нам</a>
+		<p><h1>Спасибо за регистрацию!</h1> 
+    <p>Ваша учетная запись в настоящий момент неактивна. Активировать ее могут специалисты отдела фармацевтического консалтинга ООО "Центр инноваций"		
+    <p><a href="register">Зарегистрироваться</a>  <a href="login">Войти</a>
+		<p>Контактный email: <a href="mailto:***REMOVED***" title="обратный адрес">***REMOVED***</a>
 	</div>
 	<!---->
 	<div class="errors">

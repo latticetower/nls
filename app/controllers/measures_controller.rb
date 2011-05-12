@@ -57,7 +57,7 @@ end
 
     respond_to do |format|
       if @measure.save
-        format.html { redirect_to(@measure, :notice => 'Measure was successfully created.') }
+        format.html { redirect_to(measures_url) }
         format.xml  { render :xml => @measure, :status => :created, :location => @measure }
       else
         format.html { render :action => "new" }
@@ -73,7 +73,7 @@ end
 
     respond_to do |format|
       if @measure.update_attributes(params[:measure])
-        format.html { redirect_to(@measure, :notice => 'Measure was successfully updated.') }
+        format.html { redirect_to(measures_url) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

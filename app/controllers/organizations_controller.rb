@@ -62,7 +62,7 @@ end
 
     respond_to do |format|
       if @organization.save
-        format.html { redirect_to(@organization, :notice => 'Organization was successfully created.') }
+        format.html { redirect_to(organizations_url, :notice => Russian.t(:organization) + Russian.t(:was_created_success)) }
         format.xml  { render :xml => @organization, :status => :created, :location => @organization }
       else
         format.html { render :action => "new" }
@@ -78,7 +78,7 @@ end
 
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
-        format.html { redirect_to(@organization, :notice => 'Organization was successfully updated.') }
+        format.html { redirect_to(organizations_url, :notice => Russian.t(:organization) + ' ' + Russian.t(:was_updated_success)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

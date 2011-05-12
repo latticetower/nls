@@ -2,13 +2,20 @@ class AnswerDetailsController < ApplicationController
 
  active_scaffold :answer_details do |config|
     config.label = Russian.t(:answer_details)
-    config.columns = [ :item, :letter_detail, :serial, :producer, :supplier, :received_drugs, 	:identified_drugs, :details]
-    config.list.columns =  [ :item, :letter_detail, :serial, :producer, :supplier, :received_drugs, :identified_drugs, :details]
-
-	config.columns[:letter_detail].clear_link
-	config.columns[:supplier].inplace_edit = true
+    config.columns = [ :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier, :received_drugs, 	
+    :identified_drugs, :tactic, :details]
+    config.list.columns =  [ :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier, :received_drugs, 
+    :identified_drugs, :tactic,  :details]
+  
+  config.actions.exclude :create
+  config.columns[:supplier].inplace_edit = true
+	config.columns[:letter_detail]
+  config.columns[:letter_detail].clear_link
 	config.columns[:identified_drugs].inplace_edit = true
+  
 	config.columns[:received_drugs].inplace_edit = true
+  config.columns[:tactic].inplace_edit = true
+  config.columns[:tactic].form_ui = :select
 	config.columns[:details].inplace_edit = true
 	##todo: use this 
 	config.columns.each do |column|
@@ -18,9 +25,9 @@ class AnswerDetailsController < ApplicationController
 	
 	config.search.columns = [:letter]
 	config.search.live = true
-	config.show.link=false
-config.update.link=false
-config.delete.link=false
+	config.show.link = false
+  config.update.link = false
+  config.delete.link = false
 
 	config.list.per_page = 15
 	config.columns[:letter].sort = true
@@ -28,7 +35,19 @@ config.delete.link=false
 	
 	config.list.always_show_search = true
 end 
+def authorized_for_create?
+  return false if not current_user
+  return current_user.is_a_client?
+end
+def authorized_for_read?
+  return false if not current_user
+  true
+end
 
+def list_authorized?
+  return false if not current_user
+  return true
+end
   # GET /answer_details/1
   # GET /answer_details/1.xml
   def show

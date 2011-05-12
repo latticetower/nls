@@ -58,7 +58,7 @@ end
 
     respond_to do |format|
       if @letter_state.save
-        format.html { redirect_to(@letter_state, :notice => 'LetterState was successfully created.') }
+        format.html { redirect_to(letter_states_url) }
         format.xml  { render :xml => @letter_state, :status => :created, :location => @letter_state }
       else
         format.html { render :action => "new" }
@@ -74,7 +74,7 @@ end
 
     respond_to do |format|
       if @letter_state.update_attributes(params[:letter_state])
-        format.html { redirect_to(@letter_state, :notice => 'LetterState was successfully updated.') }
+        format.html { redirect_to(letter_states_url) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -54,7 +54,7 @@ end
 
     respond_to do |format|
       if @manufacturer.save
-        format.html { redirect_to(@manufacturer, :notice => 'Manufacturer was successfully created.') }
+        format.html { redirect_to(manufacturers_url)  }
         format.xml  { render :xml => @manufacturer, :status => :created, :location => @manufacturer }
       else
         format.html { render :action => "new" }
@@ -70,7 +70,7 @@ end
 
     respond_to do |format|
       if @manufacturer.update_attributes(params[:manufacturer])
-        format.html { redirect_to(@manufacturer, :notice => 'Manufacturer was successfully updated.') }
+        format.html { redirect_to(manufacturers_url)  }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

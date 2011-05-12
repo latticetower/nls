@@ -5,9 +5,9 @@ active_scaffold :tactic do |config|
     config.list.columns = [:name]
 	
 	##todo: use this 
-	#config.columns.each do |column|
-	#   column.label = Russian.t(column.name)
-	#end
+	config.columns.each do |column|
+	   column.label = Russian.t(column.name)
+	end
 	
 	config.list.sorting = {:name => 'ASC'}
 	
@@ -25,12 +25,7 @@ end
   # GET /tactics/1
   # GET /tactics/1.xml
   def show
-    @tactic = Tactic.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @tactic }
-    end
+    redirect_to :action => 'index'
   end
 
   # GET /tactics/new

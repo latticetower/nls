@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Вход в систему учета заявок клиентов</title>
+  <title>Вход в систему учета </title>
 
 
 
@@ -22,19 +22,20 @@
 
 	<!-- осн форма -->
 	<div class="login">
-		<p>Вас приветствует <h1>Система учета Недоброкачественных Лекарственых Средств</h1> <p>Введите свои учетные данные*:
+		<p>Здравствуйте! <p>Введите свои учетные данные*:
 		<% form_for :user, :url => { :action => "register" } do |f| %>
 			<table>
   <%= error_messages_for :user %>
 Логин: <%= f.text_field :email %><br/>
   Пароль: <%= f.password_field :encrypted_password %><br/>
-  Подтверждение: <%= f.password_field :encrypted_password_confirmation %><br/>
-
+  Подтверждение пароля: <%= f.password_field :encrypted_password_confirmation %><br/>
+  Организация: <%= f.text_field :organization_name %><br/>
 
 			</table>
-			<%= f.submit 'Войти' %>
+			<%= f.submit 'Зарегистрироваться!' %>
 		<% end %>
-		<p>*если у вас еще нет учетной записи, <a href="mailto:***REMOVED***" title="обратный адрес">напишите нам</a>, и мы ее предоставим
+        <p><a href="login">Войти</a>
+		<p>*если у вас возникли проблемы при регистрации, <a href="mailto:***REMOVED***" title="обратный адрес">напишите нам</a>
 	</div>
 	<!---->
 	<div class="errors">

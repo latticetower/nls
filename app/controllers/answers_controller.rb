@@ -1,12 +1,17 @@
 class AnswersController < ApplicationController
-
+layout 'letters', :only => [:index, :show]
 active_scaffold :answers
 
   # GET /answers/1
   # GET /answers/1.xml
   def show
     @answer = Letter.find(params[:id])
-
+@ld = @answer.letter_details
+    for ld in @ld do
+      if ld.answer_detail == nil
+        ld.answer_detail = AnswerDetail.new(:letter_id => @answer.id, :organization_id => current_user.organization_id)
+      end
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @answer }
@@ -17,7 +22,7 @@ active_scaffold :answers
   # GET /answers/new.xml
   def new
     @answer = Letter.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @answer }

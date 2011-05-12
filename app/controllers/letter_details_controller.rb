@@ -33,8 +33,8 @@ active_scaffold :letter_details do |config|
 	
 	config.search.columns = [:letter]
 	config.search.live = true
-config.show.link=false
-config.update.link=false
+config.show.link = false
+config.update.link = false
 
 	config.list.per_page = 15
 	config.columns[:letter].sort = true
@@ -66,29 +66,34 @@ end
 
   # GET /letter_details/new
   # GET /letter_details/new.xml
-  def new
+ 
+=begin
+ def new
     @letter_detail = LetterDetail.new
-if params[:id]
-@letter = Letter.find(params[:id])
-@letter_detail.letter=@letter
-end
+  if params[:id]
+  @letter = Letter.find(params[:id])
+  @letter_detail.letter = @letter
+  end
 
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @letter_detail }
     end
   end
+=end
 =begin
   # GET /letter_details/1/edit
   def edit
     @letter_detail = LetterDetail.find(params[:id])
   end
-=end
+
   # POST /letter_details
   # POST /letter_details.xml
   def create
     @letter_detail = LetterDetail.new(params[:letter_detail])
-
+    puts "+++++++++++++++"
+    puts params
+    puts "----------"
     respond_to do |format|
       if @letter_detail.save
         format.html { redirect_to(@letter_detail, :notice => 'LetterDetail was successfully created.') }
@@ -99,7 +104,8 @@ end
       end
     end
   end
-=begin
+
+
   # PUT /letter_details/1
   # PUT /letter_details/1.xml
   def update

@@ -5,6 +5,7 @@ class DataFile
   # Save the uploaded files to a temp folder and then perform
   # translation.
   #we don't need this
+=begin
   def self.save(upload,upload1,upload2)
     name =
       sanitize_filename(upload['file'].original_filename).to_s
@@ -30,7 +31,7 @@ class DataFile
                             path2,
                             "public\\resources\\newdoc.docx")
   end
-  
+=end  
    # Save the uploaded files to a temp folder and then perform
   # translation.
   #we don't need this

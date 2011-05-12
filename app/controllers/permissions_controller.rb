@@ -8,7 +8,7 @@ active_scaffold :permissions do |config|
 	config.columns.each do |column|
 	   column.label = Russian.t(column.name)
 	end
-	
+
 	config.list.sorting = {:name => 'ASC'}
 	
 	config.search.columns = [:name]
@@ -21,6 +21,25 @@ active_scaffold :permissions do |config|
 	config.list.always_show_search = true
 end
 
+def authorized_for_read?
+  return false if not current_user
+  return true
+end
+def authorized_for_update?
+  return false if not current_user
+  return true
+end
+
+
+def list_authorized?
+  return false if not current_user
+  return true
+end
+
+def authorized_for_delete?
+  return false unless current_user
+  current_user.is_an_admin?
+end
   # GET /permissions/1
   # GET /permissions/1.xml
   def show

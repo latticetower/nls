@@ -1,5 +1,5 @@
 ﻿<%= @letter.item %>
-<%= @letter.created_on %>
+<%= @letter.item_date %>
 <div style="background-color:lime;">
 <%= render  :active_scaffold => "answers", :constraints => { :letter_id => @letter.id } %>
 </div>			  

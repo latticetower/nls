@@ -57,7 +57,7 @@ end
 
     respond_to do |format|
       if @boxing_type.save
-        format.html { redirect_to(@boxing_type, :notice => 'BoxingType was successfully created.') }
+        format.html { redirect_to(boxing_types_url) }
         format.xml  { render :xml => @boxing_type, :status => :created, :location => @boxing_type }
       else
         format.html { render :action => "new" }
@@ -73,7 +73,7 @@ end
 
     respond_to do |format|
       if @boxing_type.update_attributes(params[:boxing_type])
-        format.html { redirect_to(@boxing_type, :notice => 'BoxingType was successfully updated.') }
+        format.html { redirect_to(boxing_types_url) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

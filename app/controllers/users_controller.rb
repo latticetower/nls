@@ -1,26 +1,33 @@
 class UsersController < ApplicationController
 before_filter :authorize
   
-record_select :per_page => 5, :search_on =>'fio' #, :label => 'user_description'
+record_select :per_page => 5, :search_on => 'fio' #, :label => 'user_description'
 
 active_scaffold :user do |config|
     config.label = Russian.t(:users)
-    config.columns = [:role,  :email]
-    config.list.columns = [:role, :email]
-	config.columns.each do |column|
+    config.columns = [:role,  :email, :organization, :active]
+    config.list.columns = [:role, :email, :organization, :active]
+	  config.columns.each do |column|
 	   column.label = Russian.t(column.name)
 	end
-	
+	config.create.columns = [:role, :email]
 	config.columns[:role].search_sql = 'roles.name'
 #	config.columns[:organization].search_sql = 'organizations.name'
 	config.search.columns = [:role, :email]
 	config.search.live = true
-	
+	config.columns[:role].clear_link 
 	config.columns[:role].sort = true
 	config.columns[:role].sort_by :sql => 'roles.name'
+  config.columns[:role].inplace_edit = true
+    config.columns[:role].form_ui = :select
+    
+  config.columns[:active].inplace_edit = true
+  config.columns[:active].form_ui = :checkbox
 #	config.columns[:organization].sort_by :sql => 'organizations.name'
-#	config.columns[:organization].clear_link 
-  
+	config.columns[:organization].clear_link 
+  config.columns[:email].inplace_edit = true
+  config.columns[:organization].inplace_edit = true
+    config.columns[:organization].form_ui = :select
 	#there must be condition to show link for authorized admins
 	config.list.sorting = { :role => 'ASC', :email => 'ASC'}
 	config.list.always_show_search = true
@@ -30,8 +37,9 @@ active_scaffold :user do |config|
 end
 
 def authorized_for_read?
-return false unless current_user
-  current_user.is_a_tehnik_or_admin?
+true
+#return false unless current_user
+  #current_user.is_a_tehnik_or_admin?
 end
 
 def authorized_for_delete?
@@ -39,13 +47,13 @@ def authorized_for_delete?
   current_user.is_an_admin?
 end
 
-def conditions_for_collection
-    if current_user.can_manage_users? 
-	 return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
-	else 
-	 return ['users.id in (?)', current_user.id]
-    end
-end
+#def conditions_for_collection
+   # if current_user.can_manage_users? 
+	 #return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
+	#else 
+	# return ['users.id in (?)', current_user.id]
+   # end
+#end
 
   # GET /users
   # GET /users.xml
