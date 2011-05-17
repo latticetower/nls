@@ -1,0 +1,303 @@
+*{
+font-family:  Verdana, Calibri, Arial, Helvetica, sans-serif;
+color: #8e8e8e;
+font-size: 14px;
+}
+body {
+ background-image: url("../images/bg.gif") ;
+padding:0px;
+margin:0px;
+
+ }
+div.auto_complete{
+color:black;
+background-color:oldlace;
+}
+div.auto_complete ul li.selected{
+color:black;
+background-color:yellow;
+}
+body, p, ol, ul, td {
+
+  font-size:   14px;
+  line-height: 18px;
+}
+
+a,a:hover,a:visited {
+	color: #cd0042;
+	text-decoration: none;
+	border-bottom-style: dash;
+	padding:0px;
+	border-bottom-width: 1px;
+}
+.selected{
+ background-image: url('../images/selected.png');
+ background-position: center center; 
+ background-repeat: no-repeat;
+color:#ffffff;
+	border-style: dash;
+padding-left: 15px;
+padding-right: 0px;
+}
+.not_selected{
+padding-left: 15px;
+padding-right: 0px;
+}
+
+red
+{
+color:#cd0042;
+}
+
+h4
+{
+color:#cd0042;
+}
+
+div.login {
+position:absolute;
+  margin-left: 100px;
+
+ margin-top: 100px;
+;
+background-color: white;
+ padding:10px;
+  border: 1px solid #8e8e8e;
+  color: #883535;
+  width: 300px;
+ 
+}
+
+div{
+
+padding:0px;
+}
+div.send_message {
+position:absolute;
+margin-left: 50px;
+left: 400px;
+width:auto;
+
+ margin-top: 100px;
+background-color: white;
+ padding:10px;
+  border: 1px solid #8e8e8e;
+  color: #883535;
+
+}
+
+div.errors {
+position:absolute;
+margin-left: 50px;
+left: 400px;
+
+
+ margin-top: 20px;
+
+ padding:10px;
+  color: #883535;
+  width: 300px;
+
+}
+table {
+background-image: url('../images/table_border_top_left.png'); 
+background-position: top left; 
+
+
+background-repeat: no-repeat;
+background-color: #e3e3e3;
+border-collapse: collapse;
+width: auto;
+border: solid 1px #8e8e8e;
+vertical-align: top;
+}
+.plain
+{
+border: 1px solid black;
+background-color:white;
+color:black;
+}
+tr{
+border:none;
+}
+
+.bordered{
+border-left: 1px solid #8e8e8e;
+}
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+th {
+border: none;
+font-size: 14px;
+color: #ffffff;
+background-color: #8e8e8e;
+}
+th.first{
+ background-image: url('../images/table_border_top_left.png'); 
+ background-position: top left;
+ background-repeat: no-repeat;
+}
+
+td {
+background-color: #e3e3e3;
+vertical-align: top;
+border-bottom:1px solid; 
+border-top:1px solid;
+border-color: #8e8e8e;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align:middle;
+}
+
+
+td#problem {
+
+}
+h1 {
+	font-size: 24px;
+	font-weight: normal;
+	
+	color: #cd0042;
+}
+
+h2{
+	margin-top: 190px;
+	font-size: 21px;
+	font-weight: normal;
+	
+	color: #cd0042;
+}
+
+a,a:hover,a:visited {
+	color: #cd0042;
+	text-decoration: none;
+
+	padding:0px;
+	
+}
+
+
+
+
+
+
+
+img {
+border:none;
+}
+
+
+.header {
+	width: 100% !important;
+	position:absolute;
+	top:0px;
+	left:0px;
+	height: 25px;
+	vertical-align: center;
+	border: none;
+	padding: 0px;
+	margin:0px;
+min-width: 600px;
+white-space: nowrap;
+	background-image: url("../images/header_bgr.png") ;
+	 background-position: center top; 
+}
+.header_left {
+position:absolute;
+	top:2px;
+	left:15px;
+	float: left;
+
+}
+
+.header_right{
+position:absolute;
+	top:2px;
+	right:15px;
+	float: right;
+
+	
+}
+
+.bottom{
+	width:  100% !important;
+	
+	height: 25px;
+	vertical-align: center;
+	background-image: url("../images/bottom_bgr.png") ;
+}
+
+.wrapper {
+	width: 100%;
+	
+	padding:0px;
+	
+vertical-align:center;
+border: none;
+height: 100%;
+}
+
+
+.links{
+clear: both;
+margin: 0px;
+border: none;
+width: 100%;
+padding: 0px;
+}
+.logo{
+width: 100%;
+height:80px;
+background-image: url('../images***REMOVED***o.png'); 
+background-position: center center; 
+background-repeat: no-repeat;
+border:none;
+}
+.sidebar {
+border: none;
+float: left;
+min-height: 100%;
+	height: auto ;
+	height: 100%;
+width: 150px;
+
+vertical-align:top;
+padding:0px;
+margin:0px;
+padding: 0px;
+}
+
+.main {
+border: none;
+width: auto;
+margin-left: 150px;
+padding:0px;
+}
+.application-footer {
+min-width: 600px;
+	width: 100%;
+	
+
+	height: 25px;
+	vertical-align: bottom;
+
+	text-align: center;
+
+	padding:0px;
+	margin:0px;
+
+	background-image: url("../images/header_bgr.png") ;
+	background-position: bottom center;
+}
+
+div.foot_text
+{
+
+font-size: 10px;
+padding:0px;
+margin:0px;
+color: #8e8e8e;
+}

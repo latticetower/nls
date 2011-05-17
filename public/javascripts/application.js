@@ -54,3 +54,7 @@ $(document).ready(function() {
   
   $(".hasDatepicker").css("background-color","#ff9");
 });
+
+$(document).ready(function(){
+  $('input.ui-datepicker').datepicker();
+});
