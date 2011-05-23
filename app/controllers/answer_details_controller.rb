@@ -7,34 +7,34 @@ class AnswerDetailsController < ApplicationController
     config.list.columns =  [ :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier, :received_drugs, 
     :identified_drugs, :tactic,  :details]
   
-  config.actions.exclude :create
-  config.columns[:supplier].inplace_edit = true
-	config.columns[:letter_detail]
-  config.columns[:letter_detail].clear_link
-	config.columns[:identified_drugs].inplace_edit = true
+    config.actions.exclude :create
+    config.columns[:supplier].inplace_edit = true
+    config.columns[:letter_detail]
+    config.columns[:letter_detail].clear_link
+    config.columns[:identified_drugs].inplace_edit = true
   
-	config.columns[:received_drugs].inplace_edit = true
-  config.columns[:tactic].inplace_edit = true
-  config.columns[:tactic].form_ui = :select
-	config.columns[:details].inplace_edit = true
-	##todo: use this 
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end	
-	config.list.sorting = {:letter => 'ASC'}
-	
-	config.search.columns = [:letter]
-	config.search.live = true
-	config.show.link = false
-  config.update.link = false
-  config.delete.link = false
+    config.columns[:received_drugs].inplace_edit = true
+    config.columns[:tactic].inplace_edit = true
+    config.columns[:tactic].form_ui = :select
+    config.columns[:details].inplace_edit = true
+    ##todo: use this 
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end	
+    config.list.sorting = {:letter => 'ASC'}
+    
+    config.search.columns = [:letter]
+    config.search.live = true
+    config.show.link = false
+    config.update.link = false
+    config.delete.link = false
 
-	config.list.per_page = 15
-	config.columns[:letter].sort = true
-	config.columns[:letter].sort_by :sql => 'answer_details.letter_id'
-	
-	config.list.always_show_search = true
-end 
+    config.list.per_page = 15
+    config.columns[:letter].sort = true
+    config.columns[:letter].sort_by :sql => 'answer_details.letter_id'
+    
+    config.list.always_show_search = true
+  end 
 def authorized_for_create?
   return false if not current_user
   return current_user.is_a_client?

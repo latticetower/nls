@@ -47,14 +47,26 @@ def authorized_for_delete?
   current_user.is_an_admin?
 end
 
-#def conditions_for_collection
-   # if current_user.can_manage_users? 
+def conditions_for_collection
+   if current_user.is_an_admin_or_operator?
+    return []
+   else 
+   return ['users.id in(?)', current_user.id]
+   end
 	 #return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
 	#else 
 	# return ['users.id in (?)', current_user.id]
    # end
-#end
+end
 
+def active_authorized?
+  return true if current_user.is_an_admin_or_operator?
+  return false
+end
+def role_authorized?
+  return true if current_user.is_an_admin_or_operator?
+  return false
+end
   # GET /users
   # GET /users.xml
  #def index
@@ -126,7 +138,7 @@ end
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = 'User was successfully updated.'
-        format.html { redirect_to(@user) }
+        format.html { redirect_to :action => :index, :controller => :letters}
       else
         format.html { render :action => "edit" }
       end

@@ -1,6 +1,9 @@
 class AnswersController < ApplicationController
 layout 'letters', :only => [:index, :show]
-active_scaffold :answers
+active_scaffold :answers do |config|
+ config.nested.label = ''
+
+end
 
   # GET /answers/1
   # GET /answers/1.xml
@@ -8,13 +11,13 @@ active_scaffold :answers
     @answer = Letter.find(params[:id])
 @ld = @answer.letter_details
     for ld in @ld do
-      if ld.answer_detail == nil
-        ld.answer_detail = AnswerDetail.new(:letter_id => @answer.id, :organization_id => current_user.organization_id)
+      if ld.find_answer_by_organization(current_user.organization_id) == nil
+        ld.answer_details << AnswerDetail.new(:letter_id => @answer.id, :organization_id => current_user.organization_id)
       end
     end
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @answer }
+      format.xml {render :xml => @answer }
     end
   end
 

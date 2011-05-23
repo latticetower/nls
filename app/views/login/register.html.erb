@@ -30,7 +30,8 @@
   Пароль: <%= f.password_field :encrypted_password %><br/>
   Подтверждение пароля: <%= f.password_field :encrypted_password_confirmation %><br/>
   Организация: <%= f.text_field :organization_name %><br/>
-
+ФИО уполномоченного: <%= f.text_field :upoln_name %><br/>
+Телефон: <%= f.text_field :phone %><br/>
 			</table>
 			<%= f.submit 'Зарегистрироваться!' %>
 		<% end %>

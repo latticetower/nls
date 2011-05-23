@@ -1,0 +1,9 @@
+﻿<dl>  
+  <dt><label for="record_organization"><%= Russian.t(:organization) %></label></dt>  
+  <dd>  
+    <%= text_field_with_auto_complete(:organization, :name,   
+     { :value => (@organization.name if (@organization ||= @record.organization)),              
+        :class => 'text-input' }, { :method => :get })   
+    %>  
+  </dd>  
+</dl>  

@@ -4,14 +4,18 @@ module AnswerDetailsHelper
 	'N#{detail.letter.item} #{detail.letter.created_on.strftime("%d.%m.%y")}'
    end
     def item_and_date_column(detail) 
-	'N' + h(detail.letter.item) + '<br> ' +  h(detail.letter.created_on.strftime("%d.%m.%y"))
+	'N' + h(detail.letter ? detail.letter.item : "_____") + '<br> ' +  h(detail.letter ? detail.letter.created_on.strftime("%d.%m.%y") : "____")
    end
 
    def letter_detail_all_column(record) 
-   "#{record.letter_detail.medicine.name}<br>
-      #{record.letter_detail.boxing_type.name}<br>
-	  #{record.letter_detail.measure.name}
+   if record.letter_detail
+   ld = record.letter_detail
+   "#{ld.medicine ? ld.medicine.name : ''}<br>
+      #{ld.boxing_type ? ld.boxing_type.name : ''}<br>
+	  #{ld.measure ? ld.measure.name : ''}
   "
+  end
+  ""
    end
    
 
@@ -22,14 +26,14 @@ module AnswerDetailsHelper
     #select_date record[:date_received], options.merge(:prefix => options[:name])
  # end
    def serial_column(detail)
-     h(detail.letter_detail.serial)
+     h(detail.letter_detail ? detail.letter_detail.serial : "")
    end
    
 
  
    
    def boxing_type_column(detail) 
-	h(detail.boxing_type.name) 
+	h(detail.boxing_type ? detail.boxing_type.name : "") 
    end
 
  def letter_column(detail) 
@@ -38,11 +42,14 @@ module AnswerDetailsHelper
    end
    
    def producer_country_column(detail)
-    "#{detail.letter_detail.manufacturer.name}<br>#{detail.letter_detail.country.name if detail.letter_detail.country}"
+    if detail.letter_detail 
+    ld = detail.letter_detail
+    "#{ld.manufacturer ? ld.manufacturer.name : ''}<br>#{ld.country ? ld.country.name : ""}"
+    end
    end
    
    def measure_column(detail)
-     (detail.measure.name)
+     h(detail.measure ? detail.measure.name : '')
    end
    
 end

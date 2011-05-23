@@ -1,6 +1,6 @@
 <% form.inputs do %>
-  <%= form.input :email %>
-  <%= form.input :encrypted_password %>
-  <%= form.input :encrypted_password_confirmation, :label => "Confirm password" %>
+  <%= form.input :organization_name, :label => Russian.t(:organization) %>
+  <%= form.input :upoln_name, :label => Russian.t(:quality_control) %>
+   <%= form.input :phone, :label => Russian.t(:phone) %>
 <% end %>
 

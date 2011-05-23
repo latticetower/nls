@@ -1,17 +1,28 @@
 class LetterDetailsController < ApplicationController
-
+  auto_complete_for :medicine, :name  
+  auto_complete_for :measure, :name 
+  auto_complete_for :manufacturer, :name  
+  auto_complete_for :country, :name  
+  auto_complete_for :boxing_type, :name 
+  auto_complete_for :detail_type, :name 
+ 
 active_scaffold :letter_details do |config|
     config.label = Russian.t(:letter_details)
-    config.columns = [ :medicine, :boxing_type, :measure,  :manufacturer,  :country, :serial]
+    config.columns = [ :medicine, :boxing_type, :measure,  :manufacturer,  :country, :serial, :detail_type]
   	##todo: use this 
+     config.nested.label = ''
+     config.show.label = ''
+     config.create.label = Russian.t(:create_label)
 	config.columns.each do |column|
 	   column.label = Russian.t(column.name)
 	end
 		
-#	config.columns[:boxing_type].sort_by :sql => "boxing_type.name"
-#	config.columns[:manufacturer].sort_by :sql => "manufacturer.name"
+	config.columns[:boxing_type].sort_by :sql => "boxing_type.name"
+	config.columns[:manufacturer].sort_by :sql => "manufacturer.name"
 #	config.columns[:boxing_type].search_sql = "boxing_type.name"
-#	config.columns[:manufacturer].search_sql = "manufacturer.name"
+	config.columns[:manufacturer].search_sql = "manufacturer.name"
+  config.columns[:medicine].search_sql = "medicine.name"
+  
 	config.list.sorting = {:letter => 'ASC'}
 	
 	config.columns[:medicine].inplace_edit = :ajax
@@ -19,19 +30,27 @@ active_scaffold :letter_details do |config|
 		
 	config.columns[:boxing_type].inplace_edit = :ajax
 	config.columns[:boxing_type].form_ui = :select
+  
+  
+  config.columns[:detail_type].inplace_edit = :ajax
+	config.columns[:detail_type].form_ui = :select
+  config.columns[:detail_type].options = {:include_blank => Russian.t('empty')}
 	
 	config.columns[:measure].inplace_edit = true
 	config.columns[:measure].form_ui = :select
+  config.columns[:measure].options = {:include_blank => Russian.t('empty')}
 	
 	config.columns[:manufacturer].inplace_edit = true
 	config.columns[:manufacturer].form_ui = :select
+  	config.columns[:manufacturer].options = {:include_blank => Russian.t('empty')}
 	
 	config.columns[:country].inplace_edit = :ajax
-		config.columns[:country].form_ui = :select
+  config.columns[:country].form_ui = :select
 	config.columns[:country].options = {:include_blank => Russian.t('empty')}
+  
 	config.columns[:serial].inplace_edit = true
 	
-	config.search.columns = [:letter]
+	config.search.columns = [:letter, :medicine, :detail_type]
 	config.search.live = true
 config.show.link = false
 config.update.link = false
@@ -44,15 +63,7 @@ config.update.link = false
 end 
 
 
-def authorized_for_read?
-  return true
- #return current_user.is_a_tehnik?
-end
 
-def authorized_for_delete?
-  return true
- #current_user.is_a_tehnik?
-end
   # GET /letter_details/1
   # GET /letter_details/1.xml
   def show
@@ -64,6 +75,47 @@ end
     end
   end
 
+  
+  def create
+    if params['measure'] && !params['measure']['name'].blank?  
+      @measure = Measure.find_by_name(params['measure']['name'])  
+      @measure = Measure.create(:name => params['measure']['name'] ) if @measure.nil? 
+    end  
+    
+    if params['medicine'] && !params['medicine']['name'].blank?  
+      @medicine = Medicine.find_by_name(params['medicine']['name'])  
+      @medicine  = Medicine.create(:name => params['medicine']['name'] ) if @medicine.nil? 
+    end 
+    
+    if params['manufacturer'] && !params['manufacturer']['name'].blank?  
+      @manufacturer = Manufacturer.find_by_name(params['manufacturer']['name'])  
+      @manufacturer = Manufacturer.create(:name => params['manufacturer']['name'] ) if @manufacturer.nil? 
+    end 
+    if params['boxing_type'] && !params['boxing_type']['name'].blank?  
+      @boxing_type = BoxingType.find_by_name(params['boxing_type']['name'])  
+      @boxing_type = BoxingType.create(:name => params['boxing_type']['name'] ) if @boxing_type.nil? 
+    end 
+    if params['detail_type'] && !params['detail_type']['name'].blank?  
+      @detail = DetailType.find_by_name(params['detail_type']['name'])  
+      @detail = DetailType.create(:name => params['detail_type']['name'] ) if @detail.nil? 
+    end 
+    if params['country'] && !params['country']['name'].blank?  
+      @country = Country.find_by_name(params['country']['name'])  
+      @country = Country.create(:name => params['country']['name'] ) if @country.nil? 
+    end 
+    super  
+  end
+  
+private  
+  def before_create_save(record)  
+    record.measure_id = @measure.id if @measure
+    record.medicine_id = @medicine.id if @medicine
+    record.boxing_type_id = @boxing_type.id if @boxing_type
+    record.manufacturer_id = @manufacturer.id if @manufacturer
+     record.country_id = @country.id if @country
+     record.detail_type_id = @detail_type.id if @detail_type
+  end  
+public
   # GET /letter_details/new
   # GET /letter_details/new.xml
  

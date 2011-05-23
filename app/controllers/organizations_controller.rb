@@ -24,6 +24,13 @@ active_scaffold :organization do |config|
 
 end 
 
+def conditions_for_collection
+if current_user.is_a_client_or_manager?
+return ['id in (?)', current_user.organization_id]
+end
+[]
+end
+
   # GET /organizations
   # GET /organizations.xml
 

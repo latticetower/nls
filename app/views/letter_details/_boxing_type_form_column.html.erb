@@ -1,0 +1,11 @@
+﻿<dl>  
+  <dt><label for="record_medicine"><%= Russian.t(:boxing_type) %></label></dt>  
+  <dd>  
+ 
+ 
+     <%= text_field_with_auto_complete(:boxing_type, :name,   
+     { :value => (@boxing_type.name if (@medicine ||= @record.boxing_type)),              
+        :class => 'text-input' }, { :method => :get })   
+        %>
+  </dd>  
+</dl> 

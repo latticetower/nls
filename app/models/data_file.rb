@@ -40,7 +40,17 @@ class DataFile
     OfficeOpenXML.translate(xslt,
                             template,
                             xml,
-                            "public\\resources\\newdoc.docx")
+                            "#{RAILS_ROOT}/public/resources/newdoc.docx")
+  end
+  
+  def self.do_rtf(sender, answers)
+    
+    return OfficeRTF.do_rtf(sender, answers)
+  end
+  
+  def self.do_rtf_with_stuff(sender, answers)
+  
+    return OfficeRTF.do_rtf_with_stuff(sender, answers)
   end
 
   private
