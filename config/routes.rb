@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :history_logs
+
+  map.resources :suppliers
+
   map.resources :detail_types
 
   map.resources :answers
