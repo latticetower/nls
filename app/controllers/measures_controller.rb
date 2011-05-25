@@ -1,28 +1,41 @@
 class MeasuresController < ApplicationController
 
-active_scaffold :measure do |config|
-    config.label = Russian.t(:measure)
-    config.columns = [:name]
-    config.list.columns = [:name]
-	
-	##todo: use this 
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
-	
-	config.list.sorting = {:name => 'ASC'}
-	
-	config.search.columns = [:name]
-	config.search.live = true
-	
-	config.list.per_page = 15
-	config.columns[:name].sort = true
-	config.columns[:name].sort_by :sql => 'measures.name'
-	
-	config.list.always_show_search = true
-
-end 
-
+  active_scaffold :measure do |config|
+      config.label = Russian.t(:measures)
+      config.columns = [:name]
+      config.list.columns = [:name]
+    
+    ##todo: use this 
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
+    config.actions.exclude :show
+    config.list.sorting = {:name => 'ASC'}
+    
+    config.search.columns = [:name]
+    config.search.live = true
+    
+    config.list.per_page = 15
+    config.columns[:name].sort = true
+    config.columns[:name].sort_by :sql => 'measures.name'
+    
+    config.list.always_show_search = true
+  end 
+  
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end 
   # GET /measures/1
   # GET /measures/1.xml
   def show

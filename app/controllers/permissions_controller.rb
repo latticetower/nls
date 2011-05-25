@@ -1,45 +1,58 @@
 class PermissionsController < ApplicationController
-active_scaffold :permissions do |config|
- config.label = Russian.t(:permissions)
+  active_scaffold :permissions do |config|
+    config.label = Russian.t(:permissions)
     config.columns = [:name, :description]
     config.list.columns = [:name, :description]
-	
-	##todo: use this 
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
+    config.actions.exclude :show
+    ##todo: use this 
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
 
-	config.list.sorting = {:name => 'ASC'}
-	
-	config.search.columns = [:name]
-	config.search.live = true
-	
-	config.list.per_page = 15
-	config.columns[:name].sort = true
-	config.columns[:name].sort_by :sql => 'permissions.name'
-	
-	config.list.always_show_search = true
-end
+    config.list.sorting = {:name => 'ASC'}
+    
+    config.search.columns = [:name]
+    config.search.live = true
+    
+    config.list.per_page = 15
+    config.columns[:name].sort = true
+    config.columns[:name].sort_by :sql => 'permissions.name'
+    
+    config.list.always_show_search = true
+  end
 
-def authorized_for_read?
-  return false if not current_user
-  return true
-end
-def authorized_for_update?
-  return false if not current_user
-  return true
-end
+  def authorized_for_read?
+    return false if not current_user
+    return true
+  end
+  def authorized_for_update?
+    return false if not current_user
+    return true
+  end
 
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end 
+  def list_authorized?
+    return false if not current_user
+    return true
+  end
 
-def list_authorized?
-  return false if not current_user
-  return true
-end
-
-def authorized_for_delete?
-  return false unless current_user
-  current_user.is_an_admin?
-end
+  def authorized_for_delete?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
   # GET /permissions/1
   # GET /permissions/1.xml
   def show

@@ -6,9 +6,22 @@ class User < ActiveRecord::Base
   validates_confirmation_of :encrypted_password
   belongs_to :role
   belongs_to :organization
-  
+  has_many :answers
+  has_many :answer_details
+  default_scope :order => 'registered_at DESC, users.id ASC'  
+
    delegate :permissions, :to => :role
   
+  def authorized_for_read?
+return false unless current_user
+  current_user.is_an_admin_or_operator?
+end
+
+def authorized_for_delete?
+  return false unless current_user
+  current_user.is_an_admin?
+end
+
   def self.authenticate(login, pass)
      @user = find(:first, :conditions => {:email => login})
      @encrypted_password = Digest::MD5.hexdigest(@user.salt + pass)
@@ -23,6 +36,7 @@ class User < ActiveRecord::Base
   # database.
   def before_save
     if (self.salt == nil)
+      self.registered_at = Time.now
       self.salt = random_numbers(5)
       self.encrypted_password = Digest::MD5.hexdigest(self.salt + self.encrypted_password)
       self.confirmation_token = Digest::MD5.hexdigest(self.salt + self.email)

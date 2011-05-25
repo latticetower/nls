@@ -1,63 +1,73 @@
 class UsersController < ApplicationController
-before_filter :authorize
-  
-record_select :per_page => 5, :search_on => 'fio' #, :label => 'user_description'
+  before_filter :authorize
 
-active_scaffold :user do |config|
-    config.label = Russian.t(:users)
-    config.columns = [:role,  :email, :organization, :active]
-    config.list.columns = [:role, :email, :organization, :active]
-	  config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
-	config.create.columns = [:role, :email]
-	config.columns[:role].search_sql = 'roles.name'
-#	config.columns[:organization].search_sql = 'organizations.name'
-	config.search.columns = [:role, :email]
-	config.search.live = true
-	config.columns[:role].clear_link 
-	config.columns[:role].sort = true
-	config.columns[:role].sort_by :sql => 'roles.name'
-  config.columns[:role].inplace_edit = true
-    config.columns[:role].form_ui = :select
+  record_select :per_page => 5, :search_on => 'fio' #, :label => 'user_description'
+
+  active_scaffold :user do |config|
+      config.label = Russian.t(:users)
+      config.columns = [#:registered_at,  
+                        :role,  :email, :organization, :active]
+      config.list.columns = [#:registered_at, 
+                      :role, :email, :organization, :active]
+      config.columns.each do |column|
+        column.label = Russian.t(column.name)
+      end
+      config.create.columns = [:role, :email]
+      config.columns[:role].search_sql = 'roles.name'
+    #	config.columns[:organization].search_sql = 'organizations.name'
+      config.search.columns = [:role, :email]
+      config.search.live = true
+      config.columns[:role].clear_link 
+      config.columns[:role].sort = true
+      config.columns[:role].sort_by :sql => 'roles.name'
+      config.columns[:role].inplace_edit = true
+      config.columns[:role].form_ui = :select
     
-  config.columns[:active].inplace_edit = true
-  config.columns[:active].form_ui = :checkbox
-#	config.columns[:organization].sort_by :sql => 'organizations.name'
-	config.columns[:organization].clear_link 
-  config.columns[:email].inplace_edit = true
-  config.columns[:organization].inplace_edit = true
-    config.columns[:organization].form_ui = :select
-	#there must be condition to show link for authorized admins
-	config.list.sorting = { :role => 'ASC', :email => 'ASC'}
-	config.list.always_show_search = true
-	#config.actions.add :list_filter 
-#	config.list_filter.add(:date, :created_at, {:label => "fio"})
-	#config.field_search.columns = [:created_at, :problem, :organization]
-end
-
-def authorized_for_read?
-true
-#return false unless current_user
-  #current_user.is_a_tehnik_or_admin?
-end
-
-def authorized_for_delete?
-  return false unless current_user
-  current_user.is_an_admin?
-end
-
-def conditions_for_collection
-   if current_user.is_an_admin_or_operator?
-    return []
-   else 
-   return ['users.id in(?)', current_user.id]
-   end
-	 #return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
-	#else 
-	# return ['users.id in (?)', current_user.id]
-   # end
-end
+      config.columns[:active].inplace_edit = true
+      config.columns[:active].form_ui = :checkbox
+    #	config.columns[:organization].sort_by :sql => 'organizations.name'
+      config.columns[:organization].clear_link 
+      config.columns[:email].inplace_edit = true
+      config.columns[:organization].inplace_edit = true
+      config.columns[:organization].form_ui = :select
+      #there must be condition to show link for authorized admins
+      config.list.sorting = { #:registered_at => 'DESC', 
+      :id => 'DESC'}
+      config.list.always_show_search = true
+      config.columns[:registered_at].form_ui = :datepicker
+      config.columns[:registered_at].search_ui = :date
+      #config.actions.add :list_filter 
+    #	config.list_filter.add(:date, :created_at, {:label => "fio"})
+      config.actions.swap :search, :field_search
+      config.field_search.columns = [:registered_at, :role, :email, :organization]
+  end
+  
+ def create_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end  
+  
+  def conditions_for_collection
+     if current_user.is_an_admin_or_operator?
+      return []
+     else 
+     return ['users.id in(?)', current_user.id]
+     end
+     #return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
+    #else 
+    # return ['users.id in (?)', current_user.id]
+     # end
+  end
 
 def active_authorized?
   return true if current_user.is_an_admin_or_operator?
@@ -89,10 +99,10 @@ end
   # GET /users/new.xml
   def new
     @user = User.new
-	  @organizations = Organization.all
-	  @roles = Role.all
+	 # @organizations = Organization.all
+	#  @roles = Role.all
     respond_to do |format|
-      format.html # new.html.erb
+      format.html {redirect_to :controller => :login, :action => :register}# new.html.erb
     end
   end
 
@@ -109,6 +119,7 @@ end
   # POST /users.xml
   def create
     @user = User.new(params[:user])
+    @user.update_attribute(:registered_at, Time.now)
     respond_to do |format|
       if @user.save
         flash[:notice] = 'User was successfully created.'

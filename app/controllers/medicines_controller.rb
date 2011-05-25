@@ -1,26 +1,39 @@
 class MedicinesController < ApplicationController
-active_scaffold :medicine do |config|
+  active_scaffold :medicine do |config|
     config.label = Russian.t(:medicines)
     config.columns = [:name]
     config.list.columns = [:name]
+    config.actions = [:list, :search, :create, :update, :delete]
+    
+    ##todo: use this 
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
 	
-	##todo: use this 
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
-	
-	config.list.sorting = {:name => 'ASC'}
-	
-	config.search.columns = [:name]
-	config.search.live = true
-	
-	config.list.per_page = 15
-	config.columns[:name].sort = true
-	config.columns[:name].sort_by :sql => 'medicines.name'
-	
-	config.list.always_show_search = true
-end 
-
+    config.list.sorting = {:name => 'ASC'}
+    
+    config.search.columns = [:name]
+    config.search.live = true
+    
+    config.list.per_page = 15
+    config.columns[:name].sort = true
+    config.columns[:name].sort_by :sql => 'medicines.name'
+    
+    config.list.always_show_search = true
+  end 
+  
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
 
   # GET /medicines/1
   # GET /medicines/1.xml

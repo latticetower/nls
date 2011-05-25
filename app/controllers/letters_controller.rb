@@ -1,103 +1,108 @@
 require 'data_file'
 
 class LettersController < ApplicationController
-auto_complete_for :organization, :name  
+  auto_complete_for :organization, :name  
 
-active_scaffold :letters do |config|
-    config.label = Russian.t(:letters)
-    config.create.label = Russian.t(:letter_create)
-    config.update.label = Russian.t(:letter_update)
-    config.nested.label = Russian.t(:letter_nested)
-    config.show.label = ''
+  active_scaffold :letters do |config|
+      config.label = Russian.t(:letters)
+      config.create.label = Russian.t(:letter_create)
+      config.update.label = Russian.t(:letter_update)
+      config.nested.label = Russian.t(:letter_nested)
+      config.show.label = ''
+     
+      config.columns = [:item, :item_date, :organization, :letter_state, :line_count]
+      config.list.columns = [:created_on, :item, :item_date, :organization, :letter_state, :line_count]
+      config.update.columns.exclude :line_count
+       config.create.columns.exclude :line_count
+       config.show.columns.exclude :line_count
+    config.actions = [:create, :list,  :search, :show, :update, :delete, :nested, :subform] 
+    ##todo: use this  
+    config.list.mark_records = true
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
    
-    config.columns = [:item, :item_date, :organization, :letter_state, :line_count]
-    config.list.columns = [:created_on, :item, :item_date, :organization, :letter_state, :line_count]
-    config.update.columns.exclude :line_count
-     config.create.columns.exclude :line_count
-     config.show.columns.exclude :line_count
-	config.actions = [:create, :list,  :search, :show, :update, :delete, :nested, :subform] 
-	##todo: use this  
-config.list.mark_records = true
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
- 
-  
-  config.nested.add_link(Russian.t('edit_letter'), [ :letter_details], :label => Russian.t('edit_letter'))
-  config.show.label = ''
-	config.action_links.add 'reply', :label => 'Reply', :type => :member, :page => true
-  #record
-	config.action_links.add 'edit_letter', :label => 'edit', :type => :record, :page => true
-	config.action_links[:reply].label = Russian.t('reply')
-#	config.action_links[:edit_letter].label = Russian.t('edit_letter')
-	
-  config.action_links.add 'print_marked', :label => Russian.t(:print_marked), :type => :collection, :popup => true
-	#config.action_links.add 'print_controler', :label => 'Print for controler', :type => :collection, :popup => true
-	
-  
-	config.columns[:item].inplace_edit = true
-	config.columns[:item_date].inplace_edit = true
-	config.columns[:organization].inplace_edit = true
-  
-	config.columns[:organization].form_ui = :select
-  config.columns[:letter_state].inplace_edit = true
-  config.columns[:letter_state].form_ui = :select
     
-	config.list.sorting = {:item => 'ASC'}
-	config.search.columns = [:item, :created_on, :organization]
-	config.search.live = true
-	config.show.link = false
-	
-	config.list.per_page = 15
-	config.columns[:item].sort = true
-	config.columns[:item].sort_by :sql => 'item'
-	config.columns[:created_on].search_ui = :date
-	config.list.always_show_search = true
-config.list.sorting = {:created_on => 'DESC'}
-#config.field_search.columns = :created_on, :item, :item_date
-end 
-#TODO: print marked must print all marked letters data as a rtf report
-def print_marked
-  @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
-  render :xml => @letters.to_xml
-    mime_type = "application/msword"
-  @user = current_user
-  @file = DataFile.do_rtf(@user, @letters)
-    # Send the new file with the wordprocessingml document
-    # content type.
-  send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+    config.nested.add_link(Russian.t('edit_letter'), [ :letter_details], :label => Russian.t('edit_letter'))
+    config.show.label = ''
+    config.action_links.add 'reply', :label => 'Reply', :type => :member, :page => true
+    #record
+    config.action_links.add 'edit_letter', :label => 'edit', :type => :record, :page => true
+    config.action_links[:reply].label = Russian.t('reply')
+  #	config.action_links[:edit_letter].label = Russian.t('edit_letter')
+    
+    config.action_links.add 'print_marked', :label => Russian.t(:print_marked), :type => :collection, :popup => true
+    #config.action_links.add 'print_controler', :label => 'Print for controler', :type => :collection, :popup => true
+    
+    
+    config.columns[:item].inplace_edit = true
+    config.columns[:item_date].inplace_edit = true
+    config.columns[:organization].inplace_edit = true
+    
+    config.columns[:organization].form_ui = :select
+    config.columns[:letter_state].inplace_edit = true
+    config.columns[:letter_state].form_ui = :select
+      
+    config.list.sorting = {:item => 'ASC'}
+    config.search.columns = [:item, :created_on, :organization]
+    config.search.live = true
+    config.show.link = false
+    
+    config.list.per_page = 15
+    config.columns[:item].sort = true
+    config.columns[:item].sort_by :sql => 'item'
+    
+    config.columns[:created_on].search_ui = :date
+    config.columns[:organization].search_sql = 'organizations.name'
+    config.list.always_show_search = true
+    config.list.sorting = {:created_on => 'DESC'}
+    #config.field_search.columns = :created_on, :item, :item_date
+  end 
 
-end
+  #TODO: print marked must print all marked letters data as a rtf report
+  def print_marked
+    @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+    render :xml => @letters.to_xml
+      mime_type = "application/msword"
+    @user = current_user
+    @file = DataFile.do_rtf(@user, @letters)
+      # Send the new file with the wordprocessingml document
+      # content type.
+    send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+    @letters.each do |letter|
+      @answer = letter.make_answer
+      @answer.update_attribute(:answered, true)
+      #@answer.update_attribute(:answer_date, Time.now)
+    end
+    #marked_records.clear
+  end
 
-def print_controler
-  @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
-  render :xml => @letters.to_xml
-    mime_type = "application/msword"
-  @user = current_user
-  @file = DataFile.do_rtf(@user, @letters)
-    # Send the new file with the wordprocessingml document
-    # content type.
-  send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
-end
-def authorized_for_read?
-#return true
-    return false if not current_user
-   return true
-end
-def authorized_for_update?
-  return false if not current_user
-  return current_user.is_a_operator?
-end
-def authorized_for_create?
-  return false if not current_user
-  return current_user.is_a_operator?
-end
+  def print_controler
+    @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+    render :xml => @letters.to_xml
+      mime_type = "application/msword"
+    @user = current_user
+    @file = DataFile.do_rtf(@user, @letters)
+      # Send the new file with the wordprocessingml document
+      # content type.
+    send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+  end
 
-def authorized_for_delete?
-  return false unless current_user
-  current_user.is_an_operator_or_admin?
-end
-
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end 
+  
 def letter_state_authorized?
   return true if current_user.is_an_admin_or_operator?
   return false
@@ -148,10 +153,10 @@ end
   end
   
   
-   def reply
+  def reply
     @letter = Letter.find(params[:id])
 
-	redirect_to :controller => :answers, :action => 'show', :id => @letter.id and return
+    redirect_to :controller => :answers, :action => 'show', :id => @letter.id and return
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @letter }

@@ -260,10 +260,10 @@ document.paragraph do |p|
     @all_lines = 0
           table[0][1].top_border_width = 10
    letters.each do |letter|
- 
+      @answer_id = letter.get_answer_id
       @ads = AnswerDetail.find(:all, :conditions => {
-          :organization_id => sender.organization_id, 
-          :letter_id => letter.id
+          :user_id => sender.id, 
+          :answer_id => @answer_id
           })
       @count_empty = @ads.select{|ad| ad.received_drugs == 0}.length
       @ads = @ads.select{|ad| ad.received_drugs > 0}
@@ -477,47 +477,47 @@ document.paragraph do |p|
       table.border_width = 5
       @line = 0
       @ads.each do |ad| 
-        letter = ad.letter
+      letter = ad.letter
         
-        @all_lines = @all_lines + 1
+      @all_lines = @all_lines + 1
         table [@line][0] << @all_lines.to_s #номер пп
        # #table [@line][1] do |t|
-          table [@line][1] << letter.item #дата и номер письма
-          table [@line][1].line_break
-          table [@line][1] << letter.item_date.to_s
+        table [@line][1] << letter.item #дата и номер письма
+        table [@line][1].line_break
+        table [@line][1] << letter.item_date.to_s
         ##end
-        #@ld = ad.letter_detail
+        @ld = ad.letter_detail
         ## table [@line][2] do |t| #лс
-         # table [@line][2] << (@ld.medicine ? @ld.medicine.name : '' )
-         # table [@line][2].line_break
-          #table [@line][2] << (@ld.measure ? @ld.measure.name : '' )
-         # table [@line][2].line_break
-          #table [@line][2] << (@ld.boxing_type ? @ld.boxing_type.name : '') 
+          table [@line][2] << (@ld.medicine ? @ld.medicine.name : '' )
+         table [@line][2].line_break
+          table [@line][2] << (@ld.measure ? @ld.measure.name : '' )
+          table [@line][2].line_break
+          table [@line][2] << (@ld.boxing_type ? @ld.boxing_type.name : '') 
         ##end
         ##table [@line][3] do |t| #лс
-         # table [@line][3] << @ld.serial 
+          table [@line][3] << @ld.serial 
         ##end
         ##table [@line][4] do |t| #лс
-          #table [@line][4] << (@ld.manufacturer ? @ld.manufacturer.name : '')
-          #table [@line][4].line_break
-          #table [@line][4] << (@ld.country ? @ld.country.name : '')
+          table [@line][4] << (@ld.manufacturer ? @ld.manufacturer.name : '')
+          table [@line][4].line_break
+          table [@line][4] << (@ld.country ? @ld.country.name : '')
        ## end
         ##table [@line][5] do |t| #лс
-         # table [@line][5] << ad.supplier
+          table [@line][5] << ad.supplier
         ##end
         ##table [@line][6] do |t| #лс
-         # table [@line][6] << ad.received_drugs.to_s
-          #table [@line][6] << '/'
-          #table [@line][6] << ad.identified_drugs.to_s
+          table [@line][6] << ad.received_drugs.to_s
+          table [@line][6] << '/'
+          table [@line][6] << ad.identified_drugs.to_s
         ##end
         ##table [@line][7] do |t| #лс
-         # table [@line][7] << (ad.tactic ? ad.tactic.name : '')
+          table [@line][7] << (ad.tactic ? ad.tactic.name : '')
        ## end
        ## table [@line][8] do |t| #лс
-        #  table [@line][8] << ad.details
+          table [@line][8] << ad.details
         ##end
         ##инкрементация
-        #@line = @line + 1
+        @line = @line + 1
         
     #  end
 

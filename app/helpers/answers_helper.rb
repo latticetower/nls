@@ -1,5 +1,5 @@
 module AnswersHelper
-def letter_column(detail) 
+  def letter_column(detail) 
 	'N' +h(detail.letter.item) + ' ' +  h(detail.letter.created_on.strftime("%d.%m.%y"))
    end
 
@@ -17,18 +17,18 @@ def letter_column(detail)
    end
    
    def manufacturer_column(detail)
-  in_place_editor_field :manufacturer, 'name' 
+      in_place_editor_field :manufacturer, 'name' 
    end
    
    def identified_drugs_column(detail)
-	 in_place_editor_field  :identified_drugs, ''
+     in_place_editor_field  :identified_drugs, ''
    end
    def details_column(detail)
      h(detail.details)
    end
    
    def boxing_type_column(detail) 
-	h(detail.boxing_type.name) 
+    h(detail.boxing_type.name) 
    end
 
  def letter_column(detail) 

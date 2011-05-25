@@ -30,7 +30,7 @@ class UploadController < ApplicationController
           "application/msword"
      @letter = Letter.find(params[:id]) if params[:id]
   @user = current_user
-  @file = DataFile.do_rtf(@user, @letter)
+  @file = DataFile.do_rtf(@user, [@letter])
     # Send the new file with the wordprocessingml document
     # content type.
     send_file(@file, :filename => Russian.t(:letter) + "N" +

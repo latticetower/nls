@@ -3,7 +3,7 @@ active_scaffold :boxing_type do |config|
     config.label = Russian.t(:boxing_type)
     config.columns = [:name]
     config.list.columns = [:name]
-	
+	config.actions.exclude :show
 	##todo: use this 
 	config.columns.each do |column|
 	  column.label = Russian.t(column.name)
@@ -21,7 +21,18 @@ active_scaffold :boxing_type do |config|
 	config.list.always_show_search = true
 
 end 
-
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
 
   # GET /boxing_types/1
   # GET /boxing_types/1.xml

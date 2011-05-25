@@ -1,11 +1,12 @@
 class ManufacturersController < ApplicationController
-active_scaffold :manufacturer do |config|
-    config.label = Russian.t(:manufacturer)
+  active_scaffold :manufacturer do |config|
+    config.label = Russian.t(:manufacturers)
     config.columns = [:name]
     config.list.columns = [:name]
 		config.columns.each do |column|
 	   column.label = Russian.t(column.name)
 	end
+  config.actions.exclude :show
 	config.list.sorting = {:name => 'ASC'}
 	
 	config.search.columns = [:name]
@@ -19,17 +20,21 @@ active_scaffold :manufacturer do |config|
 
 end 
 
-
-  # GET /manufacturers/1
-  # GET /manufacturers/1.xml
-  def show
-    @manufacturer = Manufacturer.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @manufacturer }
-    end
+ def create_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
   end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end 
+  
 
   # GET /manufacturers/new
   # GET /manufacturers/new.xml

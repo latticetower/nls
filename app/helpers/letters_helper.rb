@@ -9,6 +9,6 @@ module LettersHelper
    letter.created_on.to_s(:date_only)
    end
    def list_row_class(letter)
-    letter.id % 2 == 0 ? 'negative' : 'positive'
+    letter.answered ? 'answered' : 'new_letter'
   end
 end

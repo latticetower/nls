@@ -1,13 +1,28 @@
 class ActionListsController < ApplicationController
+ 
  active_scaffold  do |config|
     config.label = Russian.t(:action_lists)
+    config.actions.exclude :search #temporarily - since there is no action lists now
     config.columns = [:answer_detail, :created_at, :tactic]
     config.list.columns = [:answer_detail, :created_at, :tactic]
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
   end
-
+  
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  
   # GET /action_lists/1
   # GET /action_lists/1.xml
   def show

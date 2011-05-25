@@ -14,9 +14,11 @@ class LoginController < ApplicationController
       
       @user = User.authenticate(params[:user][:email], params[:user][:password])
      
-     # hl = HistoryLog.create(:login => params[:user][:login], :ip => request.remote_ip, :useragent => request.env["HTTP_USER_AGENT"])
-     # hl.update_attribute(:allowed, true) if user
-     # hl.update_attribute(:password, params[:user][:password]) if user.nil?
+      hl = HistoryLog.create(:email => params[:user][:email], 
+            :ip => request.remote_ip, 
+            :useragent => request.env["HTTP_USER_AGENT"])
+      hl.update_attribute(:allowed, true) if @user
+      hl.update_attribute(:password, params[:user][:password]) if @user.nil?
      
       if @user != nil
         session[:user_id] = @user.id
@@ -39,11 +41,13 @@ class LoginController < ApplicationController
       return if params[:user][:login] == ""
       
       @user = User.new(params[:user])
-      
+      #@user.update_attribute(:registered_at, Time.now)
      #TODO: Переделать хистори лог чтобы отображал в т.ч. добавление новых пользователей
-     # hl = HistoryLog.create(:login => params[:user][:login], :ip => request.remote_ip, :useragent => request.env["HTTP_USER_AGENT"])
-     # hl.update_attribute(:allowed, true) if user
-     # hl.update_attribute(:password, params[:user][:password]) if user.nil?
+      hl = HistoryLog.create(:email => params[:user][:email], 
+          :ip => request.remote_ip, 
+          :useragent => request.env["HTTP_USER_AGENT"])
+     # hl.update_attribute(:allowed, true) if @user
+      hl.update_attribute(:password, params[:user][:password]) unless @user.nil?
       
      if @user.save
         flash[:notice] = "User created."

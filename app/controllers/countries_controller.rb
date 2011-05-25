@@ -7,7 +7,7 @@ class CountriesController < ApplicationController
 	  column.label = Russian.t(column.name)
 	end
 	config.list.sorting = {:name => 'ASC'}
-	
+	config.actions.exclude :show
 	config.search.columns = [:name]
 	config.search.live = true
 	
@@ -19,7 +19,23 @@ class CountriesController < ApplicationController
 
 end 
  
- 
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end 
+  def list_authorized?
+    return false unless current_user
+   # current_user.is_an_operator_or_admin?
+   true
+  end
   # GET /countries/1
   # GET /countries/1.xml
   def show

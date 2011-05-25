@@ -10,7 +10,7 @@ active_scaffold :letter_states do |config|
 	config.columns.each do |column|
 	   column.label = Russian.t(column.name)
 	end
-	
+	config.actions.exclude :show
 	config.list.sorting = {:name => 'ASC'}
 	
 	config.search.columns = [:name]
@@ -23,7 +23,20 @@ active_scaffold :letter_states do |config|
 	config.list.always_show_search = true
 
 end 
-
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end 
   # GET /letter_states/1
   # GET /letter_states/1.xml
   def show

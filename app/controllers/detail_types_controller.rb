@@ -1,43 +1,43 @@
 class DetailTypesController < ApplicationController
-active_scaffold :detail_type do |config|
-  config.label = Russian.t(:detail_types)
-    config.columns = [ :name, :name_long]
-    config.list.columns = [:name, :name_long]
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
-end
-def authorized?
-  return false if not current_user
-  current_user.is_an_admin_or_operator?
-end
-def authorized_for_create?
-  return false if not current_user
-  current_user.is_an_admin_or_operator?
-end
-def authorized_for_delete?
-  return false if not current_user
-  current_user.is_an_admin_or_operator?
-end
-def authorized_for_read?
-  return false if not current_user
-  current_user.is_an_admin_or_operator?
-end
-def authorized_for_update?
-  return false if not current_user
-  current_user.is_an_admin_or_operator?
-end
- def conditions_for_collection
-   if current_user.is_an_admin_or_operator?
-    return []
-   else 
-   return ['1!=1']
-   end
-	 #return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
-	#else 
-	# return ['users.id in (?)', current_user.id]
-   # end
-end
+  active_scaffold :detail_type do |config|
+    config.label = Russian.t(:detail_types)
+      config.columns = [ :name, :name_long]
+      config.list.columns = [:name, :name_long]
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
+  end
+
+
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end 
+  def list_authorized?
+    return false unless current_user
+   # current_user.is_an_operator_or_admin?
+   true
+  end
+  
+   def conditions_for_collection
+     if current_user.is_an_admin_or_operator?
+        return []
+     else 
+       return ['1!=1']
+     end
+     #return ['users.organization_id in (?)', current_user.showed_organizations]#, ['ticket_categories.category_id in (?)', current_user.categories]
+    #else 
+    # return ['users.id in (?)', current_user.id]
+     # end
+  end
 
   # GET /detail_types/1
   # GET /detail_types/1.xml

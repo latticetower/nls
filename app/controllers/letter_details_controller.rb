@@ -5,10 +5,12 @@ class LetterDetailsController < ApplicationController
   auto_complete_for :country, :name  
   auto_complete_for :boxing_type, :name 
   auto_complete_for :detail_type, :name 
+  
  
 active_scaffold :letter_details do |config|
     config.label = Russian.t(:letter_details)
-    config.columns = [ :medicine, :boxing_type, :measure,  :manufacturer,  :country, :serial, :detail_type]
+    config.columns = [ :medicine, :boxing_type, :measure,  :manufacturer,  :country, 
+    :serial, :detail_type]
   	##todo: use this 
      config.nested.label = ''
      config.show.label = ''
@@ -50,19 +52,42 @@ active_scaffold :letter_details do |config|
   
 	config.columns[:serial].inplace_edit = true
 	
-	config.search.columns = [:letter, :medicine, :detail_type]
+	config.search.columns = [:boxing_type, :medicine, :measure,  :manufacturer,  
+        :country, :serial]
 	config.search.live = true
 config.show.link = false
 config.update.link = false
 
 	config.list.per_page = 15
-	config.columns[:letter].sort = true
-	config.columns[:letter].sort_by :sql => 'letter_details.letter_id'
+#	config.columns[:letter].sort = true
+	#config.columns[:boxing_type].sort_by :sql => 'boxing_types.name'
+	
+  config.columns[:measure].search_sql = 'measures.name'
+  config.columns[:boxing_type].search_sql = 'boxing_types.name'
+	config.columns[:manufacturer].search_sql = 'manufacturers.name'
+  config.columns[:country].search_sql = 'countries.name'
+  config.columns[:medicine].search_sql = 'medicines.name' 
+  #config.columns[:serial].search_sql = 'serials.name' 
+	
+  config.columns[:detail_type].sort_by :sql => 'detail_types.letter_id'
 	
 	config.list.always_show_search = true
 end 
 
-
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator?
+  end 
 
   # GET /letter_details/1
   # GET /letter_details/1.xml

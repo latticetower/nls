@@ -1,0 +1,9 @@
+﻿<dl>  
+  <dt><label for="record_supplier"><%= Russian.t(:supplier) %></label></dt>  
+  <dd>  
+     <%= text_field_with_auto_complete(:supplier, :name,   
+     { :value => (@supplier.name if (@supplier ||= @record.supplier)),              
+        :class => 'text-input' }, { :method => :get })   
+        %>
+  </dd>  
+</dl> 

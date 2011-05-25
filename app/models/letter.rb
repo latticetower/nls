@@ -2,14 +2,38 @@ class Letter < ActiveRecord::Base
   belongs_to :letter_state, :foreign_key => "state_id"
   has_many :letter_details
   belongs_to :organization
-  
+  has_many :answers
+    
   def to_label
     item
   end
+
+  def make_answer
+    @user = User.current_user
+    return nil unless @user
+    conditions = {:user_id => @user.id, :letter_id => self.id}
+    @answer = Answer.find(:first, :conditions => conditions)
+     unless @answer
+      @answer = Answer.create(conditions)  
+      @answer.update_attribute(:answer_date, Time.now)
+     end
+    @res = @answer.make_details(@user.id)
   
-   def authorized_for_read?
-   return false unless current_user
-   return true
+    return @answer
+  end
+  
+  def get_answer_id
+    @user = User.current_user
+    return nil unless @user
+    conditions = {:user_id => @user.id, :letter_id => self.id}
+    @answer = Answer.find(:first, :conditions => conditions)
+    return nil unless @answer
+    return @answer.id
+  end
+  
+  def authorized_for_read?
+     return false unless current_user
+     return true
     #current_user.is_an_operator_or_admin?
   end
   def authorized_for_update?
@@ -24,7 +48,14 @@ class Letter < ActiveRecord::Base
     return false unless current_user
     current_user.is_an_operator_or_admin?
   end
-
+  def answered
+    @user = current_user
+    return false unless @user
+    @answer = Answer.find(:first, :conditions => {:user_id => @user.id, 
+          :letter_id => self.id})
+    return false unless @answer
+    return @answer.answered
+  end
   
   def to_xml(options={})
     options[:indent] ||= 2

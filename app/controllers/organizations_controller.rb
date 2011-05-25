@@ -1,35 +1,48 @@
 class OrganizationsController < ApplicationController
 
 
-active_scaffold :organization do |config|
+  active_scaffold :organization do |config|
     config.label = Russian.t(:organizations)
     config.columns = [:name, :name_long]
     config.list.columns = [:name, :name_long]
+	config.actions.exclude :show
+    ##todo: use this 
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
 	
-	##todo: use this 
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
-	
-	config.list.sorting = {:name => 'ASC'}
-	
-	config.search.columns = [:name]
-	config.search.live = true
-	
-	config.list.per_page = 15
-	config.columns[:name].sort = true
-	config.columns[:name].sort_by :sql => 'organizations.name'
-	
-	config.list.always_show_search = true
-
-end 
-
-def conditions_for_collection
-if current_user.is_a_client_or_manager?
-return ['id in (?)', current_user.organization_id]
-end
-[]
-end
+    config.list.sorting = {:name => 'ASC'}
+    
+    config.search.columns = [:name]
+    config.search.live = true
+    
+    config.list.per_page = 15
+    config.columns[:name].sort = true
+    config.columns[:name].sort_by :sql => 'organizations.name'
+    
+    config.list.always_show_search = true
+  end 
+  
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_admin?
+  end 
+  def conditions_for_collection
+    if current_user.is_a_client_or_manager?
+      return ['id in (?)', current_user.organization_id]
+    end
+    []
+  end
 
   # GET /organizations
   # GET /organizations.xml

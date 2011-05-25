@@ -8,13 +8,20 @@ end
   # GET /answers/1
   # GET /answers/1.xml
   def show
-    @answer = Letter.find(params[:id])
-@ld = @answer.letter_details
-    for ld in @ld do
-      if ld.find_answer_by_organization(current_user.organization_id) == nil
-        ld.answer_details << AnswerDetail.new(:letter_id => @answer.id, :organization_id => current_user.organization_id)
-      end
-    end
+  ##todo: must add condition
+  @id = params[:id]
+  @user_id = current_user.id
+  
+  @letter = Letter.find(@id)
+    
+ # @answer = Answer.find(:first, :conditions => {
+  #      :letter_id => @id, 
+  #      :user_id => @user_id
+  #      })
+  
+    @answer = @letter.make_answer # if not @answer
+    @ad = @answer.answer_details
+ 
     respond_to do |format|
       format.html # show.html.erb
       format.xml {render :xml => @answer }

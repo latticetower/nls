@@ -1,13 +1,29 @@
 class RolesController < ApplicationController
-active_scaffold :roles do |config|
-  config.label = Russian.t(:roles)
-    config.columns = [ :name]
-    config.list.columns = [:name]
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
-end
-
+  active_scaffold :roles do |config|
+      config.label = Russian.t(:roles)
+      config.columns = [ :name]
+      config.actions.exclude :search
+      config.list.columns = [:name]
+      config.columns.each do |column|
+         column.label = Russian.t(column.name)
+      end
+  end
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end 
+  def list_authorized?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
   # GET /roles/1
   # GET /roles/1.xml
   def show
