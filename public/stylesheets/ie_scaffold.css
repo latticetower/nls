@@ -301,3 +301,81 @@ padding:0px;
 margin:0px;
 color: #8e8e8e;
 }
+
+.active-scaffold tr.new_letter td.letter_state-column {
+  background-color: white;
+}
+
+.active-scaffold tr.new_letter td.item_date-column {
+  background-color: white;
+}
+.active-scaffold tr.new_letter td.organization-column {
+  background-color: white;
+}
+
+.active-scaffold tr.new_letter td.item-column {
+  background-color: white;
+}
+.active-scaffold tr.new_letter td.created_on-column {
+  background-color: white;
+}
+
+.active-scaffold tr.new_letter td.line_count-column {
+  background-color: white;
+}
+
+.active-scaffold tr.answered td.line_count-column {
+  background-color: silver;
+  color:black;
+}
+
+.active-scaffold tr.answered td.letter_state-column {
+  background-color: silver;
+  color:black;
+}
+
+.active-scaffold tr.answered td.item_date-column {
+  background-color: silver;
+  color:black;
+}
+.active-scaffold tr.answered td.organization-column {
+  background-color: silver;
+  color:black;
+}
+
+.active-scaffold tr.answered td.item-column {
+  background-color: silver;
+  color:black;
+}
+.active-scaffold tr.answered td.created_on-column {
+  background-color: silver;
+  color:black;
+}
+
+active-scaffold tr.answered td.line_count-column {
+  background-color: silver;
+  color:black;
+}
+
+.active-scaffold tr.answered td.letter_state-column {
+  background-color: silver;
+  color:black;
+}
+
+.active-scaffold tr.even-record answered td.item_date-column {
+  background-color: silver;
+  color:black;
+}
+.active-scaffold tr.even-record answered td.organization-column {
+  background-color: silver;
+  color:black;
+}
+
+.active-scaffold tr.even-record answered td.item-column {
+  background-color: silver;
+  color:black;
+}
+.active-scaffold tr.even-record answered td.created_on-column {
+  background-color: silver;
+  color:black;
+}
