@@ -18,14 +18,14 @@ class LoginController < ApplicationController
             :ip => request.remote_ip, 
             :useragent => request.env["HTTP_USER_AGENT"])
       hl.update_attribute(:allowed, true) if @user
-      hl.update_attribute(:password, params[:user][:password]) if @user.nil?
+      hl.update_attribute(:password, params[:user][:password]) unless @user
      
       if @user != nil
         session[:user_id] = @user.id
         puts "set id=" + session[:user_id].to_s()
         redirect_to :controller => 'letters'
       else
-        flash[:notice] = "Invalid password"
+        flash[:sent] = Russian.t(:invalid_password)
       end
     end
   end 

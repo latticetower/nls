@@ -10,6 +10,7 @@ has_many  :answer_details
 #belongs_to :answer, :primary_key => 'id', :foreign_key => 'letter_id'
 
 ##todo: check all!!
+##TODO: поковырять
   def make_answer_detail(user_id, answer_id)
    conditions = {:user_id => user_id, 
       :letter_detail_id => self.id, 
@@ -25,11 +26,11 @@ has_many  :answer_details
          @ad.update_attribute(:answer_id, answer_id)
          @ad.update_attribute(:user_id, user_id)
          @ad.save
+      end
      end
-     end
-     @ad.update_attribute(:letter_id, letter.id) if @ad.letter_id == 0
+     
      @ad = AnswerDetail.create(conditions) unless @ad
-   
+   @ad.update_attribute(:letter_id, letter.id) if @ad.letter_id == 0
      #end
       return @ad  
   end

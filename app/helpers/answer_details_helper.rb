@@ -3,7 +3,7 @@ module AnswerDetailsHelper
  def answer_detail_letter_column(detail) 
 	'N#{detail.letter.item} #{detail.letter.created_on.strftime("%d.%m.%y")}'
    end
- def item_and_date_column(detail) 
+ def answer_detail_item_and_date_column(detail) 
     
 	@s = 'N' + h(detail.letter ? detail.letter.item : "_____") + '<br> ' 
   return @s unless detail.letter
@@ -61,7 +61,7 @@ module AnswerDetailsHelper
      h(@ld.medicine ? @ld.medicine.name : '')
    end
    
-   def detail_type_column(detail)
+   def answer_detail_detail_type_column(detail)
      return '' unless detail.letter_detail
      return '' unless detail.letter_detail.detail_type
      h(detail.letter_detail.detail_type.name)

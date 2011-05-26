@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
    delegate :permissions, :to => :role
   
   def authorized_for_read?
-return false unless current_user
+   return false unless current_user
   current_user.is_an_admin_or_operator?
 end
 
@@ -24,9 +24,10 @@ end
 
   def self.authenticate(login, pass)
      @user = find(:first, :conditions => {:email => login})
+     return nil unless @user
      @encrypted_password = Digest::MD5.hexdigest(@user.salt + pass)
      return @user if @user.encrypted_password == @encrypted_password
-     return null
+     return nil
   end
 
   def to_label
