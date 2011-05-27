@@ -1,16 +1,23 @@
 class LetterDetail < ActiveRecord::Base
-belongs_to :letter
-belongs_to :detail_type
-belongs_to :medicine
-belongs_to :boxing_type
-belongs_to :measure
-belongs_to :manufacturer
-belongs_to :country
-has_many  :answer_details
-#belongs_to :answer, :primary_key => 'id', :foreign_key => 'letter_id'
+  belongs_to :letter
+  belongs_to :detail_type
+  belongs_to :medicine
+  belongs_to :boxing_type
+  belongs_to :measure
+  belongs_to :manufacturer
+  belongs_to :country
+  has_many  :answer_details
+  
 
-##todo: check all!!
-##TODO: поковырять
+  
+  #belongs_to :answer, :primary_key => 'id', :foreign_key => 'letter_id'
+  def detail_type_authorized?
+    return false unless current_user
+    current_user.is_an_admin_or_operator?
+  end
+  
+  ##todo: check all!!
+  ##TODO: поковырять
   def make_answer_detail(user_id, answer_id)
    conditions = {:user_id => user_id, 
       :letter_detail_id => self.id, 
@@ -54,6 +61,7 @@ end
     return false unless current_user
     current_user.is_an_operator?
   end
+
   
   def delete_authorized?
     return false unless current_user
@@ -65,6 +73,10 @@ end
   end
 
 def authorized_for_create?
+  return false if not current_user
+ current_user.is_an_admin_or_operator?
+end
+def authorized_for_update?
   return false if not current_user
  current_user.is_an_admin_or_operator?
 end

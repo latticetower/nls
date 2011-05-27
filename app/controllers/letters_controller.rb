@@ -3,6 +3,7 @@ require 'data_file'
 class LettersController < ApplicationController
   auto_complete_for :organization, :name  
 
+  
   active_scaffold :letters do |config|
       config.label = Russian.t(:letters)
       config.create.label = Russian.t(:letter_create)
@@ -105,10 +106,10 @@ class LettersController < ApplicationController
   
 def letter_state_authorized?
   return true if current_user.is_an_admin_or_operator?
-  return false
+  return false 
 end
 def line_count_authorized?
-  return true if current_user.is_admin_or_operator?
+  return true if current_user.is_an_admin_or_operator?
   return false
 end
 #для актив скаффолда

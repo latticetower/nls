@@ -36,18 +36,32 @@ class Letter < ActiveRecord::Base
      return true
     #current_user.is_an_operator_or_admin?
   end
+  
   def authorized_for_update?
-  return false unless current_user
+    return false unless current_user
     current_user.is_an_operator_or_admin?
   end
-    def authorized_for_create?
+  
+  def authorized_for_create?
     return false unless current_user
-      current_user.is_an_operator_or_admin?
-    end
+    current_user.is_an_operator_or_admin?
+  end
+    
   def authorized_for_delete?
     return false unless current_user
     current_user.is_an_operator_or_admin?
   end
+  
+  def letter_state_authorized?
+    return true if current_user.is_an_admin_or_operator?
+    return false 
+  end
+  
+#  def line_count_authorized?
+#    return true if current_user.is_an_admin_or_operator?
+#    return false
+#  end
+  
   def answered
     @user = current_user
     return false unless @user

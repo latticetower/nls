@@ -5,7 +5,18 @@ class LetterDetailsController < ApplicationController
   auto_complete_for :country, :name  
   auto_complete_for :boxing_type, :name 
   auto_complete_for :detail_type, :name 
-  
+    before_filter :update_table_config
+
+  def update_table_config         
+    if current_user
+      # Change things one way
+      if not current_user.is_an_admin_or_operator?
+        active_scaffold_config.columns.exclude :detail_type
+      end
+    else
+      # Change things back the other way
+    end 
+  end
  
 active_scaffold :letter_details do |config|
     config.label = Russian.t(:letter_details)
@@ -79,15 +90,13 @@ end
     current_user.is_an_operator?
   end
   
-  def update_authorized?
-    return false unless current_user
-    current_user.is_an_operator?
-  end
+
   
   def delete_authorized?
     return false unless current_user
     current_user.is_an_operator?
   end 
+  
 
   # GET /letter_details/1
   # GET /letter_details/1.xml

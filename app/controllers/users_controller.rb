@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       end
       config.create.columns = [:role, :email]
       config.columns[:role].search_sql = 'roles.name'
-    #	config.columns[:organization].search_sql = 'organizations.name'
+    	config.columns[:organization].search_sql = 'organizations.name'
       config.search.columns = [:role, :email]
       config.search.live = true
       config.columns[:role].clear_link 
@@ -38,23 +38,23 @@ class UsersController < ApplicationController
       config.columns[:registered_at].search_ui = :date
       #config.actions.add :list_filter 
     #	config.list_filter.add(:date, :created_at, {:label => "fio"})
-      config.actions.swap :search, :field_search
-      config.field_search.columns = [:registered_at, :role, :email, :organization]
+      #config.actions.swap :search, :field_search
+      config.search.columns = [ :role, :email, :organization]
   end
   
  def create_authorized?
     return false unless current_user
-    current_user.is_an_admin?
+    current_user.is_an_admin_or_operator?
   end
   
   def update_authorized?
     return false unless current_user
-    current_user.is_an_admin?
+    current_user.is_an_admin_or_operator?
   end
   
   def delete_authorized?
     return false unless current_user
-    current_user.is_an_admin?
+    current_user.is_an_admin_or_operator?
   end  
   
   def conditions_for_collection
@@ -74,6 +74,7 @@ def active_authorized?
   return false
 end
 def role_authorized?
+  return false if not current_user
   return true if current_user.is_an_admin_or_operator?
   return false
 end
@@ -112,7 +113,7 @@ end
   end
 
   def edit_details
-  @user = current_user
+    @user = current_user
   end
   
   # POST /users

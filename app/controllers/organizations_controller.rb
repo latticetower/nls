@@ -25,17 +25,17 @@ class OrganizationsController < ApplicationController
   
   def create_authorized?
     return false unless current_user
-    current_user.is_an_admin?
+    current_user.is_an_admin_or_operator?
   end
   
   def update_authorized?
     return false unless current_user
-    current_user.is_an_admin?
+    current_user.is_an_admin_or_operator?
   end
   
   def delete_authorized?
     return false unless current_user
-    current_user.is_an_admin?
+    current_user.is_an_admin_or_operator?
   end 
   def conditions_for_collection
     if current_user.is_a_client_or_manager?

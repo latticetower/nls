@@ -19,7 +19,7 @@ end
 
 def authorized_for_delete?
   return false unless current_user
-  current_user.is_an_admin?
+  current_user.is_an_admin_or_operator?
 end
 
   def self.authenticate(login, pass)
