@@ -4,13 +4,14 @@ class DetailType < ActiveRecord::Base
      return false unless current_user
      return true
   end
+ ##TODO: create named_scope :by_type
   def authorized_for_update?
     return false unless current_user
-    current_user.is_an_operator_or_admin?
+    current_user.is_an_operator_or_admin_or_inspector?
   end
   def authorized_for_create?
       return false unless current_user
-      current_user.is_an_operator_or_admin?
+      current_user.is_an_operator_or_admin_or_inspector?
   end
   def authorized_for_delete?
     return false unless current_user

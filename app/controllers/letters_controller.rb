@@ -11,8 +11,10 @@ class LettersController < ApplicationController
       config.nested.label = Russian.t(:letter_nested)
       config.show.label = ''
      
-      config.columns = [:item, :item_date, :organization, :letter_state, :line_count]
-      config.list.columns = [:created_on, :item, :item_date, :organization, :letter_state, :line_count]
+      config.columns = [:item, :item_date, :organization, 
+        :letter_state, :line_count, :answered]
+      config.list.columns = [:created_on, :item, :item_date, :organization, 
+        :letter_state, :line_count, :answered]
       config.update.columns.exclude :line_count
        config.create.columns.exclude :line_count
        config.show.columns.exclude :line_count
@@ -71,8 +73,11 @@ class LettersController < ApplicationController
       # content type.
     send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
     @letters.each do |letter|
+    
       @answer = letter.make_answer
-      @answer.update_attribute(:answered, true)
+      if not @answer.answered
+        @answer.update_attribute(:answered, true) 
+      end
       #@answer.update_attribute(:answer_date, Time.now)
     end
     #marked_records.clear
@@ -104,10 +109,7 @@ class LettersController < ApplicationController
     current_user.is_an_operator_or_admin?
   end 
   
-def letter_state_authorized?
-  return true if current_user.is_an_admin_or_operator?
-  return false 
-end
+#not in use - to use must be moved to model class
 def line_count_authorized?
   return true if current_user.is_an_admin_or_operator?
   return false

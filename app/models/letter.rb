@@ -53,10 +53,9 @@ class Letter < ActiveRecord::Base
   end
   
   def letter_state_authorized?
-    return true if current_user.is_an_admin_or_operator?
-    return false 
+    return false if not current_user
+    current_user.is_an_admin_or_operator_or_inspector? 
   end
-  
 #  def line_count_authorized?
 #    return true if current_user.is_an_admin_or_operator?
 #    return false

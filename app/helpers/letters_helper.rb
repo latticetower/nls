@@ -11,4 +11,7 @@ module LettersHelper
    def list_row_class(letter)
     letter.answered ? 'answered' : 'new_letter'
   end
+  def letter_answered_column(letter)
+    image_tag('tick.png') if letter.answered
+  end
 end

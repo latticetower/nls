@@ -13,7 +13,7 @@ class LetterDetail < ActiveRecord::Base
   #belongs_to :answer, :primary_key => 'id', :foreign_key => 'letter_id'
   def detail_type_authorized?
     return false unless current_user
-    current_user.is_an_admin_or_operator?
+    current_user.is_an_admin_or_operator_or_inspector?
   end
   
   ##todo: check all!!
@@ -59,7 +59,7 @@ end
   
   def update_authorized?
     return false unless current_user
-    current_user.is_an_operator?
+    current_user.is_an_operator_or_inspector?
   end
 
   
@@ -78,6 +78,6 @@ def authorized_for_create?
 end
 def authorized_for_update?
   return false if not current_user
- current_user.is_an_admin_or_operator?
+ current_user.is_an_admin_or_operator_or_inspector?
 end
 end

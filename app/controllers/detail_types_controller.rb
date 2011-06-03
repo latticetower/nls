@@ -2,6 +2,8 @@ class DetailTypesController < ApplicationController
   active_scaffold :detail_type do |config|
     config.label = Russian.t(:detail_types)
       config.columns = [ :name, :name_long]
+      config.actions.exclude :search
+      config.actions.exclude :show
       config.list.columns = [:name, :name_long]
     config.columns.each do |column|
        column.label = Russian.t(column.name)
@@ -11,11 +13,11 @@ class DetailTypesController < ApplicationController
 
   def create_authorized?
     return false unless current_user
-    current_user.is_an_operator_or_admin?
+    current_user.is_an_operator_or_admin_or_inspector?
   end
   def update_authorized?
     return false unless current_user
-    current_user.is_an_operator_or_admin?
+    current_user.is_an_operator_or_admin_or_inspector?
   end
   def delete_authorized?
     return false unless current_user
@@ -28,7 +30,7 @@ class DetailTypesController < ApplicationController
   end
   
    def conditions_for_collection
-     if current_user.is_an_admin_or_operator?
+     if current_user.is_an_admin_or_operator_or_inspector?
         return []
      else 
        return ['1!=1']

@@ -65,12 +65,14 @@ end
   def xmlp
    mime_type = 
       "application/msword"
-  @letter = Letter.find(3)
-  @user = current_user
-  @file = DataFile.do_rtf(@user, @letter)
-  send_file(@file, :filename => Russian.t(:letter) + "N" +
-  @letter.item.inspect + " - " + @letter.item_date.to_s + ".doc", :type => mime_type)
-
+  #@letter = Letter.find(3)
+  #@user = current_user
+  #@file = DataFile.do_rtf(@user, @letter)
+  #send_file(@file, :filename => Russian.t(:letter) + "N" +
+  #@letter.item.inspect + " - " + @letter.item_date.to_s + ".doc", :type => mime_type)
+file = "public/text.csv"
+File.open(file, "w"){ |f| f << "Hello World!" }
+send_file(file, :type => "text/csv; charset=utf-8")
   #render :nothing => true
       #render :xml => Letter.find(3).to_xml
 end

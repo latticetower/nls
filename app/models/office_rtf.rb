@@ -11,6 +11,32 @@ include RTF
 class OfficeRTF
 
   
+  def self.set_styles
+    styles = {}
+    styles['UNDERLINED']             = CharacterStyle.new
+    styles['UNDERLINED'].underline   = true
+    styles['UNDERLINED'].font_size = 20
+    
+    styles['U']             = CharacterStyle.new
+    styles['U'].underline   = true
+        #10 шрифт, с подчеркиванием - для названия организации
+    styles['BOLD']             = CharacterStyle.new
+    styles['BOLD'].bold   = true
+    styles['BOLD'].font_size = 20
+    #14 шрифт, выравнивание по левому краю
+    styles['HEADER'] = CharacterStyle.new
+    styles['HEADER'].font_size = 28 
+    #центрирование
+    styles['CENTERED']             = ParagraphStyle.new
+    styles['CENTERED'].justification = ParagraphStyle::CENTER_JUSTIFY 
+    
+    styles['NORMAL']                 = ParagraphStyle.new
+    styles['NORMAL'].space_after     = 300
+    #отступ - для заголовка
+    styles['PS_INDENTED']             = ParagraphStyle.new
+    styles['PS_INDENTED'].left_indent = 9000
+    return styles
+  end
   
   def self.do_rtf_for_all(sender, letter)
   
@@ -188,30 +214,9 @@ document.paragraph do |p|
     document = Document.new(Font.new(Font::ROMAN, 'Times New Roman'), doc_style)
    ## document.paper. << Paper.new('A4_portrait', 16840, 11907)
     #    Create the used styles.
-    styles                           = {}
+    styles = set_styles
     #10 шрифт, с подчеркиванием - для названия организации
-    styles['UNDERLINED']             = CharacterStyle.new
-    styles['UNDERLINED'].underline   = true
-    styles['UNDERLINED'].font_size = 20
     
-    styles['U']             = CharacterStyle.new
-    styles['U'].underline   = true
-        #10 шрифт, с подчеркиванием - для названия организации
-    styles['BOLD']             = CharacterStyle.new
-    styles['BOLD'].bold   = true
-    styles['BOLD'].font_size = 20
-    #14 шрифт, выравнивание по левому краю
-    styles['HEADER'] = CharacterStyle.new
-    styles['HEADER'].font_size = 28 
-    #центрирование
-    styles['CENTERED']             = ParagraphStyle.new
-    styles['CENTERED'].justification = ParagraphStyle::CENTER_JUSTIFY 
-    
-    styles['NORMAL']                 = ParagraphStyle.new
-    styles['NORMAL'].space_after     = 300
-    #отступ - для заголовка
-    styles['PS_INDENTED']             = ParagraphStyle.new
-    styles['PS_INDENTED'].left_indent = 9000
     document.paragraph(styles['PS_INDENTED']) do |p|
       p.apply(styles['HEADER']) do |s|
           s << Russian.t(:header_line1)
@@ -260,9 +265,9 @@ document.paragraph do |p|
     @all_lines = 0
           table[0][1].top_border_width = 10
    letters.each do |letter|
+      if not letter.answered 
       @answer_id = letter.get_answer_id
-      @ads = AnswerDetail.find(:all, :conditions => {
-          :user_id => sender.id, 
+      @ads = AnswerDetail.find(:all, :conditions => {:user_id => sender.id, 
           :answer_id => @answer_id
           })
       @count_empty = @ads.select{|ad| ad.received_drugs == 0}.length
@@ -301,7 +306,7 @@ document.paragraph do |p|
           table [@line][4] << (@ld.country ? @ld.country.name : '')
        # end
         #table [@line][5] do |t| #лс
-          table [@line][5] << ad.supplier
+          table [@line][5] << (ad.supplier ? ad.supplier.name : ad.supplier_name)
         #end
         #table [@line][6] do |t| #лс
           table [@line][6] << ad.received_drugs.to_s
@@ -328,7 +333,7 @@ document.paragraph do |p|
       if @ads.length == 0
         #если по письму ответа нет
           table = document.table(1, 3, 500, 2000,  12500)
-            table.border_width = 5
+          table.border_width = 5
           @all_lines = @all_lines + 1
           
           table [0][0] << @all_lines.to_s #номер пп
@@ -356,12 +361,12 @@ document.paragraph do |p|
             table[0][1].style = styles['CENTERED']       
           end      
         end
-        
+     end
      
    end
     document.paragraph   
     document.paragraph 
-document.paragraph do |p|
+    document.paragraph do |p|
       p << Russian.t(:upoln)
       p << " "
       p.apply(styles['U']) do |s|

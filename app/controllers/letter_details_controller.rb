@@ -90,6 +90,10 @@ end
     current_user.is_an_operator?
   end
   
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_operator?
+  end
 
   
   def delete_authorized?
