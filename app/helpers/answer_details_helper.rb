@@ -62,6 +62,7 @@ module AnswerDetailsHelper
    end
    
    def answer_detail_detail_type_column(detail)
+   return '' if User.current_user.is_a_client_or_manager?
      return '' unless detail.letter_detail
      return '' unless detail.letter_detail.detail_type
      h(detail.letter_detail.detail_type.name)

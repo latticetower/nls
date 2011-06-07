@@ -46,7 +46,7 @@ class Letter < ActiveRecord::Base
     return false unless current_user
     current_user.is_an_operator_or_admin?
   end
-    
+
   def authorized_for_delete?
     return false unless current_user
     current_user.is_an_operator_or_admin?
@@ -68,6 +68,14 @@ class Letter < ActiveRecord::Base
           :letter_id => self.id})
     return false unless @answer
     return @answer.answered
+  end
+  
+  def set_answered(flag)
+    @user = current_user
+    return unless @user
+    @answer = Answer.find(:first, :conditions => {:user_id => @user.id, 
+          :letter_id => self.id})
+    @answer.update_attribute(:answered, flag) if @answer
   end
   
   def to_xml(options={})

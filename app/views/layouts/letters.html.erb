@@ -75,6 +75,9 @@
 <% end %>
 <div class="main">
 <!--p style="color: green"><%= notice %></p-->
+<% if @current_user.is_an_inspector? %>
+<% render :partial => 'print_for_tu'%>
+<% end %>
     <%= yield %>
 </div>
 </div>

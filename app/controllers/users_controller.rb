@@ -49,8 +49,9 @@ class UsersController < ApplicationController
   
   def update_authorized?
     return false unless current_user
+    true
     #return current_user == record
-    current_user.is_an_admin_or_operator?
+    #current_user.is_an_admin_or_operator?
   end
   
   def delete_authorized?

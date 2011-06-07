@@ -10,7 +10,6 @@ class LettersController < ApplicationController
       config.update.label = Russian.t(:letter_update)
       config.nested.label = Russian.t(:letter_nested)
       config.show.label = ''
-     
       config.columns = [:item, :item_date, :organization, 
         :letter_state, :line_count, :answered]
       config.list.columns = [:created_on, :item, :item_date, :organization, 
@@ -18,6 +17,7 @@ class LettersController < ApplicationController
       config.update.columns.exclude :line_count
        config.create.columns.exclude :line_count
        config.show.columns.exclude :line_count
+       config.create.columns.exclude :answered
     config.actions = [:create, :list,  :search, :show, :update, :delete, :nested, :subform] 
     ##todo: use this  
     config.list.mark_records = true
@@ -33,10 +33,17 @@ class LettersController < ApplicationController
     config.action_links.add 'edit_letter', :label => 'edit', :type => :record, :page => true
     config.action_links[:reply].label = Russian.t('reply')
   #	config.action_links[:edit_letter].label = Russian.t('edit_letter')
+    config.action_links.add 'unmark', :label => Russian.t('unmark'), 
+      :type => :member, :inline => true, :position => :replace, :page => false
     
-    config.action_links.add 'print_marked', :label => Russian.t(:print_marked), :type => :collection, :popup => true
+    config.action_links.add 'print_marked', :label => Russian.t(:print_marked),
+    :type => :collection, :popup => true
     #config.action_links.add 'print_controler', :label => 'Print for controler', :type => :collection, :popup => true
     
+     config.action_links.add 'print_for_tu', :label => Russian.t(:print_for_tu),
+    :type => :collection, :popup => true
+    config.action_links.add 'print_for_tu2', :label => Russian.t(:print_for_tu2),
+    :type => :collection, :popup => true
     
     config.columns[:item].inplace_edit = true
     config.columns[:item_date].inplace_edit = true
@@ -61,7 +68,15 @@ class LettersController < ApplicationController
     config.list.sorting = {:created_on => 'DESC'}
     #config.field_search.columns = :created_on, :item, :item_date
   end 
-
+  def unmark
+    record = Letter.find(params[:id])
+    render :nothing => true and return unless record
+    record.set_answered(false)
+    render :nothing => true
+    #render :partial => "list_record", :object => record
+    #_list_record.html.erb
+  end
+  
   #TODO: print marked must print all marked letters data as a rtf report
   def print_marked
     @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
@@ -69,6 +84,55 @@ class LettersController < ApplicationController
       mime_type = "application/msword"
     @user = current_user
     @file = DataFile.do_rtf(@user, @letters)
+      # Send the new file with the wordprocessingml document
+      # content type.
+    send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+    @letters.each do |letter|
+    
+      @answer = letter.make_answer
+      if not @answer.answered
+        @answer.update_attribute(:answered, true) 
+      end
+      #@answer.update_attribute(:answer_date, Time.now)
+    end
+    #marked_records.clear
+  end
+  def print_for_tu_authorized?
+    return false if not current_user
+    return current_user.is_an_inspector?
+  end
+  
+  def print_for_tu2_authorized?
+    return false if not current_user
+    return current_user.is_an_inspector?
+  end
+  def print_for_tu   
+   @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+    render :xml => @letters.to_xml
+      mime_type = "application/msword"
+    @user = current_user
+    @file = DataFile.do_rtf_for_tu(@user, @letters)
+      # Send the new file with the wordprocessingml document
+      # content type.
+    send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+    @letters.each do |letter|
+    
+      @answer = letter.make_answer
+      if not @answer.answered
+        @answer.update_attribute(:answered, true) 
+      end
+      #@answer.update_attribute(:answer_date, Time.now)
+    end
+    #redirect_to :letters
+    #marked_records.clear
+  end
+  
+  def print_for_tu2
+    @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+    render :xml => @letters.to_xml
+      mime_type = "application/msword"
+    @user = current_user
+    @file = DataFile.do_rtf_for_tu2(@user, @letters)
       # Send the new file with the wordprocessingml document
       # content type.
     send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
@@ -109,6 +173,16 @@ class LettersController < ApplicationController
     current_user.is_an_operator_or_admin?
   end 
   
+  def reply_authorized?
+    return false unless current_user
+    return false if current_user.is_an_inspector?
+    return true
+  end
+  def print_marked_authorized?
+    return false unless current_user
+    return true if current_user.is_a_client_or_manager?
+    return false
+  end
 #not in use - to use must be moved to model class
 def line_count_authorized?
   return true if current_user.is_an_admin_or_operator?
@@ -117,7 +191,7 @@ end
 #для актив скаффолда
 
 def conditions_for_collection
-if current_user.is_a_client_or_manager?
+if current_user.is_a_client_or_manager_or_inspector?
 return ['letters.state_id in (2)']
 end
 []
@@ -136,6 +210,7 @@ end
 
   # GET /letters/1
   # GET /letters/1.xml
+=begin
   def show
     @letter = Letter.find(params[:id])
 
@@ -144,7 +219,7 @@ end
       format.xml  { render :xml => @letter, :include => [ :letter_details ] }
     end
   end
-  
+=end  
   def edit_letter
     @letter = Letter.find(params[:id])
 

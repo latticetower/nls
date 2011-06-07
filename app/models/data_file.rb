@@ -53,6 +53,15 @@ class DataFile
     return OfficeRTF.do_rtf_with_stuff(sender, answers)
   end
 
+  def self.do_rtf_for_tu(sender, answers)
+  
+    return OfficeRTF.do_rtf_1(sender, answers)
+  end
+  
+  def self.do_rtf_for_tu2(sender, answers)
+  
+    return OfficeRTF.do_rtf_2(sender, answers)
+  end
   private
   def self.upload_file(path,uploadfile,file)
     File.open(path, "wb") do |f|

@@ -1,8 +1,9 @@
 class AnswerDetailsController < ApplicationController
-auto_complete_for :supplier, :name 
- active_scaffold :answer_details do |config|
+  auto_complete_for :supplier, :name 
+  
+  active_scaffold :answer_details do |config|
     config.label = Russian.t(:answer_details)
-    config.columns = [ :detail_type, :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier_name, :received_drugs, 	
+    config.columns = [:detail_type, :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier_name, :received_drugs, 	
     :identified_drugs, :tactic, :details]
     config.list.columns =  [  :detail_type, :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier_name, :received_drugs, 
     :identified_drugs, :tactic,  :details]
@@ -47,8 +48,9 @@ def list_authorized?
   return true
 end
 def detail_type_authorized?
-return false if not current_user
-return true
+  return false if not current_user
+  return false if current_user.is_a_client_or_manager?
+  return true
 end
   # GET /answer_details/1
   # GET /answer_details/1.xml
