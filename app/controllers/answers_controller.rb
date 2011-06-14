@@ -1,10 +1,17 @@
 class AnswersController < ApplicationController
-layout 'letters', :only => [:index, :show]
-active_scaffold :answers do |config|
- config.nested.label = ''
+  layout 'letters', :only => [:index, :show, :edit, :update_individual  ]
+  
 
-end
-
+ 
+  active_scaffold :answers do |config|
+     config.nested.label = ''
+     config.actions = [:subform, :list, :show, :nested, :update, :create] 
+     config.columns = [:letter]
+  end
+  
+  def index 
+    redirect_to :controller => :letters, :action => 'index'
+  end
   # GET /answers/1
   # GET /answers/1.xml
   def show
@@ -28,6 +35,18 @@ end
     end
   end
 
+  def create_ajax  
+    ld = LetterDetail.find(params[:id])
+    @ads = ld.answer_details.by_user(User.current_user.id)
+    @ad = AnswerDetail.new(:user_id => current_user.id, :letter_detail_id => ld.id, 
+    :supplier_name => params.to_s, :answer_id => self.id)
+    
+	 
+	 #if @ad.save
+         render :partial => 'create_ad_ajax', :locals => {:ad => @ad, :ld => ld}
+    # end
+  end
+  
   # GET /answers/new
   # GET /answers/new.xml
   def new
@@ -40,9 +59,10 @@ end
   end
 
   # GET /answers/1/edit
- # def edit
- #   @answer = Letter.find(params[:id])
- # end
+  def edit
+    @letter = Letter.find(params[:id])
+    @answer = @letter.make_answer
+  end
 
   # POST /answers
   # POST /answers.xml
@@ -63,8 +83,8 @@ end
   # PUT /answers/1
   # PUT /answers/1.xml
   def update
-    @answer = Letter.find(params[:id])
-
+    @answer = self # if not @answer
+    @ad = @answer.answer_details
     respond_to do |format|
       if @answer.update_attributes(params[:answer])
         format.html { redirect_to(@answer, :notice => 'Answer was successfully updated.') }
@@ -75,6 +95,25 @@ end
       end
     end
   end
+  
+  def update_individual  
+    @ads = AnswerDetail.update(params[:answer_details].keys, 
+      params[:answer_details].values).reject { |p| p.errors.empty? } 
+ 
+    @ads_created = AnswerDetail.create(params[:unsaved_answer_details]).reject{|p| p.errors.empty?}
+    #@ads_created.save
+    #redirect_to answers_url   
+    if @ads.empty?   
+      flash[:notice] =  "Updated"
+      redirect_to answers_url  
+    else  
+  
+      @ad = @ads.first 
+      @letter = @ad.letter
+      @answer = @ad.answer
+      redirect_to :action => 'edit', :id => @letter.id
+    end      
+  end  
 
   # DELETE /answers/1
   # DELETE /answers/1.xml

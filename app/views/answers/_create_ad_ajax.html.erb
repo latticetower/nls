@@ -1,0 +1,39 @@
+<tr> 
+  <% fields_for "unsaved_answer_details[]", ad do |f| %>  
+      <td></td>
+      <td><%= f.hidden_field :letter_detail_id %> 
+      <%= f.hidden_field :answer_id %>
+      <%= f.hidden_field :user_id %>
+      </td>
+        
+      <td>
+      <% if ld.allow_serial_input %>
+        
+        <%= f.text_field :serial, :size => 20 %> 
+        <% end %> 
+      </td> 
+          <td></td>
+          <!-- part 2-->
+      <td>  
+          <%= f.text_field :supplier_name, :size => 20 %>  
+      </td>  
+      <td>   
+        <%= f.text_field :received_drugs, :size => 3 %>/<%= f.text_field :identified_drugs, :size => 3  %>  
+      </td>  
+      <td>  
+        <%= f.collection_select :tactic_id, Tactic.all, :id, :name, :include_blank => true %>  
+      </td> 
+      <td>  
+        <%= f.text_field :details, :size => 20 %>  
+        <span id="details_message<%= id %>" class="live_validation"> </span>
+        <%= observe_field :details,
+          :url => { :controller => :live_validations, :action => :validate_details },
+          :frequency => 0.5,
+          :update => 'details_message'+id.to_s,
+          :with => "details"  %>
+      </td> 
+      
+ <% end %> 
+</tr> 
+
+

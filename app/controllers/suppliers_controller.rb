@@ -1,16 +1,18 @@
 class SuppliersController < ApplicationController
+record_select :per_page => 3, :search_on => [:name], :order_by => 'name'
 
 active_scaffold :supplier do |config|
     config.label = Russian.t(:supplier)
     config.columns = [:name]
     config.list.columns = [:name]
-	config.columns.each do |column|
-	   column.label = Russian.t(column.name)
-	end
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
   end
+  
  def create_authorized?
     return false unless current_user
-    current_user.is_an_admin?
+    current_user.is_a_client_or_manager_or_admin?
   end
   
   def update_authorized?
@@ -36,6 +38,7 @@ active_scaffold :supplier do |config|
 
   # GET /suppliers/new
   # GET /suppliers/new.xml
+=begin
   def new
     @supplier = Supplier.new
 
@@ -44,7 +47,7 @@ active_scaffold :supplier do |config|
       format.xml  { render :xml => @supplier }
     end
   end
-
+=end
   # GET /suppliers/1/edit
   def edit
     @supplier = Supplier.find(params[:id])

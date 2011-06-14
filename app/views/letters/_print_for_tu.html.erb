@@ -1,0 +1,10 @@
+﻿<div>
+<% form_remote_tag(:url => url_for(:action => "print_for_tu_result", :id => @actdata),
+:html => {:action => url_for(:action => 'print_for_tu_result', :id => @actdata)},
+    :update => "report_list") do %>
+<br>
+Начало периода: <%= text_field "actdata", "starts_at", {:class => 'datepicker'}  %>
+Конец периода: <%= text_field "actdata", "ends_at", {:class => 'datepicker'}  %>
+<%= submit_tag 'Обновить' %>
+<% end %>
+</div>fff

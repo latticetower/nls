@@ -5,23 +5,13 @@ class LetterDetailsController < ApplicationController
   auto_complete_for :country, :name  
   auto_complete_for :boxing_type, :name 
   auto_complete_for :detail_type, :name 
-    before_filter :update_table_config
+ #   before_filter :update_table_config
 
-  def update_table_config         
-    if current_user
-      # Change things one way
-      if not current_user.is_an_admin_or_operator?
-        active_scaffold_config.columns.exclude :detail_type
-      end
-    else
-      # Change things back the other way
-    end 
-  end
  
 active_scaffold :letter_details do |config|
     config.label = Russian.t(:letter_details)
     config.columns = [ :medicine, :boxing_type, :measure,  :manufacturer,  :country, 
-    :serial, :detail_type]
+    :serial, :allow_serial_input, :detail_type]
   	##todo: use this 
      config.nested.label = ''
      config.show.label = ''
@@ -66,8 +56,8 @@ active_scaffold :letter_details do |config|
 	config.search.columns = [:boxing_type, :medicine, :measure,  :manufacturer,  
         :country, :serial]
 	config.search.live = true
-config.show.link = false
-config.update.link = false
+  config.show.link = false
+  config.update.link = false
 
 	config.list.per_page = 15
 #	config.columns[:letter].sort = true
@@ -83,6 +73,10 @@ config.update.link = false
   config.columns[:detail_type].sort_by :sql => 'detail_types.letter_id'
 	
 	config.list.always_show_search = true
+  
+  config.list.columns.exclude :allow_serial_input
+  config.columns[:allow_serial_input].form_ui = :checkbox
+  config.columns[:allow_serial_input].form_ui = :checkbox
 end 
 
   def create_authorized?

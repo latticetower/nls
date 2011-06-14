@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
 layout 'letters', :only => 'index'
 
-  before_filter :authorize
-  before_filter :jquery_noconflict
+  before_filter :authorize, :jquery_noconflict
   
   def jquery_noconflict
     ActionView::Helpers::PrototypeHelper.const_set(:JQUERY_VAR, 'jQuery')
   end
   
   ActiveScaffold.set_defaults do |config|
+  config.frontend = :farma
 	 # config.dhtml_history = false
 	# config.security.default_permission = falseconfig.security.default_permission = false
   end

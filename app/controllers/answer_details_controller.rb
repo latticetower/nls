@@ -3,14 +3,18 @@ class AnswerDetailsController < ApplicationController
   
   active_scaffold :answer_details do |config|
     config.label = Russian.t(:answer_details)
-    config.columns = [:detail_type, :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier_name, :received_drugs, 	
+    config.columns = [:detail_type, :item_and_date, :letter_detail_all, 
+    :serial, :producer_country, :supplier_name, :received_drugs, 	
     :identified_drugs, :tactic, :details]
-    config.list.columns =  [  :detail_type, :item_and_date, :letter_detail_all, :serial, :producer_country, :supplier_name, :received_drugs, 
+    config.list.columns =  [  :detail_type, :item_and_date, :letter_detail_all, 
+    :serial, :producer_country, :supplier_name, :received_drugs, 
     :identified_drugs, :tactic,  :details]
   
     config.actions.exclude :create
+    
     config.columns[:supplier_name].inplace_edit = true
-   # config.columns[:supplier].form_ui = :select
+  # config.columns[:supplier].form_ui = :select
+  #  config.columns[:supplier].search_sql = 'suppliers.name'
    # config.columns[:letter_detail]
     config.columns[:letter_detail].clear_link
     config.columns[:identified_drugs].inplace_edit = true
@@ -19,6 +23,7 @@ class AnswerDetailsController < ApplicationController
     config.columns[:tactic].inplace_edit = true
     config.columns[:tactic].form_ui = :select
     config.columns[:details].inplace_edit = true
+    
     ##todo: use this 
     config.columns.each do |column|
        column.label = Russian.t(column.name)
@@ -34,24 +39,45 @@ class AnswerDetailsController < ApplicationController
     config.show.link = false
     config.update.link = false
     config.delete.link = false
-
+    
     config.list.per_page = 15
     config.columns[:letter].sort = true
     config.columns[:letter].sort_by :sql => 'answer_details.letter_id'
-    
     config.list.always_show_search = false
+    
+    config.action_links.add 'others_not_found_check', :label => Russian.t(:others_not_found_check),
+     :type => :collection, :inline => true , :position => :top
   end 
+  
 
+  
+
+  def others_not_found_check
+    @answer = Answer.find(active_scaffold_session_storage[:constraints][:answer_id])
+    render :nothing => true and return if not @answer
+    if @answer.details_validate!
+      @answer.update_attribute(:others_not_found, true) 
+    else
+      # render :status => '200'  
+      flash[:error] = Russian.t('no_details')      
+    end
+    render :nothing => true
+    # render :text => Russian.t('all_fine')
+    # others_not_found
+    # others_no_found
+  end
  
-def list_authorized?
-  return false if not current_user
-  return true
-end
-def detail_type_authorized?
-  return false if not current_user
-  return false if current_user.is_a_client_or_manager?
-  return true
-end
+  def list_authorized?
+    return false if not current_user
+    return true
+  end
+  
+  def detail_type_authorized?
+    return false if not current_user
+    return false if current_user.is_a_client_or_manager?
+    return true
+  end
+  
   # GET /answer_details/1
   # GET /answer_details/1.xml
   def show
@@ -88,7 +114,7 @@ private
   def before_create_save(record)  
     record.supplier_id = @supplier.id if @supplier
   end 
-  def before_update_save(record)  
+  def before_update_save(record)
     record.supplier_id = @supplier.id if @supplier
   end  
 public

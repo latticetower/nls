@@ -6,12 +6,30 @@ class AnswerDetail < ActiveRecord::Base
   belongs_to :answer
   belongs_to :user
   belongs_to :supplier
-
-  validates_length_of :details, :minimum => 3,  :if => :tactic_must_have_details? , :message => 'no data'
+  
+  named_scope :by_user, lambda {|user_id|{:conditions => {:user_id => user_id}} }
+  
+ # validates_numericality_of :identified_drugs
+# validates_numericality_of :received_drugs
+#  validates_length_of :details, :minimum => 3,  :if => :tactic_must_have_details? , :message => 'no data'
+ # validates_length_of :supplier_name, :minimum => 3
   def tactic_must_have_details? 
     return ((self.tactic_id == 2) or (self.tactic_id == 3))
   end
- 
+ def check_if_valid?
+   flag = true
+   if tactic_must_have_details? 
+     if details.length < 2
+       #flash[:message] << '<br>'
+       #flash[:message] << ad.letter_detail.medicine.name + ' '
+       #flash[:message] << ad.letter_detail.serial
+       #flash[:message] << ' '
+       #flash[:message] << Russian.t(:no_data)
+       flag = false
+     end
+   end
+   #return ((self.tactic_id == 2) or (self.tactic_id == 3))
+ end
   
   
   def to_label

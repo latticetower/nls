@@ -18,6 +18,7 @@ class LettersController < ApplicationController
        config.create.columns.exclude :line_count
        config.show.columns.exclude :line_count
        config.create.columns.exclude :answered
+       config.update.columns.exclude :answered
     config.actions = [:create, :list,  :search, :show, :update, :delete, :nested, :subform] 
     ##todo: use this  
     config.list.mark_records = true
@@ -292,6 +293,7 @@ private
 public
   # PUT /letters/1
   # PUT /letters/1.xml
+=begin
   def update
     @letter = Letter.find(params[:id])
     respond_to do |format|
@@ -304,6 +306,7 @@ public
       end
     end
   end
+
 
   # DELETE /letters/1
   # DELETE /letters/1.xml
@@ -318,4 +321,5 @@ public
       format.xml  { head :ok }
     end
   end
+=end
 end

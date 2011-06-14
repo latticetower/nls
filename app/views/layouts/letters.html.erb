@@ -18,20 +18,13 @@
   <%= javascript_include_tag "jquery-ui-1.8.4.custom.min" %>
 <%= javascript_include_tag 'jquery.ui.datepicker-ru' %>
   <%= active_scaffold_includes %>
-         
-<script type="text/javascript">
-	$(function() {
-  $('input.ui-datepicker').datepicker();
-	});
-	</script>
+   <%= record_select_includes %>
+  <%= javascript_include_tag "jquery", "jquery.validate.min" %>    
   <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" %>
   <script type="text/javascript">
   jQuery.noConflict();
 </script>
-  <%= stylesheet_link_tag "/javascripts/jscalendar-1.0/calendar-win2k-cold-1.css" %>
-  <%= javascript_include_tag "jscalendar-1.0/calendar.js" %>
-  <%= javascript_include_tag "jscalendar-1.0/lang/calendar-en.js" %>
-  <%= javascript_include_tag "jscalendar-1.0/calendar-setup.js" %>
+
 </head>
 <body>
 <div class="wrapper"> <div class="sidebar">
@@ -74,7 +67,7 @@
 <%= link_to "Выйти", "***REMOVED***out" %><br></div>
 <% end %>
 <div class="main">
-<!--p style="color: green"><%= notice %></p-->
+<p style="color: green"><%= notice %></p>
 <% if @current_user.is_an_inspector? %>
 <% render :partial => 'print_for_tu'%>
 <% end %>

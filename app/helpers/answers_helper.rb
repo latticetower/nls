@@ -1,9 +1,10 @@
 module AnswersHelper
-  def letter_column(detail) 
+  def answer_column(detail) 
+    return '' unless detail.letter
 	'N' +h(detail.letter.item) + ' ' +  h(detail.letter.created_on.strftime("%d.%m.%y"))
    end
 
-   def letter_detail_column(record) 
+   def answer_letter_detail_column(record) 
    h(record.letter_detail.medicine.name) 
    end
  # def manufacturer_form_column(record, options)
@@ -12,8 +13,8 @@ module AnswersHelper
     # but if we used select_date we would have to use :prefix
     #select_date record[:date_received], options.merge(:prefix => options[:name])
  # end
-   def supplier_column(detail)
-     h(detail.supplier)
+   def item_column(detail)
+     ''
    end
    
    def manufacturer_column(detail)
@@ -31,10 +32,6 @@ module AnswersHelper
     h(detail.boxing_type.name) 
    end
 
- def letter_column(detail) 
-	h(detail.item) + ' '
-	+  h(detail.created_on.strftime("%d.%m.%y"))
-   end
    
    def manufacturer_column(detail)
      h(detail.manufacturer.name)
