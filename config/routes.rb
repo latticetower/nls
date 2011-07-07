@@ -1,15 +1,21 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :history_logs
 
-  map.resources :suppliers
+  map.resources :suppliers, :collection => {:browse => :get}, :member => {:select => :post}
 
   map.resources :detail_types
-
-  map.resources :answers
+  map.resources :answers, :collection => { :update_individual => :put, 
+      :auto_complete_for_answer_detail_supplier => :get,
+      :auto_complete_for_supplier_name => :get
+          }  
 
   map.resources :medicines, :active_scaffold => :medicines
-
-  map.resources :answer_details, :active_scaffold => :answer_details ##
+  
+  map.connect 'answer_details/others_not_found_check', :controller => :answer_details, :action => :others_not_found_check
+  map.resources :answer_details, :active_scaffold => :answer_details, :collection => 
+      { 
+      :auto_complete_for_supplier_name => :get
+          }  
   
   map.resources :answers, :active_scaffold => :answers ###
 
@@ -33,6 +39,7 @@ map.auto_complete ':controller/:action', :requirements => { :action => /auto_com
   map.resources :permissions
 
   map.resources :tactics
+  map.connect 'users/edit_details', :controller => :users, :action => :edit_details
   map.resources :users
   map.resources :manufacturers
 
@@ -51,7 +58,7 @@ map.resource :session, :controller => 'sessions'
 
   map.resources :permissions
 map.resources :organizations, :active_scaffold => :organizations
-map.connect 'letters/print_marked', :controller => :letters, :action => 'print_marked'
+map.connect 'letters/:action', :controller => :letters
 map.connect 'letters/to_xml/:id', :controller => :letters, :action => :to_xml
   map.resources :letters, :active_scaffold => :letters, :collection => 
       { 

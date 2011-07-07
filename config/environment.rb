@@ -74,7 +74,7 @@ end
 
 
 require "will_paginate"
-
+#LiveValidations.use :jquery_validations, :validator_settings => {:debug => true, :onsubmit => true, :errorClass => "invalid"}
   
  ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
   :default => "%d.%m.%Y %H:%M",
