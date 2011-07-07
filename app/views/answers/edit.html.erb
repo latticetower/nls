@@ -1,6 +1,6 @@
 ﻿<h1>Письмо от <%= @letter.organization.name if @letter.organization %> 
 N <%= @letter.item %> <%= @letter.item_date %></h1>
-<% form_for (@answer, :url => {:action => 'update_individual'}, 
+<% form_for (@answer, :url => {:action => 'update_individual', :id => @answer.id}, 
 :live_validations => true, :validate => true, :remote => true) do |fr|%> 
 <%= fr.error_messages %>
 <table>
@@ -51,7 +51,8 @@ N <%= @letter.item %> <%= @letter.item_date %></h1>
     <td></td>
     <td>
    
-    <%= link_to_remote Russian.t(:add_new_answer_detail), :url => {:action => 'create_ajax', :id =>  ld.id}, 
+    <%= link_to_remote Russian.t(:add_new_answer_detail), :url => {:action => 'create_ajax', 
+          :letter_detail_id => ld.id, :answer_id => @answer.id}, 
           :method => "create_ajax",  
           :update => "letter_detail_data"+ld.id.to_s, :position => :bottom %>
     
@@ -66,6 +67,6 @@ N <%= @letter.item %> <%= @letter.item_date %></h1>
 <!--конец кнопки-->
   <% end %> 
   </table> 
- <%= submit_tag :submit %>
+ <%= submit_tag 'Обновить' %>
 
 <% end %>

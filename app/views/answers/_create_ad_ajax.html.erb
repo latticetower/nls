@@ -1,7 +1,8 @@
 <tr> 
   <% fields_for "unsaved_answer_details[]", ad do |f| %>  
       <td></td>
-      <td><%= f.hidden_field :letter_detail_id %> 
+      <td>
+      <%= f.hidden_field :letter_detail_id %> 
       <%= f.hidden_field :answer_id %>
       <%= f.hidden_field :user_id %>
       </td>

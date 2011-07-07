@@ -1,5 +1,6 @@
-class AnswerDetailsController < ApplicationController
-  auto_complete_for :supplier, :name 
+class AnswerDetailsController < ApplicationController  
+  #accepts_nested_attributes_for :supplier, :allow_destroy => true
+ 
   
   active_scaffold :answer_details do |config|
     config.label = Russian.t(:answer_details)

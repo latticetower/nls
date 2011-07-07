@@ -1,5 +1,8 @@
 class DetailType < ActiveRecord::Base
   has_many :letter_details
+  
+
+  
   def authorized_for_read?
      return false unless current_user
      return true

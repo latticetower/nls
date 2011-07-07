@@ -6,6 +6,8 @@
 <br>
 Начало периода: <%= text_field "actdata", "starts_at", {:class => 'datepicker'}  %>
 Конец периода: <%= text_field "actdata", "ends_at", {:class => 'datepicker'}  %>
+<%= select("actdata", "report_type", options_for_select([["Dollar", "1"], ["Kroner", "2"]]) %>
+<br>
 <%= submit_tag 'Обновить' %>
 <% end %>
 </div>

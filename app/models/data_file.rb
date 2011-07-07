@@ -53,9 +53,23 @@ class DataFile
     return OfficeRTF.do_rtf_with_stuff(sender, answers)
   end
 
-  def self.do_rtf_for_tu(sender, answers)
+  def self.do_rtf_for_tu(sender, starts_at, ends_at, rtype, rgroup,rgt) 
+    return OfficeRTF.do_rtf_group1(sender, starts_at, ends_at, rgroup, rtype) if rgt == "1"
+    return OfficeRTF.do_rtf_group2(sender, starts_at, ends_at, rgroup, rtype)
+  end
   
-    return OfficeRTF.do_rtf_1(sender, answers)
+  #stub
+  def self.do_rtf_medicines(sender, starts_at, ends_at, rtype, rgroup,rgt) 
+    return OfficeRTF.do_rtf_medicines(sender, starts_at, ends_at, rtype, rgroup) 
+   
+  end
+  def self.do_rtf_organizations(sender, starts_at, ends_at, rtype, rgroup,rgt) 
+    return OfficeRTF.do_rtf_organizations(sender, starts_at, ends_at, rtype, rgroup)
+  end
+  ##TODO: remove this method
+  def self.do_rtf_for_tudd(sender, letters, rtype, rgroup)
+  
+    return OfficeRTF.do_rtf_1(sender, letters)
   end
   
   def self.do_rtf_for_tu2(sender, answers)

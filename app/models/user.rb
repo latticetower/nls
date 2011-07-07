@@ -10,10 +10,13 @@ class User < ActiveRecord::Base
   has_many :answer_details
   default_scope :order => 'registered_at DESC, users.id ASC'  
 
-   delegate :permissions, :to => :role
+  delegate :permissions, :to => :role
+  
+  has_and_belongs_to_many :printed_organizations, :join_table => "user_organizations", :class_name => "Organization" 
   
   def authorized_for_read?
    return false unless current_user
+   return false unless current_user.active
    current_user.is_an_admin_or_operator?
   end
 

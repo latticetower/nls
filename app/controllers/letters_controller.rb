@@ -27,9 +27,11 @@ class LettersController < ApplicationController
     end
    
     
-    config.nested.add_link(Russian.t('edit_letter'), [ :letter_details], :label => Russian.t('edit_letter'))
+    config.nested.add_link(Russian.t('edit_letter'), :letter_details, :label => Russian.t('edit_letter'))
     config.show.label = ''
     config.action_links.add 'reply', :label => 'Reply', :type => :member, :page => true
+    
+    config.nested.add_link(Russian.t('show_answers'), :answer_details, :label => Russian.t('show_letter'))
     #record
     config.action_links.add 'edit_letter', :label => 'edit', :type => :record, :page => true
     config.action_links[:reply].label = Russian.t('reply')
@@ -107,25 +109,48 @@ class LettersController < ApplicationController
     return false if not current_user
     return current_user.is_an_inspector?
   end
-  def print_for_tu   
-   @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+  
+  ##TODO: test controller, must be removed
+  def print_for_tu_result
+    @letters = Letter.find(:all, :conditions => ['item_date between ? and ?', 
+                params[:report][:starts_at], 
+                params[:report][:ends_at]])
     render :xml => @letters.to_xml
+    @rt = params[:report][:report_type]
+    @rg = params[:report][:report_group]
+       @rgt = params[:report][:report_grouptype] if params[:report]   
       mime_type = "application/msword"
     @user = current_user
-    @file = DataFile.do_rtf_for_tu(@user, @letters)
+    @file = DataFile.do_rtf_for_tu(@user, @letters, @rt, @rg, @rgt)
       # Send the new file with the wordprocessingml document
       # content type.
     send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
-    @letters.each do |letter|
-    
-      @answer = letter.make_answer
-      if not @answer.answered
-        @answer.update_attribute(:answered, true) 
-      end
-      #@answer.update_attribute(:answer_date, Time.now)
-    end
-    #redirect_to :letters
-    #marked_records.clear
+
+  end
+  ##TODO: print data
+  def print_for_tu
+    @starts_at = 1.month.ago.beginning_of_month.to_date
+      @ends_at = 1.month.ago.end_of_month.to_date
+    @report = params[:report]
+    @starts_at = params[:report][:starts_at] if params[:report]
+      @ends_at = params[:report][:ends_at] if params[:report]
+    ##TODO: remove 
+    @letters = Letter.find(:all, :conditions => ['item_date between ? and ?', 
+                @starts_at, 
+                @ends_at]) 
+                
+    @rt = params[:report][:report_type] if params[:report]
+    @rg = params[:report][:report_group] if params[:report]         
+    @rgt = params[:report][:report_grouptype] if params[:report]      
+    ## @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+    render :xml => @letters.to_xml
+      mime_type = "application/msword"
+    @user = current_user
+    @file = DataFile.do_rtf_for_tu(@user, @starts_at, @ends_at, @rt, @rg, @rgt)
+ 
+    send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+ 
+
   end
   
   def print_for_tu2
@@ -232,6 +257,7 @@ end
   end
   
   
+  
   def reply
     @letter = Letter.find(params[:id])
 
@@ -306,8 +332,7 @@ public
       end
     end
   end
-
-
+=end
   # DELETE /letters/1
   # DELETE /letters/1.xml
   def destroy
@@ -321,5 +346,44 @@ public
       format.xml  { head :ok }
     end
   end
-=end
+  
+  ##
+  def print_organizations
+    @starts_at = 1.month.ago.beginning_of_month.to_date
+      @ends_at = 1.month.ago.end_of_month.to_date
+    @report = params[:report]
+    @starts_at = params[:report][:starts_at] if params[:report]
+      @ends_at = params[:report][:ends_at] if params[:report]
+
+    @rt = params[:report][:report_type] if params[:report]
+    @rg = params[:report][:report_group] if params[:report]         
+    @rgt = params[:report][:report_grouptype] if params[:report]      
+    ## @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+   
+      mime_type = "application/msword"
+    @user = current_user
+    @file = DataFile.do_rtf_organizations(@user, @starts_at, @ends_at, @rt, @rg, @rgt)
+ 
+    send_file(@file, :filename => Russian.t(:organizations) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+  end
+  
+  def print_medicines
+    @starts_at = 1.month.ago.beginning_of_month.to_date
+      @ends_at = 1.month.ago.end_of_month.to_date
+       @report = params[:report]
+    @starts_at = params[:report][:starts_at] if params[:report]
+      @ends_at = params[:report][:ends_at] if params[:report]
+    ##TODO: remove 
+    
+    @rt = params[:report][:report_type] if params[:report]
+    @rg = params[:report][:report_group] if params[:report]         
+    @rgt = params[:report][:report_grouptype] if params[:report]      
+    ## @letters = Letter.find(:all, :conditions => {:id => marked_records.to_a})
+
+      mime_type = "application/msword"
+    @user = current_user
+    @file = DataFile.do_rtf_medicines(@user, @starts_at, @ends_at, @rt, @rg, @rgt)
+ 
+    send_file(@file, :filename => Russian.t(:medicines) + " - " + Time.now.to_s + ".doc", :type => mime_type)
+  end
 end

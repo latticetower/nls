@@ -3,7 +3,14 @@ class Letter < ActiveRecord::Base
   has_many :letter_details
   belongs_to :organization
   has_many :answers
-    
+  has_many :answer_details, :through => :answers 
+##TODO: если нужен будет другой формат даты, здесь тоже надо его изменить...
+  named_scope :by_dates, lambda{ |starts_at, ends_at| {
+	  :conditions => ["DATE(item_date) between TO_DATE(?, 'yyyy-mm-dd') AND TO_DATE(?, 'yyyy-mm-dd')", starts_at, ends_at]	  
+	}}
+  
+  
+  
   def to_label
     item
   end

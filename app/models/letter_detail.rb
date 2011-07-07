@@ -8,7 +8,11 @@ class LetterDetail < ActiveRecord::Base
   belongs_to :country
   has_many  :answer_details
   
-
+  named_scope :by_detail_type, lambda{ |detail_type| {
+	  :conditions => ['detail_type_id in (?)', detail_type]	,
+    :order => 'id ASC'    
+	}}
+  
   
   #belongs_to :answer, :primary_key => 'id', :foreign_key => 'letter_id'
   def detail_type_authorized?

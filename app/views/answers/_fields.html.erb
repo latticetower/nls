@@ -1,8 +1,10 @@
-<% for ad in @ads %> 
+﻿<% for ad in @ads %> 
         <tr> 
           <% fields_for "answer_details[]", ad do |f| %>  
 
-      <td></td>
+      <td><%= f.hidden_field :letter_detail_id %> 
+      <%= f.hidden_field :answer_id %>
+      <%= f.hidden_field :user_id %></td>
       <td></td>
           
       <td>
@@ -11,10 +13,15 @@
         <%= f.text_field :serial, :size => 20 %> 
         <% end %> 
       </td> 
-          <td></td>
-          <!-- part 2-->
-      <td>  
-          <%= f.text_field :supplier_name, :size => 20 %>  
+          <td><%= error_messages_for 'answer_detail', :object => ad %></td>
+          <!-- part 2-->  
+          <!-- здесь должен быть supplier -->    
+       <td> 
+       
+         <%= f.text_field_with_auto_complete "supplier_name",  
+            { :method => :get, :skip_style => true, :size => 20 } %>
+          
+             
       </td>  
       <td>   
         <%= f.text_field :received_drugs, :size => 3 %>/<%= f.text_field :identified_drugs, :size => 3  %>  

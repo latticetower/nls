@@ -1,7 +1,7 @@
 class Organization < ActiveRecord::Base
   has_many :letters
   has_one :organization_detail
-    
+  
   def authorized_for_read?
      return false unless current_user
      return true

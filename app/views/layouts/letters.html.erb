@@ -63,13 +63,19 @@
 </div>
 
 <% end %>
-<a href="https://docs.google.com/document/d/1HBL5xrhYIrTgAbrH5p9LSgCgSAh2xM-4Vb743m-qbm8/edit?hl=en&authkey=CM-2wOME" target="_blank">Справка</a><br>
+<% if @current_user.is_an_inspector_or_admin? %>
+<a href="https://docs.google.com/document/d/1xfndNoT4xhEnMO4vfDEB-F16xO6qs2v-1G1VfoEFzwA/edit?hl=en_US&authkey=CI2t2IUK" target="_blank">Справка</a>
+<% else %>
+<a href="https://docs.google.com/document/d/1HBL5xrhYIrTgAbrH5p9LSgCgSAh2xM-4Vb743m-qbm8/edit?hl=en&authkey=CM-2wOME" target="_blank">Справка</a>
+<% end %>
+<br>
 <%= link_to "Выйти", "***REMOVED***out" %><br></div>
 <% end %>
+
 <div class="main">
 <p style="color: green"><%= notice %></p>
-<% if @current_user.is_an_inspector? %>
-<% render :partial => 'print_for_tu'%>
+<% if @current_user.is_an_inspector_or_admin? %>
+<%= render :partial => 'print_for_tu'%>
 <% end %>
     <%= yield %>
 </div>
