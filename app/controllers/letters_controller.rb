@@ -31,7 +31,7 @@ class LettersController < ApplicationController
     config.show.label = ''
     config.action_links.add 'reply', :label => 'Reply', :type => :member, :page => true
     
-    #config.nested.add_link(Russian.t('show_answers'), :answer_details, :label => Russian.t('show_letter'))
+    config.nested.add_link(Russian.t('show_answers'), :answer_details, :label => Russian.t('show_letter'))
     #record
     config.action_links.add 'edit_letter', :label => 'edit', :type => :record, :page => true
     config.action_links[:reply].label = Russian.t('reply')

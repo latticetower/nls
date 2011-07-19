@@ -606,14 +606,13 @@ class OfficeRTF
     @line = 0
       ##for every letter
     @all_lines = all_lines + 1
-    @users = User.had_answered_for_letter(letter)
     table [@line][0] << @all_lines.to_s #номер пп
       # #table [@line][1] do |t|
     table[@line][1] << letter.item #дата и номер письма
     table[@line][1].line_break
     table[@line][1] << letter.item_date.to_s
 
-    
+    @users = User.had_answered_for_letter(letter)
     table[@line][5] << ''    
     @users.each do |user|
      table[@line][5] << user.organization_name
@@ -710,7 +709,7 @@ class OfficeRTF
           @ads = ld.answer_details.published
           @count_empty = @ads.select{|ad| ad.received_drugs == 0}.length
           @count_not_empty = @ads.select{|ad| ad.received_drugs > 0}.length
-          @ads = @ads.select{|ad| ad.received_drugs > 0 }#and ad.letter
+          @ads = @ads.select{|ad| ad.received_drugs > 0 and ad.letter}
           @empty_ads = @ads.select{|ad| ad.received_drugs == 0}
           @counter = @counter + @count_not_empty
           ##TODO: сюда добавила условие на селект
@@ -859,13 +858,12 @@ class OfficeRTF
             else
               @all_lines = print_letter_line2(document, styles, @all_lines, letter, ld, nil)
             end
-          end 
+          end
+          if @counter == 0 and rtype != "full"
+              #если по письму ответа нет
+              @all_lines = print_empty_line2(document, styles, @all_lines, letter)
+          end
         end
-        if @counter == 0 and rtype != "full"
-            #если по письму ответа нет
-            @all_lines = print_empty_line2(document, styles, @all_lines, letter)
-        end
-
       end
       ##!!!!!!!!!!!
     end
