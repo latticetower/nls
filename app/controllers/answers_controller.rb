@@ -24,7 +24,7 @@ auto_complete_for :supplier, :name
   # GET /answers/1
   # GET /answers/1.xml
   def show
-  redirect_to :action => 'edit', :id => params[:id] and return 
+  #redirect_to :action => 'edit', :id => params[:id] and return 
   ##todo: must add condition
     @id = params[:id]
     @user_id = current_user.id

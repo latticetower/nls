@@ -30,8 +30,8 @@ class LettersController < ApplicationController
     config.nested.add_link(Russian.t('edit_letter'), :letter_details, :label => Russian.t('edit_letter'))
     config.show.label = ''
     config.action_links.add 'reply', :label => 'Reply', :type => :member, :page => true
-    
-    config.nested.add_link(Russian.t('show_answers'), :answer_details, :label => Russian.t('show_letter'))
+    #TODO: show some answers to inspector on demand
+   ## config.nested.add_link(Russian.t('show_answers'), :answer_details, :label => Russian.t('show_letter'))
     #record
     config.action_links.add 'edit_letter', :label => 'edit', :type => :record, :page => true
     config.action_links[:reply].label = Russian.t('reply')
@@ -132,8 +132,8 @@ class LettersController < ApplicationController
     @starts_at = 1.month.ago.beginning_of_month.to_date
       @ends_at = 1.month.ago.end_of_month.to_date
     @report = params[:report]
-    @starts_at = params[:report][:starts_at] if params[:report]
-      @ends_at = params[:report][:ends_at] if params[:report]
+    @starts_at = params[:report][:starts_at] if params[:report] and params[:report][:starts_at]
+      @ends_at = params[:report][:ends_at] if params[:report] and params[:report][:ends_at]
     ##TODO: remove 
     @letters = Letter.find(:all, :conditions => ['item_date between ? and ?', 
                 @starts_at, 
