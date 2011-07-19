@@ -1,0 +1,27 @@
+﻿< f.inputs do 
+  f.input :letter, :label => "Письмо" 
+  f.input :medicine , :label => "Лекарственное средство" 
+ f.input :boxing_type, :label => "Упаковка" 
+  f.input :measure, :label => "Дозировка" 
+   f.input :manufacturer, :label => "Производитель" 
+    f.input :country, :label => "Страна изготовления" 
+    f.input :serial, :label => "Серия" 
+    f.submit :button
+< end >
+
+<% form_for @answer do |pf| %>
+  <% @answer.letter_details.each do |letter_detail| %>
+  <%= letter_detail.letter_id %>
+   <% pf.fields_for :letter_details, letter_detail do |pff| %>
+         <%= pff.select :country_id, Country.find(:all).collect{|c|[c.name, c.id]}.push(["(пусто)", 0]), {:selected => 0.to_i} %>
+
+        <br>
+      <% end %>
+      <% pf.fields_for :answer_details, letter_detail do |pff| %>
+         <%= pff.text_field :serial %>
+        <br>
+      <% end %>
+  <% end %>
+  <%= pf.submit :button %>
+<% end %>
+

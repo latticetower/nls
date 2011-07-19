@@ -1,0 +1,12 @@
+<h1>Editing history_log</h1>
+
+<% form_for(@history_log) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @history_log %> |
+<%= link_to 'Back', history_logs_path %>

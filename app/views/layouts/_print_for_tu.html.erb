@@ -1,0 +1,13 @@
+﻿<div>
+<% form_remote_tag(:url => url_for(:action => "print_for_tu_result", :id => @actdata),
+:html => {:action => url_for(:action => 'get_table_report_usr_month_data', :id => @actdata)},
+    :update => "report_list") do %>
+Сотрудник ЦИН: <%= select "actdata", "author_id", User.cin_users.collect{|c|[c.fio, c.id]} %>
+<br>
+Начало периода: <%= text_field "actdata", "starts_at", {:class => 'datepicker'}  %>
+Конец периода: <%= text_field "actdata", "ends_at", {:class => 'datepicker'}  %>
+<%= select("actdata", "report_type", options_for_select([["Dollar", "1"], ["Kroner", "2"]]) %>
+<br>
+<%= submit_tag 'Обновить' %>
+<% end %>
+</div>

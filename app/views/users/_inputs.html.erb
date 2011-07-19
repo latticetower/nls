@@ -1,0 +1,8 @@
+<% form.inputs do %>
+  <%= form.input :organization_name, :label => Russian.t(:organization) %>
+  <%= form.input :upoln_name, :label => Russian.t(:quality_control) %>
+   <%= form.input :phone, :label => Russian.t(:phone) %>
+   <%= form.input :printed_organizations, :label=> Russian.t(:organizations), :as => :check_boxes, 
+     :collection => Organization.find(:all, :order => "name ASC") %>
+<% end %>
+

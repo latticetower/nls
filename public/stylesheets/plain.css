@@ -1,0 +1,79 @@
+ BODY, P, br {
+     font-family: Times, 'Times New Roman', serif; 
+	 padding-top: 0pt;
+	  font-size:10pt;
+	  line-height:1.5;
+	  margin: 0px;
+    }
+    H1, H2 {
+     color: #000; 
+	 font-size:14pt !important;
+	 padding: 0px;
+	 margin:0px;
+	  line-height:1;
+    }
+	 H3 {
+     color: black; 	
+	 font-size:12pt;
+	  line-height:1;
+    }
+	table, tr,td, th
+	{
+	border-collapse: collapse;
+	
+	vertical-align: top;
+	margin-top :2px;
+	padding-top: 2pt; 
+	padding-left: 2pt; 
+	
+	}
+
+a,a:hover,a:visited {
+	color: black;
+	text-decoration: none;
+	border-bottom-style: dash;
+	padding:0px;
+	border-bottom-width: 1px;
+}
+	
+	.page
+	{
+	
+	border-right: 1px solid grey;
+	width: 120mm; 
+	height: 150mm;
+	padding-top:0.6cm;
+	padding-left:0.5cm;
+	padding-right:0.5cm;
+	padding-bottom:0.6cm;
+	float:left;
+	}
+div.main{
+position:absolute;
+	top:0px;
+	left:0px;
+}
+	div.top
+	{
+	border: 1px solid grey;
+	float:left;
+	height: 68pt;
+
+	}
+
+	
+	div.bottom
+	{
+	
+	float:left;
+bottom:0;
+margin-right: 20pt;
+	}
+	.plain
+	{
+	border: 1px solid black;
+	padding: 0px 15px ;
+	}
+	
+	img{align :left;}
+	

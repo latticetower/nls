@@ -1,0 +1,10 @@
+﻿<h1>Editing answer_detail</h1>
+
+<% semantic_form_for(@answer_detail) do |f| %>
+  <%= f.error_messages %>
+
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
+<% end %>
+
+<%= link_to 'Show', @answer_detail %> |
+<%= link_to 'Back', answer_details_path %>

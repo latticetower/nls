@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= Russian.t(:SUNLS) %></title>
+<![if !(IE)]>
+  <%= stylesheet_link_tag 'scaffold' %>
+<![endif]>
+
+<!--[if IE]>
+  <%= stylesheet_link_tag 'ie_scaffold' %>
+<![endif]-->
+  
+<%= javascript_include_tag 'prototype.js', 'effects.js', 'jquery' %>
+  <%= javascript_include_tag :defaults %>
+<%= javascript_include_tag "jquery-ui-1.8.4.custom.min" %>
+<%= javascript_include_tag 'jquery.ui.datepicker-ru' %>
+  <%= active_scaffold_includes %>
+   <%= record_select_includes %>
+  <!--javascript_include_tag "jquery", "jquery.validate.min" -->    
+ 
+  <script type="text/javascript">
+  jQuery.noConflict();
+  $(function() {
+		$(".datepicker").datepicker();
+	});
+</script>
+<%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" %>
+
+</head>
+<body>
+<div class="wrapper"> <div class="sidebar">
+<% if not @current_user %>
+<% if @current_user = User.current_user %>
+
+ 
+  <div class="links">
+    <%= link_to Russian.t(:letters), letters_path %><br>
+<% if @current_user.is_an_admin_or_operator? %>
+    <%= link_to  Russian.t(:medicines), medicines_path %><br>
+    <%= link_to  Russian.t(:boxing_types), boxing_types_path %><br>
+    <%= link_to  Russian.t(:measures), measures_path %><br>
+    <%= link_to  Russian.t(:manufacturers), manufacturers_path %><br>
+    <%= link_to Russian.t(:countries), countries_path %><br>
+    <%= link_to  Russian.t(:tactics), tactics_path %><br>
+    <br>
+    <% if @current_user.is_an_admin? %>
+      <%= link_to Russian.t(:action_lists), action_lists_path %><br>
+      <%= link_to  Russian.t(:answer_details), answer_details_path %><br>
+      <%= link_to  Russian.t(:letter_details), letter_details_path %><br>
+      <%= link_to  Russian.t(:letter_states), letter_states_path %><br>
+    <% end %>
+    <br>
+    <%= link_to  Russian.t(:organizations), organizations_path %><br>
+    <%= link_to  Russian.t(:organization_details), organization_details_path %><br>
+    <br>
+    <%= link_to Russian.t(:users), users_path %><br>
+    
+    <% if @current_user.is_an_admin? %>
+      <%= link_to Russian.t(:roles), roles_path %><br>
+      <%= link_to  Russian.t(:permissions), permissions_path %><br>
+    <% end %>
+<% end %>
+   <%= link_to Russian.t(:edit_self), :controller => "users", :action => "edit", :id => @current_user.id %><br>
+</div>
+
+<% end %>
+<% if @current_user.is_an_inspector_or_admin? %>
+<a href="https://docs.google.com/document/d/1xfndNoT4xhEnMO4vfDEB-F16xO6qs2v-1G1VfoEFzwA/edit?hl=en_US&authkey=CI2t2IUK" target="_blank">Справка</a>
+<% else %>
+<a href="https://docs.google.com/document/d/1HBL5xrhYIrTgAbrH5p9LSgCgSAh2xM-4Vb743m-qbm8/edit?hl=en&authkey=CM-2wOME" target="_blank">Справка</a>
+<% end %>
+<br>
+<%= link_to "Выйти", "***REMOVED***out" %><br></div>
+<% end %>
+
+<div class="main">
+<p style="color: green"><%= notice %></p>
+<% if @current_user.is_an_inspector_or_admin? %>
+<%= render :partial => 'print_for_tu'%>
+<% end %>
+    <%= yield %>
+</div>
+</div>
+</body>
+</html>

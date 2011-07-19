@@ -1,0 +1,11 @@
+﻿<%= @ticket.user.fio if @ticket.created_by %> (<%= @ticket.user.organization.name if @ticket.user and @ticket.user.organization %>)
+отправил(а) заявку на сайт support.***REMOVED*** <%= Russian::strftime(@ticket.updated_at.localtime, "%d %B %Y - %H:%M") %> 
+для организации <%= @ticket.organization.name if @ticket.organization %>
+Текст заявки:
+<%= @ticket.text %>
+
+----------
+Для того, чтобы перестать получать эти сообщения, необходимо в данных своей учетной записи на сайте http://support.***REMOVED*** 
+убрать или изменить список адресов электронной почты. Сообщения доставляются только сотрудникам Центра Инноваций.
+Если вы им не являетесь, сообщите по адресу ***REMOVED***, и я придумаю, как вас отписать от данной рассылки :)
+

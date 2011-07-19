@@ -1,0 +1,2 @@
+module BoxingTypesHelper
+end

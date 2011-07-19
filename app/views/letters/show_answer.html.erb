@@ -1,0 +1,8 @@
+﻿<%= @letter.item %>
+<%= @letter.item_date %>
+<div style="background-color:lime;">
+<%= render  :active_scaffold => "answers", :constraints => { :letter_id => @letter.id } %>
+</div>			  
+
+<%= link_to 'Edit', edit_letter_path(@letter) %> |
+<%= link_to 'Back', letters_path %>

@@ -1,0 +1,7 @@
+﻿<h1>Редактирование страны</h1>
+
+<% semantic_form_for(@country) do |f| %>
+  <%= f.error_messages %>
+
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
+<% end %>

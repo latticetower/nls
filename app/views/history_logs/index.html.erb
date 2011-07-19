@@ -1,0 +1,18 @@
+﻿<h1>Listing history_logs</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @history_logs.each do |history_log| %>
+  <tr>
+    <td><%= link_to 'Show', history_log %></td>
+    <td><%= link_to 'Edit', edit_history_log_path(history_log) %></td>
+    <td><%= link_to 'Destroy', history_log, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New history_log', new_history_log_path %>

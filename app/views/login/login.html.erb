@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Вход в систему учета </title>
+
+<![if !(IE)]>
+  <%= stylesheet_link_tag 'scaffold' %>
+<![endif]>
+
+<!--[if IE]>
+  <%= stylesheet_link_tag 'ie_scaffold' %>
+<![endif]-->
+</head>
+<body >
+	<div class="header"></div>
+<div class="wrapper">
+
+	<!-- осн форма -->
+	<div class="login">
+		<p>Здравствуйте!  <p>Введите свои учетные данные*:
+		<% form_for :user, :url => { :action => "login" } do |f| %>
+			<table>
+				<tr  class="bordered"><td>Логин: </td><td><%= f.text_field :email, :size => 20 %></td></tr>
+				<tr  class="bordered"><td>Пароль: </td><td><%= f.password_field :password, :size => 20 %></td></tr>
+			</table>
+			<%= f.submit 'Войти' %>
+		<% end %>
+    <p><a href="register">Зарегистрироваться</a>
+				<p>*если у вас возникли проблемы при регистрации, <a href="mailto:***REMOVED***" title="обратный адрес">напишите нам</a>
+	</div>
+	<!---->
+	<div class="errors">
+		<p><%= flash[:sent] %></p>
+	</div>
+</div>
+<div class="footer"><a href = "http://***REMOVED***"><div class="foot_text">ООО Центр Инноваций, 2011</div></a></div>
+</body>
+</html>

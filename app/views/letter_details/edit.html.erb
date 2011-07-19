@@ -1,0 +1,7 @@
+﻿<h1>Редактирование деталей письма</h1>
+
+<% semantic_form_for(@letter_detail) do |f| %>
+  <%= f.error_messages %>
+
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
+<% end %>
