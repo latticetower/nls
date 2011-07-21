@@ -2,7 +2,10 @@
   <%= form.input :organization_name, :label => Russian.t(:organization) %>
   <%= form.input :upoln_name, :label => Russian.t(:quality_control) %>
    <%= form.input :phone, :label => Russian.t(:phone) %>
+   <% if User.current_user.is_an_inspector? %>
    <%= form.input :printed_organizations, :label=> Russian.t(:organizations), :as => :check_boxes, 
      :collection => Organization.find(:all, :order => "name ASC") %>
+	<% end %> 
+	 <%= form.input :allow_experimental, :label => Russian.t(:allow_experimental) %>
 <% end %>
 

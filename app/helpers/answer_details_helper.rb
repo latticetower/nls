@@ -3,9 +3,9 @@ module AnswerDetailsHelper
  def answer_detail_letter_column(detail) 
 	'N#{detail.letter.item} #{detail.letter.created_on.strftime("%d.%m.%y")}'
    end
-   def answer_detail_supplier_form_column
-   in_place_editor_field :supplier, :name
-   end
+#   def answer_detail_supplier_form_column
+#   in_place_editor_field :supplier, :name
+#   end
  def answer_detail_item_and_date_column(detail) 
     
 	@s = 'N' + h(detail.letter ? detail.letter.item : "_____") + '<br> ' 

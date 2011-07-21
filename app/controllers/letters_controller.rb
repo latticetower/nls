@@ -135,9 +135,7 @@ class LettersController < ApplicationController
     @starts_at = params[:report][:starts_at] if params[:report] and params[:report][:starts_at]
       @ends_at = params[:report][:ends_at] if params[:report] and params[:report][:ends_at]
     ##TODO: remove 
-    @letters = Letter.find(:all, :conditions => ['item_date between ? and ?', 
-                @starts_at, 
-                @ends_at]) 
+    @letters = Letter.by_dates(@starts_at,  @ends_at) 
                 
     @rt = params[:report][:report_type] if params[:report]
     @rg = params[:report][:report_group] if params[:report]         

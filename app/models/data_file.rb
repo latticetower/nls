@@ -57,7 +57,7 @@ class DataFile
     #return OfficeRTF.do_rtf_group1(sender, starts_at, ends_at, rgroup, rtype) if rgt == "1"
     #return OfficeRTF.do_rtf_group2(sender, starts_at, ends_at, rgroup, rtype) if rgt == "2"
 	@letters = Letters.by_dates(starts_at, ends_at)
-	return OfficeRTF.do_rtf_2(sender, @letters)
+	return OfficeRTF.do_rtf_tu(sender, @letters)
   end
   
   #stub

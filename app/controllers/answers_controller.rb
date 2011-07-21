@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   
   auto_complete_for :answer_detail, :supplier_name
   
-auto_complete_for :supplier, :name
+
   active_scaffold :answers do |config|
      config.nested.label = ''
      config.actions = [:subform, :list, :show, :nested, :update, :create] 
@@ -18,13 +18,20 @@ auto_complete_for :supplier, :name
     render :partial => "live/search"
   end
 =end  
+
+  def set_answered
+    @answer = Answer.find(params[:id])
+    @answer.update_attribute(:answered, true)
+	flash[:notice] = Russian.t(:success)
+    redirect_to :controller => :letters
+  end
   def index 
     redirect_to :controller => :letters, :action => 'index'
   end
   # GET /answers/1
   # GET /answers/1.xml
   def show
-  #redirect_to :action => 'edit', :id => params[:id] and return 
+  redirect_to :action => 'edit', :id => params[:id] and return if current_user.allow_experimental ==true #todo: add condition
   ##todo: must add condition
     @id = params[:id]
     @user_id = current_user.id
