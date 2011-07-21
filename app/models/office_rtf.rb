@@ -513,7 +513,7 @@ class OfficeRTF
         table[@line][7] << Russian.t(:letter_no_answer)
       end
     else
-      @users = User.had_answered_for_letter(letter).with_some_answer_detail.with_no_answer_detail
+      @users = User.had_answered_for_letter(letter).with_some_answer_detail.with_no_answer_detail.printed_for(User.current_user)
       @users.each do |user|
         table[@line][5] << (user ? user.organization_name : '')
         table[@line][5].line_break
@@ -568,7 +568,7 @@ class OfficeRTF
       end
     else 
     ##TODO: add scope with_some_answer_detail
-      @users = User.had_answered_for_letter(letter).with_some_answer_detail.with_no_answer_detail
+      @users = User.had_answered_for_letter(letter).with_some_answer_detail.with_no_answer_detail.printed_for(User.current_user)
       @users.each do |user|
         table[@line][5] << (user ? user.organization_name : '')
         table[@line][5].line_break
@@ -582,7 +582,31 @@ class OfficeRTF
     return @all_lines
   end
 
-
+##todo: must be used instead of organization
+  def self.print_users_line(document, styles, all_lines, letter, usrs)
+	table = document.table(1, 9, 500, 2000, 2000, 1500, 1500, 1500, 2000, 2000, 2000)
+    table.border_width = 5
+    @all_lines = all_lines + 1
+    @line = 0
+    table [@line][0] << @all_lines.to_s #номер пп
+    table [@line][1] << letter.item #дата и номер письма
+	table [@line][1].line_break
+	table [@line][1] << letter.item_date.to_s
+	#usrs.each do |usr|
+	#	table[@line][5] << usr.organization_name
+	#	table[@line][5].line_break
+	#end
+	
+	usrs.printed_for(User.current_user).each do |usr|
+		table[@line][6] << usr.organization_name
+		table[@line][6].line_break
+	end
+	
+    9.times do |j|
+      table[@line][j].style = styles['CENTERED']
+    end
+    return @all_lines
+  end
   ###
   def self.print_organization_line(document, styles, all_lines, org)
     table = document.table(1, 9, 500, 2000, 2000, 1500, 1500, 1500, 2000, 2000, 2000)
@@ -591,7 +615,11 @@ class OfficeRTF
     @line = 0
     table [@line][0] << @all_lines.to_s #номер пп
     table [@line][1] << org.name #дата и номер письма
-
+	org.users.each do |usr|
+		table[@line][5] << usr.organization_name
+		table[@line][5].line_break
+	end
+	
     9.times do |j|
       table[@line][j].style = styles['CENTERED']
     end
@@ -601,7 +629,12 @@ class OfficeRTF
 
   ##TODO: сюда подробное описание для случаев, в которы
   def self.print_empty_line1(document, styles, all_lines, letter)
-    table = document.table(1, 9, 500, 2000, 2000, 1500, 1500, 1500, 2000, 2000, 2000)
+    @users = User.had_answered_for_letter(letter).printed_for(User.current_user)
+	@not_printed = @users.with_some_answer_detail
+	@users.delete_if{|u| @not_printed.include?(u)}
+	return @all_lines if @users.length == 0 
+	
+	table = document.table(1, 9, 500, 2000, 2000, 1500, 1500, 1500, 2000, 2000, 2000)
     table.border_width = 5
     @line = 0
       ##for every letter
@@ -612,7 +645,7 @@ class OfficeRTF
     table[@line][1].line_break
     table[@line][1] << letter.item_date.to_s
 
-    @users = User.had_answered_for_letter(letter)
+	
     table[@line][5] << ''    
     @users.each do |user|
      table[@line][5] << user.organization_name
@@ -626,12 +659,18 @@ class OfficeRTF
     return @all_lines
   end
 
+  ##TODO: fix - remove not empty
   #метод печатает организации пользователей, которые не выявили лс по письму
   def self.print_empty_line2(document, styles, all_lines, letter)
-    table = document.table(1, 3, 500, 2000,  12500)
+    @users = User.had_answered_for_letter(letter).printed_for(User.current_user)
+	@not_printed = @users.with_some_answer_detail
+	@users.delete_if{|u| @not_printed.include?(u)}
+	return @all_lines if @users.length == 0 
+	table = document.table(1, 3, 500, 2000,  12500)
     table.border_width = 5
     @all_lines = all_lines + 1
-    @users = User.had_answered_for_letter(letter)
+    
+	
     table[0][0] << @all_lines.to_s #номер пп
     table[0][1] << letter.item #дата и номер письма
     table[0][1].line_break
@@ -697,47 +736,39 @@ class OfficeRTF
       #TODO: check conditions!
       #@letters = letters #Letter.find(:all,# :conditions => ['item_date between ? and ?', #     1.month.ago.beginning_of_month.to_date, #     1.month.ago.end_of_month.to_date], #  :order =>'item_date ASC, item ASC' )
       @letters.each do |letter|
-        #здесь выбираем все ответы
-        @count_empty = 0
-        @count_not_empty = 0
-        @counter = 0
+      
 
         ##TODO: добавить named_scope
         @lds = letter.letter_details.by_detail_type(dt.id)
         #особенность в чем? мы смотрим кол-во ответов, и печатаем данные в отчет исходя из ответов. т.е. те кто не отвечал туда автоматом не попадают
         @lds.each do |ld|
-          @ads = ld.answer_details.published
-          @count_empty = @ads.select{|ad| ad.received_drugs == 0}.length
-          @count_not_empty = @ads.select{|ad| ad.received_drugs > 0}.length
-          @ads = @ads.select{|ad| ad.received_drugs > 0 and ad.letter}
+          @ads = ld.answer_details.published.by_printed_users_for(User.current_user)
+          @ads_with_data = @ads.select{|ad| ad.received_drugs > 0 and ad.letter}
           @empty_ads = @ads.select{|ad| ad.received_drugs == 0}
-          @counter = @counter + @count_not_empty
+          
           ##TODO: сюда добавила условие на селект
      
           ##for every letter
-          @ads.each do |ad|   #letter = ad.letter          #next if not letter
+          @ads_with_data.each do |ad|   #letter = ad.letter          #next if not letter
             @all_lines = print_letter_line1(document, styles, @all_lines, letter, ld, ad)
             ##инкрементация
           end
           #for empty lines#
-          if @count_empty > 0 and @count_not_empty > 0
-            if rtype == "full"
-              @empty_ads.each do |ad|
-                @all_lines = print_letter_line1(document, styles, @all_lines, letter, ld, ad)
-              end
-            else
-              @all_lines = print_letter_line1(document, styles, @all_lines, letter, ld, nil)
-            end
-          end
+          
+			if rtype == "full"
+			  @empty_ads.each do |ad|
+				if ad.answer.received_drugs > 0
+					@all_lines = print_letter_line1(document, styles, @all_lines, letter, ld, ad)
+				end
+			  end
+			end
+			
+       
           ##old part
         end ##lds
 
         #  (@c).times do |i|             #    9.times do |j|#      table[i][j].style = styles['CENTERED']#    end#  end
-        if @counter == 0 and rtype != "full" and @count_empty > 0
-            #если по письму ответа нет
-            @all_lines = print_empty_line1(document, styles, @all_lines, letter)
-        end
-          
+         @all_lines = print_empty_line1(document, styles, @all_lines, letter)
       
       end ##@letters.each
       ##after
@@ -752,69 +783,7 @@ class OfficeRTF
 =begin
 старая версия метода
 ##TODO: новые методы взамен старых. разобраться с кашей!!!!
-  def self.do_rtf_group1(sender, starts_at, ends_at, rgroup, rtype)
-    @letters = Letter.by_dates(starts_at, ends_at)
 
-
-    doc_style = set_doc_style
-    document = Document.new(Font.new(Font::ROMAN, 'Times New Roman'), doc_style)
-    styles = set_styles
-
-    print_header1(document, styles, starts_at, ends_at)
-    print_table_header1(document, styles)
-
-    @all_lines = 0
-
-    ##TODO: убрать пустые строчки
-    DetailType.find_all_by_group(rgroup).each do |dt|
-      prepare_detail_type_header(document, styles, dt)
-      #TODO: check conditions!
-      #@letters = letters #Letter.find(:all,# :conditions => ['item_date between ? and ?', #     1.month.ago.beginning_of_month.to_date, #     1.month.ago.end_of_month.to_date], #  :order =>'item_date ASC, item ASC' )
-      @letters.each do |letter|
-        ##TODO: добавить named_scope
-        @lds = letter.letter_details.by_detail_type(dt.id)
-
-       #особенность в чем? мы смотрим кол-во ответов, и печатаем данные в отчет исходя из ответов. т.е. те кто не отвечал туда автоматом не попадают
-        @lds.each do |ld|
-          @ads = ld.answer_details
-          @count_empty = @ads.select{|ad| ad.received_drugs == 0}.length
-          @ads = @ads.select{|ad| ad.received_drugs > 0 and ad.letter}
-          @ads_empty = @ads.select{|ad|   ad.received_drugs == 0}
-
-          ##TODO: сюда добавила условие на селект
-          @c = @ads.length
-          @line = 0
-          ##for every letter
-          @ads.each do |ad|   #letter = ad.letter          #next if not letter
-            @all_lines = print_letter_line1(document, styles, @all_lines, letter, ld, ad)
-            ##инкрементация
-          end
-          #для пустых строк#
-          if rtype == "full"
-            @ads_empty.each do |ad|   #letter = ad.letter          #next if not letter
-
-              @all_lines = print_letter_line1(document, styles, @all_lines, letter, ld, ad)
-              ##инкрементация
-
-            end
-          end
-          #  (@c).times do |i|             #    9.times do |j|#      table[i][j].style = styles['CENTERED']#    end#  end
-          if @ads.length == 0
-            @line = 0
-            @all_lines = print_empty_line1(document, styles, @all_lines, letter, ld)
-            ##инкрементация - в кратком виде не нужна
-            @line = @line + 1
-          end
-        end ##lds
-      end ##@letters.each
-      ##after
-    end ##DetailType
-    print_table_footer1(document, styles)
-
-    @filename = "#{RAILS_ROOT}/public/resources/#{sender.email}_answer.doc"
-    File.open(@filename, 'w') {|file| file.write(document.to_rtf) }
-    return @filename
- end
 =end
 
  ##TODO: добавить условий, проверку принадлежности к группе
@@ -835,35 +804,36 @@ class OfficeRTF
     ###сюда условие на организации
     DetailType.find_all_by_group(rgroup).each do |dt|
       @letters.each do |letter|
-        @ld = letter.letter_details.by_detail_type(dt.id)
-        @counter = 0
-        @count_not_empty = 0
-        @count_empty = 0
-        @ld.each do |ld|
-          @ads = ld.answer_details.published ##TODO: add published scope here
-          @count_not_empty = @ads.select{|ad| ad.received_drugs > 0}.length
-          @count_empty  = @ads.select{|ad| ad.received_drugs == 0}.length
-          @empty_ads = @ads.select{|ad| ad.received_drugs == 0}
-          @ads = @ads.select{|ad| ad.received_drugs > 0}
-          @counter = @counter + @count_not_empty
-          @c = @ads.length
-          @ads.each do |ad|
+        @lds = letter.letter_details.by_detail_type(dt.id)  
+        
+		@lds.each do |ld|
+          @ads = ld.answer_details.published.by_printed_users_for(User.current_user) ##TODO: add published scope here
+          @ads_with_data = @ads.select{|ad| ad.received_drugs > 0  and ad.letter}
+          @empty_ads = @ads.select{|ad| ad.received_drugs == 0 }
+          #1
+          @ads_with_data.each do |ad|
             @all_lines = print_letter_line2(document, styles, @all_lines, letter, ld, ad)
           end
-          if @count_empty > 0 and @count_not_empty > 0
-            if rtype == "full"
-              @empty_ads.each do |ad|
-                @all_lines = print_letter_line2(document, styles, @all_lines, letter, ld, ad)
-              end
-            else
-              @all_lines = print_letter_line2(document, styles, @all_lines, letter, ld, nil)
-            end
-          end
-          if @counter == 0 and rtype != "full"
+          #if @count_empty > 0 and @count_not_empty > 0
+            #if rtype == "full"
+			
+			if rtype == "full"
+			  @empty_ads.each do |ad|
+				if ad.answer.received_drugs > 0
+					@all_lines = print_letter_line2(document, styles, @all_lines, letter, ld, ad)
+				end
+			  end
+			end
+           # else
+           #   @all_lines = print_letter_line2(document, styles, @all_lines, letter, ld, nil)
+            #end
+          #end  
+        end
+		
+		#if rtype == "full"
               #если по письму ответа нет
               @all_lines = print_empty_line2(document, styles, @all_lines, letter)
-          end
-        end
+        #end
       end
       ##!!!!!!!!!!!
     end
@@ -875,6 +845,7 @@ class OfficeRTF
   end
   ##
    def self.do_rtf_organizations(sender, starts_at, ends_at, rtype, rgroup)
+    @letters = Letter.by_dates(starts_at, ends_at)
     doc_style = set_doc_style
     document = Document.new(Font.new(Font::ROMAN, 'Times New Roman'), doc_style)
     styles = set_styles
@@ -886,9 +857,13 @@ class OfficeRTF
     #1.month.ago.end_of_month.to_date], :order => 'item_date ASC, item ASC')
     ###сюда условие на организации
     @orgs = sender.printed_organizations
-    @orgs.each do |org|
-      @all_lines = print_organization_line(document, styles, @all_lines, org)
-    end
+	@letters.each do |letter|
+	   @users = User.had_answered_for_letter(letter.id).printed_for(User.current_user)
+	   @all_lines = print_users_line(document, styles, @all_lines, letter, @users)	if @users
+	end
+    #@orgs.each do |org|
+	#	@all_lines = print_organization_line(document, styles, @all_lines, org)	
+	#end
     print_table_footer2(document, styles)
 
     @filename = "#{RAILS_ROOT}/public/resources/#{sender.email}_answer.doc"

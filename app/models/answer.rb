@@ -16,6 +16,12 @@ class Answer < ActiveRecord::Base
 	  :conditions => ['user_id in (?)', usrs]
 	}}
   
+  
+   named_scope :empty, 
+    :select => 'distinct *',
+    :joins => 'left join answer_details on answer_details.answer_id = answers.id',
+    :conditions => 'answer_details.received_drugs == 0'
+	
   named_scope :not_empty, 
     :select => 'distinct *',
     :joins => 'left join answer_details on answer_details.answer_id = answers.id',
@@ -31,6 +37,14 @@ class Answer < ActiveRecord::Base
       flag = false if not ad.check_if_valid?
     end
     flag
+  end
+  
+  def received_drugs
+	@sum = 0
+    answer_details.each do |ad|
+		@sum = @sum + ad.received_drugs
+	end
+	@sum
   end
   
   def make_details(user_id)

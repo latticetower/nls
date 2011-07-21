@@ -19,6 +19,11 @@ class User < ActiveRecord::Base
 	  :joins => "left join answers on answers.user_id = users.id", 
 	  :conditions => ['answers.answered and answers.letter_id in (?)', letter]
 	}}
+	named_scope :printed_for, lambda{ |sender| {
+	  :joins => ["left join organizations on organizations.id = users.organization_id", 
+	  "left join user_organizations on user_organizations.organization_id=organizations.id"],
+	  :conditions => ['user_organizations.user_id in (?)', sender]
+	}}
   ##TODO: fix it! not used
   named_scope :had_answered_for_letter_detail, lambda{ |letter_detail| {
 	  :joins => "left join answer_details on answers.user_id = users.id", 
