@@ -14,9 +14,7 @@ class AnswerDetailsController < ApplicationController
     config.actions.exclude :create
     
     config.columns[:supplier_name].inplace_edit = true
-  # config.columns[:supplier].form_ui = :select
-  #  config.columns[:supplier].search_sql = 'suppliers.name'
-   # config.columns[:letter_detail]
+
     config.columns[:letter_detail].clear_link
     config.columns[:identified_drugs].inplace_edit = true
 
@@ -46,8 +44,8 @@ class AnswerDetailsController < ApplicationController
     config.columns[:letter].sort_by :sql => 'answer_details.letter_id'
     config.list.always_show_search = false
     
-    config.action_links.add 'others_not_found_check', :label => Russian.t(:others_not_found_check),
-     :type => :collection, :inline => true , :position => :top
+    #config.action_links.add 'others_not_found_check', :label => Russian.t(:others_not_found_check),
+    # :type => :collection, :inline => true , :position => :top
   end 
   
 
@@ -103,31 +101,31 @@ class AnswerDetailsController < ApplicationController
 
   # POST /answer_details
   # POST /answer_details.xml
-  def create
-    if params['supplier'] && !params['supplier']['name'].blank?  
-      @supplier = Supplier.find_by_name(params['supplier']['name'])  
-      @supplier = Supplier.create(:name => params['supplier']['name'] ) if @supplier.nil? 
-    end  
-    super
-  end
+ # def create
+   # if params['supplier'] && !params['supplier']['name'].blank?  
+   #   @supplier = Supplier.find_by_name(params['supplier']['name'])  
+   #   @supplier = Supplier.create(:name => params['supplier']['name'] ) if @supplier.nil? 
+   # end  
+   # super
+ # end
 
 private  
-  def before_create_save(record)  
-    record.supplier_id = @supplier.id if @supplier
-  end 
-  def before_update_save(record)
-    record.supplier_id = @supplier.id if @supplier
-  end  
+ # def before_create_save(record)  
+ #   record.supplier_id = @supplier.id if @supplier
+ # end 
+ # def before_update_save(record)
+ #   record.supplier_id = @supplier.id if @supplier
+ # end  
 public
   # PUT /answer_details/1
   # PUT /answer_details/1.xml
-  def update
-    if params['supplier'] && !params['supplier']['name'].blank?  
-      @supplier = Supplier.find_by_name(params['supplier']['name'])  
-      @supplier = Supplier.create(:name => params['supplier']['name'] ) if @supplier.nil? 
-    end 
-    super
-  end
+ # def update
+ #   if params['supplier'] && !params['supplier']['name'].blank?  
+ #     @supplier = Supplier.find_by_name(params['supplier']['name'])  
+ #     @supplier = Supplier.create(:name => params['supplier']['name'] ) if @supplier.nil? 
+ #   end 
+ #   super
+ # end
 =begin
   # GET /letter_details/new
   # GET /letter_details/new.xml

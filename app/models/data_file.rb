@@ -54,10 +54,10 @@ class DataFile
   end
 
   def self.do_rtf_for_tu(sender, starts_at, ends_at, rtype, rgroup,rgt) 
-    #return OfficeRTF.do_rtf_group1(sender, starts_at, ends_at, rgroup, rtype) if rgt == "1"
-    #return OfficeRTF.do_rtf_group2(sender, starts_at, ends_at, rgroup, rtype) if rgt == "2"
-	@letters = Letters.by_dates(starts_at, ends_at)
-	return OfficeRTF.do_rtf_2(sender, @letters)
+    return OfficeRTF.do_rtf_group1(sender, starts_at, ends_at, rgroup, rtype) if rgt == "1"
+    return OfficeRTF.do_rtf_group2(sender, starts_at, ends_at, rgroup, rtype) if rgt == "2"
+	@letters = Letter.by_dates(starts_at, ends_at)
+	return OfficeRTF.do_rtf_tu(sender, @letters)
   end
   
   #stub

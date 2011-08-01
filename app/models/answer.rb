@@ -7,7 +7,7 @@ class Answer < ActiveRecord::Base
   has_many :answer_details #
   belongs_to :letter #
   belongs_to :user #
-  has_many :suppliers, :through => :answer_details
+
   #validates_length_of :details, :minimum => 3,  :if => :tactic_must_have_details? , :message => 'no data'
   #validates_presence_of :user
   
@@ -29,7 +29,7 @@ class Answer < ActiveRecord::Base
 
   
   accepts_nested_attributes_for :answer_details, :reject_if => :all_blank, :update_only => true, :allow_destroy => true
-  accepts_nested_attributes_for :suppliers
+ # accepts_nested_attributes_for :suppliers
   
   def details_validate!
     flag = true

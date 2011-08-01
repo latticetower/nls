@@ -124,7 +124,7 @@ private
               xml.country (@ld.country ? @ld.country.name : '')
              end
           xml.serial @ld.serial
-          xml.seller ad.supplier
+         # xml.seller ad.supplier
           xml.received_drugs ad.received_drugs
           xml.identified_drugs ad.identified_drugs
           xml.Mery ad.tactic ? ad.tactic.name : ''

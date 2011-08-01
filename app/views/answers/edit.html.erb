@@ -70,3 +70,5 @@ N <%= @letter.item %> <%= @letter.item_date %></h1>
  <%= submit_tag 'Обновить' %>
 
 <% end %>
+
+<%= button_to 'Отправить в ТУ', url_for(:action => :set_answered, :id => @answer.id) %>

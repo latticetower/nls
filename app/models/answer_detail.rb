@@ -5,11 +5,11 @@ class AnswerDetail < ActiveRecord::Base
   belongs_to :tactic
   belongs_to :answer
   belongs_to :user
-  belongs_to :supplier
+  #belongs_to :supplier
   
 
 named_scope :by_username,
-        :include => :supplier,
+        #:include => :supplier,
         :conditions => [ "user_id = ?", User.current_user.id]
 
    named_scope :published, 
@@ -30,15 +30,16 @@ named_scope :all_identified_drugs, :select => 'sum(identified_drugs)'
 
   named_scope :by_user, lambda {|user_id|{:conditions => {:user_id => user_id}} }
   
-  validates_numericality_of :identified_drugs
- validates_numericality_of :received_drugs
-  validates_length_of :details, :minimum => 3,  :if => :tactic_must_have_details? , :message => 'no data'
- validates_length_of :supplier_name, :minimum => 3
+#  validates_numericality_of :identified_drugs
+# validates_numericality_of :received_drugs
+#  validates_length_of :details, :minimum => 3,  :if => :tactic_must_have_details? , :message => 'no data'
+# validates_length_of :supplier_name, :minimum => 3
   
   def tactic_must_have_details? 
     return ((self.tactic_id == 2) or (self.tactic_id == 3))
   end
  
+=begin
  def check_if_valid?
    flag = true
    if tactic_must_have_details? 
@@ -53,7 +54,7 @@ named_scope :all_identified_drugs, :select => 'sum(identified_drugs)'
    end
    #return ((self.tactic_id == 2) or (self.tactic_id == 3))
  end
-  
+=end  
   
   def to_label
     ld = letter_detail
