@@ -16,7 +16,7 @@ function formatLinkForPaginationURL() {
    });
 }
 
-$(document).ready(function() {
+$(document).ready = function() {
   $('input.ui-date-text').live('change', function(){
     var sels = [];
     sels[0]=$("select[id$='_1i']");
@@ -45,7 +45,7 @@ $(document).ready(function() {
     values[0]=$("select[id$='_1i']").val();
     values[1]=$("select[id$='_2i']").val();
     values[2]=$("select[id$='_3i']").val();
-    if(values[0] != '' &amp; values[1] != '' &amp; values[2] != '') {
+    if(values[0] != '' & values[1] != '' & values[2] != '') {
       d = new Date(values[0], parseInt(values[1] - 1), values[2]);
       $(input).val($.datepicker.formatDate($.datepicker._defaults.dateFormat,d));
     };
@@ -53,8 +53,5 @@ $(document).ready(function() {
   });
   
   $(".hasDatepicker").css("background-color","#ff9");
-});
+};
 
-$(document).ready(function(){
-  $('input.ui-datepicker').datepicker();
-});
