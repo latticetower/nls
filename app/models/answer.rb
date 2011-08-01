@@ -11,6 +11,23 @@ class Answer < ActiveRecord::Base
   #validates_length_of :details, :minimum => 3,  :if => :tactic_must_have_details? , :message => 'no data'
   #validates_presence_of :user
   
+    ##just added named scope
+  named_scope :by_users, lambda{ |usrs| {
+	  :conditions => ['user_id in (?)', usrs]
+	}}
+  
+  
+   named_scope :empty, 
+    :select => 'distinct *',
+    :joins => 'left join answer_details on answer_details.answer_id = answers.id',
+    :conditions => 'answer_details.received_drugs == 0'
+	
+  named_scope :not_empty, 
+    :select => 'distinct *',
+    :joins => 'left join answer_details on answer_details.answer_id = answers.id',
+    :conditions => 'answer_details.received_drugs > 0'
+
+  
   accepts_nested_attributes_for :answer_details, :reject_if => :all_blank, :update_only => true, :allow_destroy => true
   accepts_nested_attributes_for :suppliers
   
@@ -20,6 +37,14 @@ class Answer < ActiveRecord::Base
       flag = false if not ad.check_if_valid?
     end
     flag
+  end
+  
+  def received_drugs
+	@sum = 0
+    answer_details.each do |ad|
+		@sum = @sum + ad.received_drugs
+	end
+	@sum
   end
   
   def make_details(user_id)

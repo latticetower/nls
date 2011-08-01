@@ -12,7 +12,22 @@ named_scope :by_username,
         :include => :supplier,
         :conditions => [ "user_id = ?", User.current_user.id]
 
-  
+   named_scope :published, 
+    :select => 'distinct *',
+    :joins => 'left join answers on answers.id =answer_details.answer_id',
+    :conditions => 'answers.answered=true' 
+	
+    named_scope :by_printed_users_for, lambda{|sender| {
+	:joins => ['left join users on users.id=answer_details.user_id',
+	     'left join organizations on organizations.id=users.organization_id',
+	     'left join user_organizations on user_organizations.organization_id=organizations.id'],
+		 :conditions => ['user_organizations.user_id in (?)', sender]
+	}}
+	
+named_scope :all_received_drugs, :select => 'sum(received_drugs)'
+
+named_scope :all_identified_drugs, :select => 'sum(identified_drugs)'
+
   named_scope :by_user, lambda {|user_id|{:conditions => {:user_id => user_id}} }
   
   validates_numericality_of :identified_drugs

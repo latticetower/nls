@@ -12,7 +12,34 @@ class User < ActiveRecord::Base
 
   delegate :permissions, :to => :role
   
-  has_and_belongs_to_many :printed_organizations, :join_table => "user_organizations", :class_name => "Organization" 
+  has_and_belongs_to_many :printed_organizations, :join_table => "user_organizations", :class_name => "Organization", :order => 'name ASC' 
+  
+  ##just added named scope
+  named_scope :had_answered_for_letter, lambda{ |letter| {
+	  :joins => "left join answers on answers.user_id = users.id", 
+	  :conditions => ['answers.answered and answers.letter_id in (?)', letter]
+	}}
+	named_scope :printed_for, lambda{ |sender| {
+	  :joins => ["left join organizations on organizations.id = users.organization_id", 
+	  "left join user_organizations on user_organizations.organization_id=organizations.id"],
+	  :conditions => ['user_organizations.user_id in (?)', sender]
+	}}
+  ##TODO: fix it! not used
+  named_scope :had_answered_for_letter_detail, lambda{ |letter_detail| {
+	  :joins => "left join answer_details on answers.user_id = users.id", 
+	  :conditions => ['answers.answered and answers.letter_id in (?)', letter_detail.letter_id]
+	}}
+  
+  named_scope :with_no_answer_detail, :select => 'distinct users.*',
+            :joins => ["left join answers  ans on ans.user_id = users.id", 
+                       "left join answer_details ansd on ans.id = ansd.answer_id"], 
+            :conditions => ['ans.answered and ansd.received_drugs = 0', ]
+	
+  
+  named_scope :with_some_answer_detail, :select => 'distinct users.*',
+            :joins => ["left join answers on answers.user_id = users.id", 
+                       "left join answer_details on answers.id = answer_details.answer_id"], 
+            :conditions => ['answers.answered and answer_details.received_drugs > 0', ]
   
   def authorized_for_read?
    return false unless current_user
@@ -20,10 +47,10 @@ class User < ActiveRecord::Base
    current_user.is_an_admin_or_operator?
   end
 
-def authorized_for_delete?
-  return false unless current_user
-  current_user.is_an_admin_or_operator?
-end
+  def authorized_for_delete?
+    return false unless current_user
+    current_user.is_an_admin_or_operator?
+  end
 
   def self.authenticate(login, pass)
      @user = find(:first, :conditions => {:email => login})
@@ -47,7 +74,7 @@ end
     end
   end
  
-  private
+private
  
   # A sequence of random numbers with no skewing of range in any particular
   # direction and leading zeros preserved.
