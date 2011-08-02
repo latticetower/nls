@@ -1,15 +1,15 @@
-п»ї<div>
+<div>
 <% form_tag('letters/print_data') do %>
-РќР°С‡Р°Р»Рѕ РїРµСЂРёРѕРґР°: <%= text_field "report", "starts_at", {:class => 'datepicker', :value => 1.month.ago.beginning_of_month.to_date.to_s }  %>
-РљРѕРЅРµС† РїРµСЂРёРѕРґР°: <%= text_field "report", "ends_at", {:class => 'datepicker' , :value => 1.month.ago.end_of_month.to_date.to_s } %><br>
-<%= select("report", "report_type", options_for_select([["РљСЂР°С‚РєРёР№", "short"], ["Р Р°Р·РІРµСЂРЅСѓС‚С‹Р№", "full"]])) %>
-<%= select("report", "report_group", options_for_select([["С„Р°Р»СЊСЃРёС„РёРєР°С‚С‹", "1"], ["Р±СЂР°РєРё", "2"]])) %>
+Начало периода: <%= text_field "report", "starts_at", {:class => 'datepicker', :value => 1.month.ago.beginning_of_month.to_date.to_s }  %>
+Конец периода: <%= text_field "report", "ends_at", {:class => 'datepicker' , :value => 1.month.ago.end_of_month.to_date.to_s } %><br>
+<%= select("report", "report_type", options_for_select([["Краткий", "short"], ["Развернутый", "full"]])) %>
+<%= select("report", "report_group", options_for_select([["фальсификаты", "1"], ["браки", "2"]])) %>
 <% if User.current_user.allow_experimental %>
-<%= select("report", "report_grouptype", options_for_select([["РѕС‚С‡РµС‚1", "1"], ["РѕС‚С‡РµС‚2", "2"]])) %>
+<%= select("report", "report_grouptype", options_for_select([["отчет1", "1"], ["отчет2", "2"]])) %>
 <% end %>
 <br>
-<%= submit_tag 'РџРѕСЃС‚СЂРѕРёС‚СЊ РѕС‚С‡РµС‚' %>
-<%= submit_tag 'РЎРїРёСЃРѕРє Р›РЎ', :name => 'print_medicines' %>
-<%= submit_tag 'РЎРїРёСЃРѕРє РѕСЂРіР°РЅРёР·Р°С†РёР№', :name => 'print_organizations' %>
+<%= submit_tag 'Построить отчет' %>
+<%= submit_tag 'Список ЛС', :name => 'print_medicines' %>
+<%= submit_tag 'Список организаций', :name => 'print_organizations' %>
 <% end %>
 </div>
