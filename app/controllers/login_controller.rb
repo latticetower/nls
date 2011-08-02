@@ -5,7 +5,7 @@ class LoginController < ApplicationController
     redirect_to :action => :login
   end
   
-  # GET ***REMOVED***in
+  # GET /login
   def login
     if request.post? 
       session[:user_id] = nil 

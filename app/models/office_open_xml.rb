@@ -61,7 +61,7 @@ class OfficeOpenXML
   def compress(newXML)
     # Copy the modified template document to a new document.
     FileUtils.copy(@template, @newdoc)
-      File.open("#{RAILS_ROOT}***REMOVED***/observers.log", 'a') {|f| 
+      File.open("#{RAILS_ROOT}/log/observers.log", 'a') {|f| 
       f.write("compress " + @newdoc + "  template:" + @template + "\r\n") 
       }
  
@@ -71,7 +71,7 @@ class OfficeOpenXML
       # document with the new transformed XML.
       zipfile.add_or_replace_buffer('word/document.xml',
         newXML.to_s)
-            File.open("#{RAILS_ROOT}***REMOVED***/observers.log", 'a') {|f| 
+            File.open("#{RAILS_ROOT}/log/observers.log", 'a') {|f| 
     f.write("zip opened \r\n") 
     }
     end
@@ -85,7 +85,7 @@ class OfficeOpenXML
 
   def stylesheet_doc
 @file = File.open(@xslt)
-      File.open("#{RAILS_ROOT}***REMOVED***/observers.log", 'a') {|f| 
+      File.open("#{RAILS_ROOT}/log/observers.log", 'a') {|f| 
     f.write("xslt template file: " + @xslt + "\r\n") 
     f.write("xslt found\r\n")  if @file
     }

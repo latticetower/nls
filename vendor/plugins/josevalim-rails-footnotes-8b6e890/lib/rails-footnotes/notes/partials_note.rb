@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}***REMOVED***_note"
+require "#{File.dirname(__FILE__)}/log_note"
 
 module Footnotes
   module Notes
