@@ -127,8 +127,18 @@ class LettersController < ApplicationController
       # Send the new file with the wordprocessingml document
       # content type.
     send_file(@file, :filename => Russian.t(:letters) + " - " + Time.now.to_s + ".doc", :type => mime_type)
-
   end
+  
+  def print_data
+  
+    redirect_to :action => print_for_tu, :report => @report and return if params[:commit] == "print_for_tu"
+         
+    redirect_to :action => print_medicines, :report => @report and return if params[:commit] == "print_medicines"
+         
+    redirect_to :action => print_organizations, :report => @report and return if params[:commit] == "print_organizations"
+    
+  end
+  
   ##TODO: print data
   def print_for_tu
     @starts_at = 1.month.ago.beginning_of_month.to_date
