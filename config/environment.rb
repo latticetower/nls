@@ -4,7 +4,7 @@ RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-#Dir["#{RAILS_ROOT}/app/ui/*.rb"].each(&:require) #for active scaffold ui
+Dir["#{RAILS_ROOT}/app/ui/*.rb"].each(&:require) #for active scaffold ui
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -13,8 +13,7 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
   config.gem 'russian', :source => 'http://gemcutter.org'
-  config.gem 'mislav-will_paginate', :lib => 'will_paginate', 
-  :source => 'http://gems.github.com'
+  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'inherited_resources', :version => '1.0.6'  ##, :source => 'http://gems.github.com'
   config.gem 'formtastic', :version => '1.2.3'
  ##config.gem 'cancan'
@@ -25,7 +24,7 @@ Rails::Initializer.run do |config|
  config.gem 'splattael-activerecord_base_without_table', :lib    => 'activerecord_base_without_table',
                                                             :source => 'http://gems.github.com'
 
-                                                            
+                                                  
   config.gem 'ruby-rtf',
                :source => 'http://gems.github.com'
 
