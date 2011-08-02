@@ -1,0 +1,14 @@
+﻿<div>
+<% form_tag('letters/print_for_tu') do %>
+Начало периода: <%= text_field "report", "starts_at", {:class => 'datepicker', :value => 1.month.ago.beginning_of_month.to_date.to_s }  %>
+Конец периода: <%= text_field "report", "ends_at", {:class => 'datepicker' , :value => 1.month.ago.end_of_month.to_date.to_s } %><br>
+<%= select("report", "report_type", options_for_select([["Краткий", "short"], ["Развернутый", "full"]])) %>
+<%= select("report", "report_group", options_for_select([["фальсификаты", "1"], ["браки", "2"]])) %>
+<%= select("report", "report_grouptype", options_for_select([["отчет1", "1"], ["отчет2", "2"]])) %>
+<br>
+<%= submit_tag 'Построить отчет' %>
+<% end %>
+<br>
+<%= button_to 'Список ЛС', url_for(:action => :print_medicines) %>
+<%= button_to 'Список организаций', url_for(:action => :print_organizations) %>
+</div>
