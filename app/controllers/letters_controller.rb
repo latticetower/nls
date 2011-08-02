@@ -102,12 +102,14 @@ class LettersController < ApplicationController
   end
   def print_for_tu_authorized?
     return false if not current_user
-    return current_user.is_an_inspector?
+    return false if not current_user.is_an_inspector?
+    return current_user.allow_experimental
   end
   
   def print_for_tu2_authorized?
     return false if not current_user
-    return current_user.is_an_inspector?
+    return false if not current_user.is_an_inspector?
+    return current_user.allow_experimental
   end
   
   ##TODO: test controller, must be removed
