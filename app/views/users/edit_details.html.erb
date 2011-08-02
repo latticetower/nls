@@ -1,7 +1,10 @@
-﻿<h1>Изменение личной информации</h1>
-
-<% form_for @user, :url => {:action => "update_current", :id => @user} do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :locals => { :f => f, :button => "Обновить", :current_user => @user  }  %>
+﻿<h2>Редактирование информации</h2>
+Пользователь: <%= @user.email %>
+<% semantic_form_for @user do |form| %>
+  <%= form.error_messages %>
+  <%= render :partial => "/users/inputs", :locals => { :form => form } %>
+  <% form.buttons do %>
+    <%= form.commit_button "Обновить" %>
+  <% end %>
 <% end %>
 

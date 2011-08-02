@@ -1,0 +1,18 @@
+<h1>Listing boxing_types</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @boxing_types.each do |boxing_type| %>
+  <tr>
+    <td><%= link_to 'Show', boxing_type %></td>
+    <td><%= link_to 'Edit', edit_boxing_type_path(boxing_type) %></td>
+    <td><%= link_to 'Destroy', boxing_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New boxing_type', new_boxing_type_path %>

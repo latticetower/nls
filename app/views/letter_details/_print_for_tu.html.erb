@@ -1,0 +1,19 @@
+﻿<div>
+<% @report = Hash.new %>
+<% form_tag('letters/print_data') do %>
+Начало периода: <%= text_field "report", "starts_at", {:class => 'datepicker', :value => 1.month.ago.beginning_of_month.to_date.to_s }  %>
+Конец периода: <%= text_field "report", "ends_at", {:class => 'datepicker' , :value => 1.month.ago.end_of_month.to_date.to_s } %><br>
+<%= select("report", "report_type", options_for_select([["Краткий", "short"], ["Развернутый", "full"]])) %>
+<%= select("report", "report_group", options_for_select([["фальсификаты", "1"], ["браки", "2"]])) %>
+<% if User.current_user.allow_experimental %>
+  <%= select("report", "report_grouptype", options_for_select([["отчет1", "1"], ["отчет2", "2"]])) %>
+<% end %>
+<br>
+<%= submit_tag 'Построить отчет', :name => 'print_for_tu' %>
+<%= submit_tag 'Список ЛС', :name => 'print_medicines' %>
+<%= submit_tag 'Построить организаций', :name => 'print_organizations' %>
+<% end %>
+<br>
+<%= button_to 'Список ЛС', url_for(:action => :print_medicines, :id => params) %>
+<%= button_to 'Список организаций', url_for(:action => :print_organizations) %>
+</div>

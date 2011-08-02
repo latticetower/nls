@@ -1,27 +1,62 @@
 class OrganizationsController < ApplicationController
-before_filter :authorize
-active_scaffold :organizations
 
-#record_select :per_page => 5, :search_on =>'name' #, :label => 'user_description'
+
+  active_scaffold :organization do |config|
+    config.label = Russian.t(:organizations)
+    config.columns = [:name, :name_long]
+    config.list.columns = [:name, :name_long]
+	config.actions.exclude :show
+    ##todo: use this 
+    config.columns.each do |column|
+       column.label = Russian.t(column.name)
+    end
+	
+    config.list.sorting = {:name => 'ASC'}
+    
+    config.search.columns = [:name]
+    config.search.live = true
+    
+    config.list.per_page = 15
+    config.columns[:name].sort = true
+    config.columns[:name].sort_by :sql => 'organizations.name'
+    
+    config.list.always_show_search = true
+  end 
+  
+  def create_authorized?
+    return false unless current_user
+    current_user.is_an_admin_or_operator?
+  end
+  
+  def update_authorized?
+    return false unless current_user
+    current_user.is_an_admin_or_operator?
+  end
+  
+  def delete_authorized?
+    return false unless current_user
+    current_user.is_an_admin_or_operator?
+  end 
+  def conditions_for_collection
+    if current_user.is_a_client_or_manager?
+      return ['id in (?)', current_user.organization_id]
+    end
+    []
+  end
+
   # GET /organizations
   # GET /organizations.xml
-  def index
-  if not current_user.can_view_firms?
-    # redirect_to :controller => "tickets", :action => "index" and return
-	 @organizations = Organization.find(:all, :conditions => {:id => current_user.organization_id})
-  else
-    @organizations = Organization.find(:all, :order => "name ASC")
-end	
-    respond_to do |format|
-      format.html {render  :template => "organizations/index", :locals => { :current_user => current_user}}
-      format.xml  { render :xml => @organizations }
-    end
-  end
+
 
   # GET /organizations/1
   # GET /organizations/1.xml
   def show
-   redirect_to :action => :index
+    @organization = Organization.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @organization }
+    end
   end
 
   # GET /organizations/new
@@ -47,12 +82,7 @@ end
 
     respond_to do |format|
       if @organization.save
-	    User.cin_users.each do |u|
-		  u.showed_organizations << @organization
-		  u.showed_organizations.save
-		end
-        flash[:notice] = 'Organization was successfully created.'
-        format.html { redirect_to(@organization) }
+        format.html { redirect_to(organizations_url, :notice => Russian.t(:organization) + Russian.t(:was_created_success)) }
         format.xml  { render :xml => @organization, :status => :created, :location => @organization }
       else
         format.html { render :action => "new" }
@@ -60,38 +90,15 @@ end
       end
     end
   end
-  
-  def create_ajax
-      @organization = Organization.new(params[:organization])
-	  
-	  if @organization.save
-	  User.cin_users.each do |u|
-	  u.showed_organizations << @organization
-	  end
-		#  u.showed_organizations.save
-         render :partial => 'organization_ajax', :object => @organization
-      end
-  end
 
   # PUT /organizations/1
   # PUT /organizations/1.xml
   def update
     @organization = Organization.find(params[:id])
-	#params[:organization][:category_ids] = params[:organization][:category_ids].delete_if{|x| x[:id].nil? }
-	#@organization.categories.each{|c| c.update_attributes(params[:organization][:category_ids][c.id.to_s]) }
+
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
-	  @organization.organization_categories.each  do |c|
-	
-	 
-	     h = 0
-	     h = params[:organization_categories][c.category_id.to_s][:hours] if params[:organization_categories][c.category_id.to_s]
-	     c.hours = h.to_f
-	     c.save
-	  end
-	  puts @organization.organization_categories.to_s
-        flash[:notice] = 'Organization was successfully updated.'
-        format.html { redirect_to(@organization) }
+        format.html { redirect_to(organizations_url, :notice => Russian.t(:organization) + ' ' + Russian.t(:was_updated_success)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

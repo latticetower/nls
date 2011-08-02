@@ -1,7 +1,12 @@
-﻿<h1>Редактирование пользователя</h1>
+﻿<h2>Редактирование информации</h2>
+Пользователь: <%= @user.email %>
+<% semantic_form_for @user do |form| %>
+  <%= form.error_messages %>
+  <%= render :partial => "/users/inputs", :locals => { :form => form } %>
 
-<% form_for(@user) do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :locals => { :f => f, :button => "Обновить"  }  %>
+
+  <% form.buttons do %>
+    <%= form.commit_button "Обновить" %>
+  <% end %>
 <% end %>
 

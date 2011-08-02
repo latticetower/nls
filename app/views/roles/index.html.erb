@@ -1,41 +1,18 @@
-﻿<h1>Роли</h1>
-<%= render :partial => "index_top", :locals => {:current_user => current_user} %>
+<h1>Listing roles</h1>
+
 <table>
   <tr>
-  <th class="first">ID</th>
-  <th>Название</th>
-<th>Название папки - для поиска шаблонов</th>
- <th></th>
-  <th></th>
-   <th></th>
   </tr>
 
 <% @roles.each do |role| %>
-  <tr class="bordered">
-    <td><%= role.id %></td>
-    <td><%= role.name %></td>
-	<td><%= role.typename %></td>
-	<td><% link_to(role) do %>
-	<%= image_tag("zoom.png", :alt => "Показать детали") %>
-        <% end %></td>
-    <td>
-
-	<% link_to(edit_role_path(role)) do %>
-	<%= image_tag("wrench.png", :alt => "Редактировать") %>
-        <% end %>
-		
-		</td>
-    <td>
-	
-	<% link_to(role, :confirm => 'Are you sure?', :method => :delete) do %>
-	     <%= image_tag("cross.png", :alt => "Удалить") %>
-        <% end %>
-		
-	</td>
-<% end %>
+  <tr>
+    <td><%= link_to 'Show', role %></td>
+    <td><%= link_to 'Edit', edit_role_path(role) %></td>
+    <td><%= link_to 'Destroy', role, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
-
+<% end %>
 </table>
 
 <br />
 
+<%= link_to 'New role', new_role_path %>

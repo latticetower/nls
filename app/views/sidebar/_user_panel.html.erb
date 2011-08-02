@@ -1,7 +1,0 @@
-﻿<div class="header_left"><% if session[:user_id] %>
-Здравствуйте, <a href = "/users/edit_details"><%= User.find(session[:user_id]).fio %></a><% end %>
-</div> <div class="header_right"> 
-<% if session[:user_id] %>
-<%= link_to 'Выйти', :controller => 'login', :action =>'logout' %>
-<% end %>
-</div>

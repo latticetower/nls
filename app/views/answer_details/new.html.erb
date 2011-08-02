@@ -1,0 +1,7 @@
+﻿<h1>Новая строка ответа</h1>
+
+<% semantic_form_remote_for(@answer_detail) do |f| %>
+  <%= f.error_messages %>
+
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
+<% end %>

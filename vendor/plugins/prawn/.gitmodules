@@ -1,9 +1,0 @@
-[submodule "vendor/pdf-inspector"]
-	path = vendor/pdf-inspector
-	url = git://github.com/sandal/pdf-inspector.git
-[submodule "vendor/ttfunk"]
-	path = vendor/ttfunk
-	url = git://github.com/sandal/ttfunk
-[submodule "prawn"]
-	path = prawn
-	url = git://github.com/sandal/prawn.git

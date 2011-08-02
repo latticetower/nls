@@ -1,40 +1,5 @@
-﻿<table>
-<thead>
-<th class="first">Данные организации</th>
-<th></th>
-</thead>
-<tbody>
-<tr class="bordered"> <td>Название организации, краткое: </td><td><%= f.text_field "name" %></td></tr>
-<tr  class="bordered">  <td>Полное название (дополнительно): </td><td><%= f.text_area "name_long", :rows => 3 %></td></tr>
-<tr  class="bordered">  <td>Телефоны, координаты для связи: </td><td><%= f.text_field "phone" %></td></tr>
-<tr  class="bordered">  <td>Количество часов регламентных работ по договору абонентского обслуживания: </td><td><%= f.text_field "hours" %></td></tr>
-</tbody>
-</table>
-
-<div>
-Организация обслуживается по следующим категориям работ: 
-<% @organization_categories = Hash.new %>
-<% @categories = Category.find(:all) %>
-  <% for  p in @categories -%>
-         <% checked = @organization.categories.include?(p) %>
-		 <% @cat = @organization.organization_categories.find(:first, :conditions => {:category_id => p.id}) %>
-		   <% @organization_categories[p.id.to_s] = Hash.new  %>
-		   <% @organization_categories[p.id.to_s][:hours] = (@cat) ? @cat.hours.to_s : "0"   %>
-		 
-		 <br><%= check_box_tag "organization[category_ids][]", "#{p.id}", checked %> 
-		          <%= "#{p.name}" %>
-		 <% fields_for "organization_categories[#{p.id}]", @cat do |ff| %>
-		  
-		    <br>Количество часов регламентных работ <br>
-		    по договору абонентского обслуживания: <br>
-		    <%= ff.text_field :hours, :value => @organization_categories[p.id.to_s][:hours] %>
-		 <% end %>
-   <% end -%>
-	    
-	  
-</div>
-
-
-  <p>
-    <%= f.submit button %>
-  </p>
+<% f.inputs do %>
+  <%= f.input :name, :label => Russian.t(:name) %>
+    <%= f.input :name_long, :label => Russian.t(:name_long) %>
+		<%= f.submit button %>
+<% end %>

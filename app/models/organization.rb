@@ -1,5 +1,22 @@
 class Organization < ActiveRecord::Base
-default_scope :order => 'name ASC'
-has_many :users
-
+  has_many :letters
+  has_one :organization_detail
+  has_many :users
+  
+  def authorized_for_read?
+     return false unless current_user
+     return true
+  end
+  def authorized_for_update?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
+  def authorized_for_create?
+      return false unless current_user
+      current_user.is_an_operator_or_admin?
+  end
+  def authorized_for_delete?
+    return false unless current_user
+    current_user.is_an_operator_or_admin?
+  end
 end

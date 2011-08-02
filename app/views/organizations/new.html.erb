@@ -1,6 +1,8 @@
 ﻿<h1>Новая организация</h1>
 
-<% form_for(@organization) do |f| %>
+<% semantic_form_for(@organization) do |f| %>
   <%= f.error_messages %>
- <%= render :partial => "form", :locals => { :f => f, :button => "Создать"}  %>
+
+<%= render :partial => "form", :locals => { :f => f, :button => "Создать"  }  %>
 <% end %>
+

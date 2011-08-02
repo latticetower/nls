@@ -1,0 +1,18 @@
+<h1>Listing organization_details</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @organization_details.each do |organization_detail| %>
+  <tr>
+    <td><%= link_to 'Show', organization_detail %></td>
+    <td><%= link_to 'Edit', edit_organization_detail_path(organization_detail) %></td>
+    <td><%= link_to 'Destroy', organization_detail, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New organization_detail', new_organization_detail_path %>

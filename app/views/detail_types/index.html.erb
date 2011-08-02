@@ -1,0 +1,18 @@
+<h1>Listing detail_types</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @detail_types.each do |detail_type| %>
+  <tr>
+    <td><%= link_to 'Show', detail_type %></td>
+    <td><%= link_to 'Edit', edit_detail_type_path(detail_type) %></td>
+    <td><%= link_to 'Destroy', detail_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New detail_type', new_detail_type_path %>

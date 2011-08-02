@@ -1,13 +1,5 @@
-﻿<%= f.text_field "name" %>
-<%= f.text_field "typename" %>
-<div>
-
-   <% for  p in Permission.find(:all) -%>
-         <% checked = @role.permissions.include?(p) %>
-         <br><%= check_box_tag "role[permission_ids][]", "#{p.id}", checked -%> 
-         <%= "#{p.name}" -%>
-      <% end -%>
-</div>
-  <p>
-    <%= f.submit 'Обновить' %>
-  </p>
+﻿<% f.inputs do %>
+  <%= f.input :name, :label => "Название роли" %>
+  <%= f.input :typename, :label => "Название папки" %>
+  <%= f.submit 'Отправить' %>
+<% end %>

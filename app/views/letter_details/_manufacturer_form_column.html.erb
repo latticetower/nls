@@ -1,0 +1,10 @@
+﻿<dl>  
+  <dt><label for="record_medicine"><%= Russian.t(:manufacturer) %></label></dt>  
+  <dd>  
+ 
+     <%= text_field_with_auto_complete(:manufacturer, :name,   
+     { :value => (@manufacturer.name if (@manufacturer ||= @record.manufacturer)),              
+        :class => 'text-input' }, { :method => :get })   
+        %>
+  </dd>  
+</dl> 

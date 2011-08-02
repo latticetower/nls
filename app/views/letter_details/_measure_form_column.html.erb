@@ -1,0 +1,11 @@
+﻿<dl>  
+  <dt><label for="record_medicine"><%= Russian.t(:measure) %></label></dt>  
+  <dd>  
+ 
+ 
+     <%= text_field_with_auto_complete(:measure, :name,   
+     { :value => (@measure.name if (@medicine ||= @record.measure)),              
+        :class => 'text-input' }, { :method => :get })   
+       %> 
+  </dd>  
+</dl> 

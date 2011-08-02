@@ -1,0 +1,74 @@
+﻿<h1>Письмо от <%= @letter.organization.name if @letter.organization %> 
+N <%= @letter.item %> <%= @letter.item_date %></h1>
+<% form_for (@answer, :url => {:action => 'update_individual', :id => @answer.id}, 
+:live_validations => true, :validate => true, :remote => true) do |fr|%> 
+<%= fr.error_messages %>
+<table>
+<tr>
+<th><%= Russian.t(:item_and_date) %></th>
+<th><%= Russian.t(:letter_detail_all) %></th>
+<th><%= Russian.t(:serial) %></th>
+<th><%= Russian.t(:producer_country) %></th>
+
+<!--part 2-->
+<th><%= Russian.t(:supplier) %></th>
+<th><%= Russian.t(:received_drugs) %>/<%= Russian.t(:identified_drugs) %></th>
+<th><%= Russian.t(:tactic) %></th>
+<th><%= Russian.t(:details) %></th>
+</tr>
+ 
+  <tr><td><%= fr.error_messages  %></td></tr>
+
+  
+  <% for ld in @answer.letter_details %> 
+   
+   <tr>
+   <td><%= @letter.item %><br>
+       <%= @letter.item_date %></td>
+   <td><%= ld.medicine ? ld.medicine.name : '' %><br>
+       <%= ld.boxing_type ? ld.boxing_type.name : '' %><br>
+       <%= ld.measure ? ld.measure.name : '' %></td>
+   <td><%= ld.serial %></td>
+   <td><%= ld.manufacturer ? ld.manufacturer.name : '' %><br>
+       <%= ld.country ? ld.country.name : '' %></td>
+       </tr>
+   <% @ads = ld.answer_details.by_user(User.current_user.id) %>  
+    <tbody id="letter_detail_data<%= ld.id %>">
+    <!-- for ad in @ads --> 
+        <!--tr--> 
+          <!-- fr.fields_for "answer_details[]", ad do |f| -->  
+            <%= render "fields",  :ld => ld, :ads => @ads, :fr => fr %>         
+          <!-- end --> 
+        <!-- /tr--> 
+    <!-- end --> 
+    </tbody>
+    <!--кнопка-->
+    <tbody id="letter_detail_button<%= ld.id %>">
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+   
+    <%= link_to_remote Russian.t(:add_new_answer_detail), :url => {:action => 'create_ajax', 
+          :letter_detail_id => ld.id, :answer_id => @answer.id}, 
+          :method => "create_ajax",  
+          :update => "letter_detail_data"+ld.id.to_s, :position => :bottom %>
+    
+    <!-- form_remote_tag(:url => url_for(:action => "create_ajax"),
+:html => {:action =>  url_for(:action => 'create_ajax')},
+    :update => "letter_detail_data"+ld.id.to_s) do >
+< submit_tag 'Добавить' >
+< end -->
+</td>
+</tr>
+</tbody>
+<!--конец кнопки-->
+  <% end %> 
+  </table> 
+ <%= submit_tag 'Обновить' %>
+
+<% end %>
+
+<%= button_to 'Отправить в ТУ', url_for(:action => :set_answered, :id => @answer.id) %>
