@@ -1,12 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :history_logs
 
-  map.resources :suppliers, :collection => {:browse => :get}, :member => {:select => :post}
 
   map.resources :detail_types
   map.resources :answers, :collection => { :update_individual => :put, 
-      :auto_complete_for_answer_detail_supplier => :get,
-      :auto_complete_for_supplier_name => :get
+      :auto_complete_for_answer_detail_supplier_name => :get
           }  
 
   map.resources :medicines, :active_scaffold => :medicines
@@ -14,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'answer_details/others_not_found_check', :controller => :answer_details, :action => :others_not_found_check
   map.resources :answer_details, :active_scaffold => :answer_details, :collection => 
       { 
-      :auto_complete_for_supplier_name => :get
+      :auto_complete_for_answer_detail_supplier_name => :get
           }  
   
   map.resources :answers, :active_scaffold => :answers ###

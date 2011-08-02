@@ -152,7 +152,7 @@ class OfficeRTF
       table [@line][4] << (@ld.country ? @ld.country.name : '')
    # end
     #table [@line][5] do |t| #лс
-      table [@line][5] << ad.supplier
+      table [@line][5] << ad.supplier_name
     #end
     #table [@line][6] do |t| #лс
       table [@line][6] << ad.received_drugs.to_s
@@ -303,7 +303,7 @@ class OfficeRTF
           table [@line][4] << (@ld.country ? @ld.country.name : '')
        # end
         #table [@line][5] do |t| #лс
-          table [@line][5] << (ad.supplier ? ad.supplier.name : ad.supplier_name)
+          table [@line][5] << ad.supplier_name
         #end
         #table [@line][6] do |t| #лс
           table [@line][6] << ad.received_drugs.to_s
@@ -501,7 +501,7 @@ class OfficeRTF
     if ad
       table[@line][5] << (ad.user ? ad.user.organization_name : '')
       if ad.received_drugs > 0
-        table[@line][6] << (ad.supplier ? ad.supplier.name : ad.supplier_name)
+        table[@line][6] << ad.supplier_name
         table[@line][7] << ad.received_drugs.to_s
         table[@line][7] << '/'
         table[@line][7] << ad.identified_drugs.to_s
@@ -555,7 +555,7 @@ class OfficeRTF
     if ad
         table [@line][5] << (ad.user ? ad.user.organization_name : '')
       if ad.received_drugs > 0
-        table[@line][6] << (ad.supplier ? ad.supplier.name : ad.supplier_name)
+        table[@line][6] << ad.supplier_name
 
         table[@line][7] << ad.received_drugs.to_s
         table[@line][7] << '/'
