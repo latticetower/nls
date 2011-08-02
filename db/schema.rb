@@ -20,20 +20,24 @@ ActiveRecord::Schema.define(:version => 20110412112347) do
   create_table "answer_details", :force => true do |t|
     t.integer "letter_id",        :default => 0,  :null => false
     t.integer "letter_detail_id",                 :null => false
-    t.string  "supplier",         :default => "", :null => false
+    t.string  "supplier_name",    :default => "", :null => false
     t.integer "received_drugs",   :default => 0,  :null => false
     t.integer "identified_drugs", :default => 0,  :null => false
     t.string  "details",          :default => "", :null => false
     t.integer "organization_id",  :default => 0
     t.integer "tactic_id",        :default => 0
+    t.integer "answer_id"
+    t.integer "user_id"
+    t.integer "supplier_id"
+    t.string  "serial"
   end
 
-  create_table "answers", :id => false, :force => true do |t|
-    t.integer "id",                             :null => false
+  create_table "answers", :force => true do |t|
     t.integer "user_id"
-    t.boolean "answered",    :default => false
+    t.boolean "answered",         :default => false
     t.date    "answer_date"
     t.integer "letter_id"
+    t.boolean "others_not_found", :default => false
   end
 
   create_table "boxing_types", :force => true do |t|
@@ -45,19 +49,30 @@ ActiveRecord::Schema.define(:version => 20110412112347) do
   end
 
   create_table "detail_types", :force => true do |t|
-    t.string "name"
-    t.string "name_long"
+    t.string  "name"
+    t.string  "name_long"
+    t.integer "group"
+  end
+
+  create_table "history_logs", :force => true do |t|
+    t.time    "created_at"
+    t.string  "email"
+    t.string  "password"
+    t.string  "ip",         :limit => 25
+    t.text    "useragent"
+    t.boolean "allowed",                  :default => false
   end
 
   create_table "letter_details", :force => true do |t|
-    t.integer "letter_id",                       :null => false
-    t.integer "medicine_id",     :default => 0,  :null => false
-    t.integer "boxing_type_id",  :default => 0,  :null => false
-    t.integer "measure_id",      :default => 0,  :null => false
-    t.integer "manufacturer_id", :default => 0,  :null => false
-    t.integer "country_id",      :default => 0,  :null => false
-    t.string  "serial",          :default => "", :null => false
+    t.integer "letter_id",                             :null => false
+    t.integer "medicine_id",        :default => 0,     :null => false
+    t.integer "boxing_type_id",     :default => 0,     :null => false
+    t.integer "measure_id",         :default => 0,     :null => false
+    t.integer "manufacturer_id",    :default => 0,     :null => false
+    t.integer "country_id",         :default => 0,     :null => false
+    t.string  "serial",             :default => "",    :null => false
     t.integer "detail_type_id"
+    t.boolean "allow_serial_input", :default => false
   end
 
   create_table "letter_states", :force => true do |t|
@@ -113,24 +128,37 @@ ActiveRecord::Schema.define(:version => 20110412112347) do
     t.string "typename", :default => "", :null => false
   end
 
+  create_table "suppliers", :id => false, :force => true do |t|
+    t.integer "id",   :null => false
+    t.string  "name"
+  end
+
   create_table "tactics", :force => true do |t|
-    t.string "name", :default => "", :null => false
+    t.string  "name",  :default => "", :null => false
+    t.integer "group"
+  end
+
+  create_table "user_organizations", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "organization_id"
   end
 
   create_table "users", :force => true do |t|
-    t.integer "role_id",                           :default => 5,     :null => false
-    t.integer "organization_id",                   :default => 1,     :null => false
-    t.string  "email"
-    t.string  "encrypted_password", :limit => 128
-    t.string  "salt",               :limit => 128
-    t.string  "confirmation_token", :limit => 128
-    t.string  "remember_token",     :limit => 128
-    t.boolean "email_confirmed",                   :default => false, :null => false
-    t.boolean "admin",                             :default => false
-    t.string  "organization_name"
-    t.boolean "active",                            :default => false
-    t.string  "upoln_name"
-    t.string  "phone"
+    t.integer  "role_id",                           :default => 5,     :null => false
+    t.integer  "organization_id",                   :default => 1,     :null => false
+    t.string   "email"
+    t.string   "encrypted_password", :limit => 128
+    t.string   "salt",               :limit => 128
+    t.string   "confirmation_token", :limit => 128
+    t.string   "remember_token",     :limit => 128
+    t.boolean  "email_confirmed",                   :default => false, :null => false
+    t.boolean  "admin",                             :default => false
+    t.string   "organization_name"
+    t.boolean  "active",                            :default => false
+    t.string   "upoln_name"
+    t.string   "phone"
+    t.datetime "registered_at"
+    t.boolean  "allow_experimental",                :default => false
   end
 
   add_index "users", ["admin"], :name => "index_users_on_admin"
